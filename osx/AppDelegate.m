@@ -13,6 +13,7 @@
 
 @property (weak) IBOutlet WebView *webview;
 @property (weak) IBOutlet NSWindow *window;
+- (IBAction)openInBrowser:(id)sender;
 
 @property (strong) id activity;
 
@@ -73,6 +74,12 @@
 
 -(BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app {
     return YES;
+}
+
+- (IBAction)openInBrowser:(id)sender {
+    WebFrame *frame = [self.webview mainFrame];
+    NSString * url = [[[[frame dataSource] request] URL] absoluteString];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString: url]];
 }
 
 @end
