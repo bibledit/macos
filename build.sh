@@ -15,7 +15,7 @@ BIBLEDITMACOS=/tmp/bibledit-macos
 echo Synchronizing relevant source code to $BIBLEDITMACOS
 mkdir -p $BIBLEDITMACOS
 rm $BIBLEDITMACOS/* 2> /dev/null
-rsync --archive --delete ../lib $BIBLEDITMACOS/
+rsync --archive --delete ../cloud $BIBLEDITMACOS/
 if [ $? != 0 ]; then exit; fi
 rsync --archive --delete ../macos $BIBLEDITMACOS/
 if [ $? != 0 ]; then exit; fi
@@ -31,7 +31,7 @@ if [ $? != 0 ]; then exit; fi
 
 
 echo Synchronize the libbibledit data files in the source tree to macOS.
-rsync -a --delete ../../lib/ .
+rsync -a --delete ../../cloud/ .
 if [ $? != 0 ]; then exit; fi
 echo Dist-clean the Bibledit library.
 ./configure
