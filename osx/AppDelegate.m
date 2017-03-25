@@ -5,9 +5,14 @@
 //  Copyright (c) 2015 Teus Benschop. All rights reserved.
 //
 
+
 #import "AppDelegate.h"
 #import <WebKit/WebKit.h>
 #import "bibledit.h"
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+
 
 @interface AppDelegate ()
 
@@ -21,6 +26,7 @@
 
 
 @implementation AppDelegate
+
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
@@ -57,13 +63,18 @@
     // defaults write org.bibledit.osx WebKitDeveloperExtras TRUE
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidResize:) name:NSWindowDidResizeNotification object:self.window];
+    
+    [self.webview setPolicyDelegate:self];
+    [self.webview setDownloadDelegate:self];
 }
+
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     bibledit_stop_library ();
     while (bibledit_is_running ()) {}
     bibledit_shutdown_library ();
 }
+
 
 // The embedded webview should resize when the main window resizes.
 - (void) windowDidResize:(NSNotification *) notification
@@ -72,14 +83,41 @@
     [[self webview] setFrame:CGRectMake(0, 0, size.width, size.height)];
 }
 
+
 -(BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app {
     return YES;
 }
+
 
 - (IBAction)openInBrowser:(id)sender {
     WebFrame *frame = [self.webview mainFrame];
     NSString * url = [[[[frame dataSource] request] URL] absoluteString];
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString: url]];
 }
+
+
+- (void) webView:(WebView *)webView decidePolicyForMIMEType:(NSString *)type request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id < WebPolicyDecisionListener >)listener
+{
+    if (![[webView class] canShowMIMEType:type]) [listener download];
+    //NSString * url = [[request URL] absoluteString];
+    //[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString: url]];
+}
+
+
+- (void)download:(NSURLDownload *)download decideDestinationWithSuggestedFilename:(NSString *)filename
+{
+    NSString * directory = @"/tmp";
+    struct passwd *pw = getpwuid(getuid());
+    if (pw->pw_dir) directory = [NSString stringWithUTF8String:pw->pw_dir];
+    if (filename == nil) filename = @"bibledit-download";
+    NSString *destinationPath = [NSString stringWithFormat:@"%@/%@/%@", directory, @"Downloads", filename];
+    NSAlert *alert = [[NSAlert alloc] init];
+    alert.messageText = @"Download";
+    [alert addButtonWithTitle:@"OK"];
+    alert.informativeText = [NSString stringWithFormat:@"Will be saved to: %@", destinationPath];
+    [alert runModal];
+    [download setDestination:destinationPath allowOverwrite:YES];
+}
+
 
 @end

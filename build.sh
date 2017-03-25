@@ -58,8 +58,7 @@ echo 9876 > config/network-port
 
 echo Update the Makefile.
 echo The -mmmacosx-version-min is for fixing: ld: warning:
-echo object file libbibledit.a was built for newer OSX version than being linked.
-# sed -i.bak 's#\`xml2-config --cflags\`#-I/usr/include/libxml2#g' Makefile
+echo object file libbibledit.a was built for newer macOS version than being linked.
 sed -i.bak 's#-pedantic#-mmacosx-version-min=10.10\ -isysroot\ '$SDK'#g' Makefile
 if [ $? != 0 ]; then exit; fi
 sed -i.bak 's#/opt/local/include#. -I..#g' Makefile
@@ -71,6 +70,8 @@ if [ $? != 0 ]; then exit; fi
 sed -i.bak '/SWORD_LIBS =/d' Makefile
 if [ $? != 0 ]; then exit; fi
 sed -i.bak '/OPENSSL_LIBS =/d' Makefile
+if [ $? != 0 ]; then exit; fi
+sed -i.bak 's#-lmimetic# #g' Makefile
 if [ $? != 0 ]; then exit; fi
 
 
