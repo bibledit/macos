@@ -66,6 +66,8 @@
     
     [self.webview setPolicyDelegate:self];
     [self.webview setDownloadDelegate:self];
+    
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerTimeout) userInfo:nil repeats:YES];
 }
 
 
@@ -99,8 +101,6 @@
 - (void) webView:(WebView *)webView decidePolicyForMIMEType:(NSString *)type request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id < WebPolicyDecisionListener >)listener
 {
     if (![[webView class] canShowMIMEType:type]) [listener download];
-    //NSString * url = [[request URL] absoluteString];
-    //[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString: url]];
 }
 
 
@@ -136,6 +136,15 @@
     {
         NSArray* files = [[openDlg URLs]valueForKey:@"relativePath"];
         [resultListener chooseFilenames:files];
+    }
+}
+
+
+- (void)timerTimeout
+{
+    NSString * url = [NSString stringWithUTF8String:bibledit_get_external_url ()];
+    if (url.length != 0) {
+        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString: url]];
     }
 }
 
