@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
-        <plugIn identifier="com.apple.WebKitIBPlugin" version="11762"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12118"/>
+        <plugIn identifier="com.apple.WebKitIBPlugin" version="12118"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -184,33 +184,12 @@
                                     <items>
                                         <menuItem title="Find…" tag="1" keyEquivalent="f" id="Xz5-n4-O0W">
                                             <connections>
-                                                <action selector="performFindPanelAction:" target="-1" id="cD7-Qs-BN4"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Find and Replace…" tag="12" keyEquivalent="f" id="YEy-JH-Tfz">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                            <connections>
-                                                <action selector="performFindPanelAction:" target="-1" id="WD3-Gg-5AJ"/>
+                                                <action selector="menuFind:" target="Voe-Tx-rLC" id="UzW-v9-Ef3"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Find Next" tag="2" keyEquivalent="g" id="q09-fT-Sye">
                                             <connections>
-                                                <action selector="performFindPanelAction:" target="-1" id="NDo-RZ-v9R"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Find Previous" tag="3" keyEquivalent="G" id="OwM-mh-QMV">
-                                            <connections>
-                                                <action selector="performFindPanelAction:" target="-1" id="HOh-sY-3ay"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Use Selection for Find" tag="7" keyEquivalent="e" id="buJ-ug-pKt">
-                                            <connections>
-                                                <action selector="performFindPanelAction:" target="-1" id="U76-nv-p5D"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Jump to Selection" keyEquivalent="j" id="S0p-oC-mLd">
-                                            <connections>
-                                                <action selector="centerSelectionInVisibleArea:" target="-1" id="IOG-6D-g5B"/>
+                                                <action selector="menuFindNext:" target="Voe-Tx-rLC" id="GqS-ns-UcV"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -643,12 +622,6 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="performZoom:" target="-1" id="DIl-cC-cCs"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Open in browser" id="Toh-VN-BFW">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="openInBrowser:" target="Voe-Tx-rLC" id="fqC-7b-uwr"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="eu3-7i-yIM"/>

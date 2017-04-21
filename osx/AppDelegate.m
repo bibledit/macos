@@ -18,7 +18,9 @@
 
 @property (weak) IBOutlet WebView *webview;
 @property (weak) IBOutlet NSWindow *window;
-- (IBAction)openInBrowser:(id)sender;
+- (IBAction)menuFind:(id)sender;
+- (IBAction)menuFindNext:(id)sender;
+
 
 @property (strong) id activity;
 
@@ -26,6 +28,9 @@
 
 
 @implementation AppDelegate
+
+
+NSString * searchText = @"";
 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -91,10 +96,30 @@
 }
 
 
-- (IBAction)openInBrowser:(id)sender {
-    WebFrame *frame = [self.webview mainFrame];
-    NSString * url = [[[[frame dataSource] request] URL] absoluteString];
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString: url]];
+- (IBAction)menuFind:(id)sender {
+    NSAlert *alert = [[NSAlert alloc] init];
+    alert.messageText = @"Search";
+    [alert addButtonWithTitle:@"OK"];
+    [alert addButtonWithTitle:@"Cancel"];
+    alert.informativeText = [NSString stringWithFormat:@"Search for"];
+    NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 200, 24)];
+    [input setStringValue:searchText];
+    [alert setAccessoryView:input];
+    [[alert window] setInitialFirstResponder: input];
+    NSInteger button = [alert runModal];
+    if (button == NSAlertFirstButtonReturn) {
+        searchText = [input stringValue];
+        if (searchText.length) {
+            [self.webview searchFor:searchText direction:TRUE caseSensitive:FALSE wrap:TRUE];
+        } else {
+            [self.webview setSelectedDOMRange:nil affinity:NSSelectionAffinityDownstream];
+        }
+    }
+}
+
+
+- (IBAction)menuFindNext:(id)sender {
+    [self.webview searchFor:searchText direction:TRUE caseSensitive:FALSE wrap:TRUE];
 }
 
 
