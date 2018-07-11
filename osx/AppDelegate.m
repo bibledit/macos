@@ -35,44 +35,64 @@ NSString * searchText = @"";
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
-    // When the Bibledit app is in the background, macOS puts it to sleep.
-    // This is the "App Nap".
-    // It has been noticed that even after coming out of the nap, Bibledit remains slowish,
-    // and uses a lot of CPU resources.
-    // Disable App Nap:
-    if ([[NSProcessInfo processInfo] respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
-        self.activity = [[NSProcessInfo processInfo] beginActivityWithOptions:0x00FFFFFF reason:@"runs a web server"];
-    }
-    
-    NSArray *components = [NSArray arrayWithObjects:[[NSBundle mainBundle] resourcePath], @"webroot", nil];
-    NSString *packagePath = [NSString pathWithComponents:components];
+  // When the Bibledit app is in the background, macOS puts it to sleep.
+  // This is the "App Nap".
+  // It has been noticed that even after coming out of the nap, Bibledit remains slowish,
+  // and uses a lot of CPU resources.
+  // Disable App Nap:
+  if ([[NSProcessInfo processInfo] respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
+    self.activity = [[NSProcessInfo processInfo] beginActivityWithOptions:0x00FFFFFF reason:@"runs a web server"];
+  }
+  
+  NSArray *components = [NSArray arrayWithObjects:[[NSBundle mainBundle] resourcePath], @"webroot", nil];
+  NSString *packagePath = [NSString pathWithComponents:components];
+  
+  NSString * documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+  components = [NSArray arrayWithObjects:documents, @"webroot", nil];
+  NSString *webrootPath = [NSString pathWithComponents:components];
+  
+  const char * package = [packagePath UTF8String];
+  const char * webroot = [webrootPath UTF8String];
+  
+  bibledit_initialize_library (package, webroot);
+  
+  // The following is to fix the following bug:
+  //   We discovered one or more bugs in your app when reviewed on Mac running macOS 10.13.5.
+  //   On first launch of the app, only a blank window is shown.
+  //   On the second launch of the app, the UI then properly appears.
+  // While resolving this bug, it was discovered that on initial run,
+  // the internal webserver did indeed start, but could not be contacted right away.
+  // That caused the blank window.
+  // The solution is this:
+  //   Start the internal web server plus the browser after a very short delay.
+  // Obviously the sandbox does not assign the server privilege right away.
+  // But it does do so after a slight delay.
+  [self performSelector:@selector(startServerAndBrowser) withObject:nil afterDelay:0.1 ];
+  
+  
+  // For the developer console in the webview, enter the following from a terminal:
+  // defaults write org.bibledit.osx WebKitDeveloperExtras TRUE
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidResize:) name:NSWindowDidResizeNotification object:self.window];
+  
+  [self.webview setPolicyDelegate:self];
+  [self.webview setDownloadDelegate:self];
+  
+  [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerTimeout) userInfo:nil repeats:YES];
+}
 
-    NSString * documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    components = [NSArray arrayWithObjects:documents, @"webroot", nil];
-    NSString *webrootPath = [NSString pathWithComponents:components];
 
-    const char * package = [packagePath UTF8String];
-    const char * webroot = [webrootPath UTF8String];
-    
-    bibledit_initialize_library (package, webroot);
-    bibledit_start_library ();
-    
-    // Open the web app in the web view.
-    // The server listens on another port than 8080 so as not to interfere with possible development on the same host.
-    NSURL *url = [NSURL URLWithString:@"http://localhost:9876"];
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-    [[[self webview] mainFrame] loadRequest:urlRequest];
-    [self.window setContentView:self.webview];
-
-    // For the developer console in the webview, enter the following from a terminal:
-    // defaults write org.bibledit.osx WebKitDeveloperExtras TRUE
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidResize:) name:NSWindowDidResizeNotification object:self.window];
-    
-    [self.webview setPolicyDelegate:self];
-    [self.webview setDownloadDelegate:self];
-    
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerTimeout) userInfo:nil repeats:YES];
+// Start the web server and the browser.
+- (void)startServerAndBrowser
+{
+  bibledit_start_library ();
+  
+  // Open the web app in the web view.
+  // The server listens on another port than 8080 so as not to interfere with possible development on the same host.
+  NSURL *url = [NSURL URLWithString:@"http://localhost:9876"];
+  NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+  [[[self webview] mainFrame] loadRequest:urlRequest];
+  [self.window setContentView:self.webview];
 }
 
 
