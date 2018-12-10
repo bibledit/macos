@@ -41,9 +41,18 @@ if [ $? != 0 ]; then exit; fi
 rm config.h
 
 
+echo Update the Makefile.am and reconfigure
+sed -i.bak '/mbedtls_ssl_init/d' configure.ac
+./reconfigure
+
+
 echo Export the Xcode toolchain for C and C++.
-export CC="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang"
-export CXX="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++"
+# This no longer works.
+# It led to errors.
+# It appears that the 'which clang' points to the same clang as below.
+# So it is no longer needed to set those environment variables.
+# export CC="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang"
+# export CXX="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++"
 
 
 echo The Xcode macOS SDK.
@@ -54,6 +63,7 @@ echo Configure Bibledit in client mode.
 ./configure --enable-mac
 if [ $? != 0 ]; then exit; fi
 echo 9876 > config/network-port
+if [ $? != 0 ]; then exit; fi
 
 
 echo Update the Makefile.
