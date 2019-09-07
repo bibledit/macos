@@ -67,7 +67,7 @@ NSString * searchText = @"";
   //   Start the internal web server plus the browser after a very short delay.
   // Obviously the sandbox does not assign the server privilege right away.
   // But it does do so after a slight delay.
-  [self performSelector:@selector(startServerAndBrowser) withObject:nil afterDelay:0.1 ];
+  [self performSelector:@selector(startServerAndBrowser) withObject:nil afterDelay:0.2 ];
   
   
   // For the developer console in the webview, enter the following from a terminal:
