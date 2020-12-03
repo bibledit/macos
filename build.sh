@@ -136,7 +136,7 @@ if [ $? != 0 ]; then exit; fi
 echo Build the app.
 cd $BIBLEDITMACOS/macos
 xcodebuild
-if [ $? != 0 ]; then exit; fi
+#if [ $? != 0 ]; then exit; fi
 
 
 echo To graphically build the app for macOS, open the project in Xcode:
