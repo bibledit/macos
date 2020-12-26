@@ -196,7 +196,16 @@ NSString * previous_reference;
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString: url]];
   }
   
-  // Handling a possible verse reference to be sent to Accordance.
+  // Accordance have implemented a ’SantaFeMac’ scheme
+  // that should allow intra-app scrolling,
+  // even if in the Mac App Store.
+  // As of Accordance 13.1.5 that supports it for both sending and receiving.
+  // Sandboxed apps can send notifications only if they do not contain a dictionary.
+  // If the sending application is in an App Sandbox, userInfo must be nil.
+  // Since Bibledit is on the Mac App Store, any additional information cannot be sent.
+  // To that end the information can be still sent and retrieved as the “object” of the notification.
+  // The Accordance developer has defined the notification string as:
+  //   com.santafemac.scrolledToVerse
   NSString * reference = [NSString stringWithUTF8String:bibledit_get_reference_for_accordance ()];
   if ([reference isNotEqualTo:previous_reference]) {
     previous_reference = [[NSString alloc] initWithString:reference];
