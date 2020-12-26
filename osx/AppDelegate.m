@@ -21,8 +21,9 @@
 - (IBAction)menuFind:(id)sender;
 - (IBAction)menuFindNext:(id)sender;
 
-
 @property (strong) id activity;
+
+@property (atomic, retain) NSString * accordanceReceivedVerse;
 
 @end
 
@@ -69,16 +70,19 @@ NSString * searchText = @"";
   // But it does do so after a slight delay.
   [self performSelector:@selector(startServerAndBrowser) withObject:nil afterDelay:0.2 ];
   
-  
   // For the developer console in the webview, enter the following from a terminal:
   // defaults write org.bibledit.osx WebKitDeveloperExtras TRUE
   
+  self.accordanceReceivedVerse = @"";
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidResize:) name:NSWindowDidResizeNotification object:self.window];
   
   [self.webview setPolicyDelegate:self];
   [self.webview setDownloadDelegate:self];
   
   [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerTimeout) userInfo:nil repeats:YES];
+
+  [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(accordanceDidScroll:) name:@"com.santafemac.scrolledToVerse" object:nil suspensionBehavior:NSNotificationSuspensionBehaviorCoalesce];
+
 }
 
 
@@ -97,6 +101,7 @@ NSString * searchText = @"";
 
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
+    [[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:@"com.santafemac.scrolledToVerse" object:nil];
     bibledit_stop_library ();
     while (bibledit_is_running ()) {}
     bibledit_shutdown_library ();
@@ -185,7 +190,8 @@ NSString * searchText = @"";
 }
 
 
-NSString * previous_reference;
+NSString * previous_sent_reference = @"";
+NSString * previous_received_reference = @"";
 
 
 - (void)timerTimeout
@@ -206,11 +212,30 @@ NSString * previous_reference;
   // To that end the information can be still sent and retrieved as the “object” of the notification.
   // The Accordance developer has defined the notification string as:
   //   com.santafemac.scrolledToVerse
+  // To prevent oscillation between send and received verse references,
+  // whenever a reference is sent, or received,
+  // set the counterpart to match.
   NSString * reference = [NSString stringWithUTF8String:bibledit_get_reference_for_accordance ()];
-  if ([reference isNotEqualTo:previous_reference]) {
-    previous_reference = [[NSString alloc] initWithString:reference];
+  if ([reference isNotEqualTo:previous_sent_reference]) {
+    previous_sent_reference = [[NSString alloc] initWithString:reference];
+    previous_received_reference = [[NSString alloc] initWithString:reference];
+    //self.accordanceReceivedVerse = [[NSString alloc] initWithString:reference];
     [[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"com.santafemac.scrolledToVerse" object:reference userInfo:nil deliverImmediately:YES];
   }
+  if ([self.accordanceReceivedVerse isNotEqualTo:previous_received_reference]) {
+    previous_received_reference = [[NSString alloc] initWithString:self.accordanceReceivedVerse];
+    previous_sent_reference = [[NSString alloc] initWithString:self.accordanceReceivedVerse];
+    const char * c_reference = [self.accordanceReceivedVerse UTF8String];
+    bibledit_put_reference_from_accordance (c_reference);
+  }
+}
+
+
+// When a new verse references comes in from Accordance,
+// store this verse reference,
+// to be processed later by the one-second timer.
+-(void)accordanceDidScroll:(NSNotification *)notification {
+  self.accordanceReceivedVerse = notification.object;
 }
 
 
