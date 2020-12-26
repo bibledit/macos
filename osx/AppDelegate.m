@@ -185,12 +185,23 @@ NSString * searchText = @"";
 }
 
 
+NSString * previous_reference;
+
+
 - (void)timerTimeout
 {
-    NSString * url = [NSString stringWithUTF8String:bibledit_get_external_url ()];
-    if (url.length != 0) {
-        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString: url]];
-    }
+  // Checking whether Bibledit needs to open a URL in the default system browser.
+  NSString * url = [NSString stringWithUTF8String:bibledit_get_external_url ()];
+  if (url.length != 0) {
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString: url]];
+  }
+  
+  // Handling a possible verse reference to be sent to Accordance.
+  NSString * reference = [NSString stringWithUTF8String:bibledit_get_reference_for_accordance ()];
+  if ([reference isNotEqualTo:previous_reference]) {
+    previous_reference = [[NSString alloc] initWithString:reference];
+    [[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"com.santafemac.scrolledToVerse" object:reference userInfo:nil deliverImmediately:YES];
+  }
 }
 
 
