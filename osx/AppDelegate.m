@@ -192,6 +192,9 @@ NSString * searchText = @"";
 
 NSString * previous_sent_reference = @"";
 NSString * previous_received_reference = @"";
+//NSString * previous_reference = @"";
+int send_counter = 0;
+int receive_counter = 0;
 
 
 - (void)timerTimeout
@@ -212,21 +215,27 @@ NSString * previous_received_reference = @"";
   // To that end the information can be still sent and retrieved as the “object” of the notification.
   // The Accordance developer has defined the notification string as:
   //   com.santafemac.scrolledToVerse
-  // To prevent oscillation between send and received verse references,
-  // whenever a reference is sent, or received,
-  // set the counterpart to match.
+  // There's timers to prevent oscillation between send and received verse references.
+  send_counter++;
+  receive_counter++;
   NSString * reference = [NSString stringWithUTF8String:bibledit_get_reference_for_accordance ()];
   if ([reference isNotEqualTo:previous_sent_reference]) {
-    previous_sent_reference = [[NSString alloc] initWithString:reference];
-    previous_received_reference = [[NSString alloc] initWithString:reference];
-    //self.accordanceReceivedVerse = [[NSString alloc] initWithString:reference];
-    [[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"com.santafemac.scrolledToVerse" object:reference userInfo:nil deliverImmediately:YES];
+    if (send_counter > 1) {
+      previous_sent_reference = [[NSString alloc] initWithString:reference];
+      //previous_received_reference = [[NSString alloc] initWithString:reference];
+      //self.accordanceReceivedVerse = [[NSString alloc] initWithString:reference];
+      [[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"com.santafemac.scrolledToVerse" object:reference userInfo:nil deliverImmediately:YES];
+      receive_counter = 0;
+    }
   }
   if ([self.accordanceReceivedVerse isNotEqualTo:previous_received_reference]) {
-    previous_received_reference = [[NSString alloc] initWithString:self.accordanceReceivedVerse];
-    previous_sent_reference = [[NSString alloc] initWithString:self.accordanceReceivedVerse];
-    const char * c_reference = [self.accordanceReceivedVerse UTF8String];
-    bibledit_put_reference_from_accordance (c_reference);
+    if (receive_counter > 1) {
+      previous_received_reference = [[NSString alloc] initWithString:self.accordanceReceivedVerse];
+      //previous_sent_reference = [[NSString alloc] initWithString:self.accordanceReceivedVerse];
+      const char * c_reference = [self.accordanceReceivedVerse UTF8String];
+      bibledit_put_reference_from_accordance (c_reference);
+      send_counter = 0;
+    }
   }
 }
 
