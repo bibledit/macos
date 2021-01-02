@@ -69,7 +69,9 @@ if [ $? != 0 ]; then exit; fi
 echo Update the Makefile.
 echo The -mmmacosx-version-min is for fixing: ld: warning:
 echo object file libbibledit.a was built for newer macOS version than being linked.
-sed -i.bak 's#-pedantic#-mmacosx-version-min=10.10\ -isysroot\ '$SDK'#g' Makefile
+echo The added architectures to the CFLAGS are for Apple Silicon.
+echo See https://developer.apple.com/forums/thread/653233.
+sed -i.bak 's#-pedantic#-mmacosx-version-min=10.10\ -isysroot\ '$SDK'\ -arch\ x86_64\ -arch\ arm64#g' Makefile
 if [ $? != 0 ]; then exit; fi
 sed -i.bak 's#/opt/local/include#. -I..#g' Makefile
 if [ $? != 0 ]; then exit; fi
@@ -136,7 +138,7 @@ if [ $? != 0 ]; then exit; fi
 echo Build the app.
 cd $BIBLEDITMACOS/macos
 xcodebuild
-#if [ $? != 0 ]; then exit; fi
+if [ $? != 0 ]; then exit; fi
 
 
 echo To graphically build the app for macOS, open the project in Xcode:
