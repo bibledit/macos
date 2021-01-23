@@ -1,8 +1,7 @@
 //
 //  AppDelegate.m
 //
-//  Created by Teus Benschop on 28/05/2015.
-//  Copyright (c) 2015 Teus Benschop. All rights reserved.
+//  Copyright (c) 2013-2021 Teus Benschop. All rights reserved.
 //
 
 
@@ -32,6 +31,7 @@
 
 
 NSString * searchText = @"";
+NSTimer * nsTimer;
 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -45,6 +45,8 @@ NSString * searchText = @"";
     self.activity = [[NSProcessInfo processInfo] beginActivityWithOptions:0x00FFFFFF reason:@"runs a web server"];
   }
   
+  
+  
   NSArray *components = [NSArray arrayWithObjects:[[NSBundle mainBundle] resourcePath], @"webroot", nil];
   NSString *packagePath = [NSString pathWithComponents:components];
   
@@ -57,6 +59,32 @@ NSString * searchText = @"";
   
   bibledit_initialize_library (package, webroot);
   
+  // [self performSelector:@selector(startServerAndBrowser) withObject:nil afterDelay:0.2 ];
+  bibledit_start_library ();
+
+  // Open a "loading" message in the WebView.
+  NSString *htmlString =
+  @"<html>"
+  "<head>"
+  "<style>"
+  ".center-screen {"
+  " display: flex;"
+  " flex-direction: column;"
+  " justify-content: center;"
+  " align-items: center;"
+  " text-align: center;"
+  " min-height: 100vh;"
+  " background: radial-gradient(gold, yellow, white);"
+  "}"
+  "</style>"
+  "</head>"
+  "<body>"
+  "<h2 class=\"center-screen\">... Bibledit loading ...</h2>"
+  "</body>"
+  "</html>";
+  [[[self webview] mainFrame] loadHTMLString:htmlString baseURL:nil];
+  [self.window setContentView:self.webview];
+
   // The following is to fix the following bug:
   //   We discovered one or more bugs in your app when reviewed on Mac running macOS 10.13.5.
   //   On first launch of the app, only a blank window is shown.
@@ -68,8 +96,13 @@ NSString * searchText = @"";
   //   Start the internal web server plus the browser after a very short delay.
   // Obviously the sandbox does not assign the server privilege right away.
   // But it does do so after a slight delay.
-  [self performSelector:@selector(startServerAndBrowser) withObject:nil afterDelay:0.2 ];
-  
+  nsTimer = [NSTimer
+             scheduledTimerWithTimeInterval:1.0
+             target:self
+             selector:@selector(urlTimerTimeout)
+             userInfo:nil
+             repeats:YES];
+
   // For the developer console in the webview, enter the following from a terminal:
   // defaults write org.bibledit.osx WebKitDeveloperExtras TRUE
   
@@ -83,6 +116,36 @@ NSString * searchText = @"";
 
   [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(accordanceDidScroll:) name:@"com.santafemac.scrolledToVerse" object:nil suspensionBehavior:NSNotificationSuspensionBehaviorCoalesce];
 
+}
+
+
+bool kernel_ready = false;
+
+- (void)urlTimerTimeout
+{
+  // Open the web app in the web view.
+  // The server listens on another port than 8080.
+  // Goal: Not to interfere with possible development on the same host.
+  NSURL *url = [NSURL URLWithString:@"http://localhost:9876"];
+  // This timer will keep testing the embedded Bibledit kernel till it becomes available.
+  NSURLSessionConfiguration *conf = [NSURLSessionConfiguration defaultSessionConfiguration];
+  NSURLSession *sessionWithoutADelegate = [NSURLSession sessionWithConfiguration:conf];
+  NSURLSessionDataTask * task = [sessionWithoutADelegate dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    // If data is received, it means that the Bibledit kernel is ready for use.
+    if (data) {
+      kernel_ready = true;
+    }
+    [sessionWithoutADelegate finishTasksAndInvalidate];
+  }];
+  if (kernel_ready) {
+    // Stop the timer.
+    [nsTimer invalidate];
+    nsTimer = nil;
+    // Load the URL of the Bibledit kernel in the webview.
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    [[[self webview] mainFrame] loadRequest:urlRequest];
+  }
+  [task resume];
 }
 
 
@@ -249,3 +312,4 @@ int receive_counter = 0;
 
 
 @end
+

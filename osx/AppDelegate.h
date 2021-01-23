@@ -1,8 +1,7 @@
 //
 //  AppDelegate.h
 //
-//  Created by Teus Benschop on 28/05/2015.
-//  Copyright (c) 2015 Teus Benschop. All rights reserved.
+//  Copyright (c) 2013-2021 Teus Benschop. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
