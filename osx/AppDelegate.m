@@ -31,7 +31,7 @@
 
 
 NSString * searchText = @"";
-NSTimer * nsTimer;
+NSTimer * urlNsTimer;
 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -40,29 +40,25 @@ NSTimer * nsTimer;
   // This is the "App Nap".
   // It has been noticed that even after coming out of the nap, Bibledit remains slowish,
   // and uses a lot of CPU resources.
-  // Disable App Nap:
+  // Simple solution: Disable App Nap.
   if ([[NSProcessInfo processInfo] respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
     self.activity = [[NSProcessInfo processInfo] beginActivityWithOptions:0x00FFFFFF reason:@"runs a web server"];
   }
-  
-  
-  
+
+  // Get the paths of the resources to copy,
+  // and get the paths of where to copy those resources to.
   NSArray *components = [NSArray arrayWithObjects:[[NSBundle mainBundle] resourcePath], @"webroot", nil];
   NSString *packagePath = [NSString pathWithComponents:components];
-  
   NSString * documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
   components = [NSArray arrayWithObjects:documents, @"webroot", nil];
   NSString *webrootPath = [NSString pathWithComponents:components];
-  
+  // Initialize the Bibledit kernel with the paths where to copy from, and where to copy to.
   const char * package = [packagePath UTF8String];
   const char * webroot = [webrootPath UTF8String];
-  
   bibledit_initialize_library (package, webroot);
   
-  // [self performSelector:@selector(startServerAndBrowser) withObject:nil afterDelay:0.2 ];
-  bibledit_start_library ();
-
   // Open a "loading" message in the WebView.
+  // This message will be displayed for as long as the Bibledit kernel server is not yet availble.
   NSString *htmlString =
   @"<html>"
   "<head>"
@@ -93,10 +89,10 @@ NSTimer * nsTimer;
   // the internal webserver did indeed start, but could not be contacted right away.
   // That caused the blank window.
   // The solution is this:
-  //   Start the internal web server plus the browser after a very short delay.
+  //   Start the internal web server plus the browser after a delay.
   // Obviously the sandbox does not assign the server privilege right away.
   // But it does do so after a slight delay.
-  nsTimer = [NSTimer
+  urlNsTimer = [NSTimer
              scheduledTimerWithTimeInterval:1.0
              target:self
              selector:@selector(urlTimerTimeout)
@@ -123,6 +119,12 @@ bool kernel_ready = false;
 
 - (void)urlTimerTimeout
 {
+  // Start the embedded server.
+  bibledit_start_library ();
+
+  // Wait shortly to give the system time to start.
+  [NSThread sleepForTimeInterval:0.2f];
+
   // Open the web app in the web view.
   // The server listens on another port than 8080.
   // Goal: Not to interfere with possible development on the same host.
@@ -139,27 +141,13 @@ bool kernel_ready = false;
   }];
   if (kernel_ready) {
     // Stop the timer.
-    [nsTimer invalidate];
-    nsTimer = nil;
+    [urlNsTimer invalidate];
+    urlNsTimer = nil;
     // Load the URL of the Bibledit kernel in the webview.
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     [[[self webview] mainFrame] loadRequest:urlRequest];
   }
   [task resume];
-}
-
-
-// Start the web server and the browser.
-- (void)startServerAndBrowser
-{
-  bibledit_start_library ();
-  
-  // Open the web app in the web view.
-  // The server listens on another port than 8080 so as not to interfere with possible development on the same host.
-  NSURL *url = [NSURL URLWithString:@"http://localhost:9876"];
-  NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-  [[[self webview] mainFrame] loadRequest:urlRequest];
-  [self.window setContentView:self.webview];
 }
 
 
@@ -312,4 +300,3 @@ int receive_counter = 0;
 
 
 @end
-
