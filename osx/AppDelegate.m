@@ -128,7 +128,10 @@ bool kernel_ready = false;
   // Open the web app in the web view.
   // The server listens on another port than 8080.
   // Goal: Not to interfere with possible development on the same host.
-  NSURL *url = [NSURL URLWithString:@"http://localhost:9876"];
+  // It used to connect to localhost but this led to errors like:
+  // nw_socket_handle_socket_event [C2.1:2] Socket SO_ERROR [61: Connection refused]
+  // The fix is to connect to 127.0.0.1 instead.
+  NSURL *url = [NSURL URLWithString:@"http://127.0.0.1:9876"];
   // This timer will keep testing the embedded Bibledit kernel till it becomes available.
   NSURLSessionConfiguration *conf = [NSURLSessionConfiguration defaultSessionConfiguration];
   NSURLSession *sessionWithoutADelegate = [NSURLSession sessionWithConfiguration:conf];
