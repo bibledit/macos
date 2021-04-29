@@ -85,12 +85,23 @@ sed -i.bak '/OPENSSL_LIBS =/d' Makefile
 if [ $? != 0 ]; then exit; fi
 sed -i.bak 's#-lmimetic# #g' Makefile
 if [ $? != 0 ]; then exit; fi
+sed -i.bak '/ICU_CFLAGS =/d' Makefile
+if [ $? != 0 ]; then exit; fi
+sed -i.bak '/ICU_LIBS =/d' Makefile
+if [ $? != 0 ]; then exit; fi
+sed -i.bak '/XML2_CFLAGS =/d' Makefile
+if [ $? != 0 ]; then exit; fi
+sed -i.bak '/XML2_LIBS =/d' Makefile
+if [ $? != 0 ]; then exit; fi
 
 
 echo Update the configuration.
+sed -i.bak '/HAVE_ICU/d' config.h
+if [ $? != 0 ]; then exit; fi
 sed -i.bak '/CONFIG_ENABLE_FILE_UPLOAD/d' config/config.h
 if [ $? != 0 ]; then exit; fi
 rm config/*.bak
+rm *.bak
 
 
 echo Build the Bibledit library.
