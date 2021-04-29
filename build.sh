@@ -62,8 +62,10 @@ SDK=`xcrun --show-sdk-path`
 echo Configure Bibledit in client mode.
 ./configure --enable-mac
 if [ $? != 0 ]; then exit; fi
-echo 9876 > config/network-port
-if [ $? != 0 ]; then exit; fi
+# No longer set the network port.
+# The Bibledit kernel will negotiate its own network port number.
+# echo 9876 > config/network-port
+# if [ $? != 0 ]; then exit; fi
 
 
 echo Update the Makefile.
