@@ -32,6 +32,7 @@
 
 NSString * searchText = @"";
 NSTimer * urlNsTimer;
+NSString * portNumber = @"";
 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -44,6 +45,9 @@ NSTimer * urlNsTimer;
   if ([[NSProcessInfo processInfo] respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
     self.activity = [[NSProcessInfo processInfo] beginActivityWithOptions:0x00FFFFFF reason:@"runs a web server"];
   }
+
+  // Get the port number that the Bibledit kernel has negotiated.
+  portNumber = [NSString stringWithUTF8String:bibledit_get_network_port ()];
 
   // Get the paths of the resources to copy,
   // and get the paths of where to copy those resources to.
@@ -131,7 +135,8 @@ bool kernel_ready = false;
   // It used to connect to localhost but this led to errors like:
   // nw_socket_handle_socket_event [C2.1:2] Socket SO_ERROR [61: Connection refused]
   // The fix is to connect to 127.0.0.1 instead.
-  NSURL *url = [NSURL URLWithString:@"http://127.0.0.1:9876"];
+  NSString* urlString = [NSString stringWithFormat:@"http://127.0.0.1:%@", portNumber];
+  NSURL *url = [NSURL URLWithString:urlString];
   // This timer will keep testing the embedded Bibledit kernel till it becomes available.
   NSURLSessionConfiguration *conf = [NSURLSessionConfiguration defaultSessionConfiguration];
   NSURLSession *sessionWithoutADelegate = [NSURLSession sessionWithConfiguration:conf];
