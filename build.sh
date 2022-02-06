@@ -142,6 +142,7 @@ rm stamp-h1
 rm generate
 rm -rf sources
 rm -rf unittests
+find . -name build.sh -delete
 
 
 popd
