@@ -1,6 +1,3 @@
-#!/bin/bash
-
-
 echo Synchronize and build libbibledit on macOS for macOS.
 
 
@@ -142,7 +139,6 @@ rm stamp-h1
 rm generate
 rm -rf sources
 rm -rf unittests
-find . -name build.sh -delete
 
 
 popd

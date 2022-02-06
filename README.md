@@ -31,7 +31,7 @@ The bibledit library depends on libcurl. Bibledit should be linked with a workin
 
 ## Building libbibledit
 
-Run script "build.sh".
+Run script "bash ./build.txt".
 
 ## Building and distributing the app
 
