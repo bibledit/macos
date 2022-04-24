@@ -14,9 +14,9 @@
 		CA48F1EB276FCC5800D34BA8 /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = CA48F1EA276FCC5800D34BA8 /* license.txt */; };
 		CA48F1ED276FCC5D00D34BA8 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CA48F1EC276FCC5D00D34BA8 /* README.md */; };
 		CA99CFA11B175B8B00696023 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA99CFA01B175B8B00696023 /* WebKit.framework */; };
+		CAD8F5242815C3000047CA67 /* build.txt in Resources */ = {isa = PBXBuildFile; fileRef = CAD8F5232815C2FF0047CA67 /* build.txt */; };
 		CAE0196F1B1775C6000EAF46 /* webroot in Resources */ = {isa = PBXBuildFile; fileRef = CAE0196E1B1775C6000EAF46 /* webroot */; };
 		CAE235C61B176C2D005AEEBF /* libbibledit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE235C51B176C2D005AEEBF /* libbibledit.a */; };
-		CAE6E41828158E7E007002BC /* build.sh in Resources */ = {isa = PBXBuildFile; fileRef = CAE6E41728158E7E007002BC /* build.sh */; };
 		CAF569171B177EBD00EE957E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAE33E751B176F2500BBA84A /* MainMenu.xib */; };
 /* End PBXBuildFile section */
 
@@ -35,10 +35,10 @@
 		CA48F1EA276FCC5800D34BA8 /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = "<group>"; };
 		CA48F1EC276FCC5D00D34BA8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CA99CFA01B175B8B00696023 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		CAD8F5232815C2FF0047CA67 /* build.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = build.txt; sourceTree = "<group>"; };
 		CAE0196E1B1775C6000EAF46 /* webroot */ = {isa = PBXFileReference; lastKnownFileType = folder; path = webroot; sourceTree = "<group>"; };
 		CAE235C51B176C2D005AEEBF /* libbibledit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbibledit.a; path = webroot/libbibledit.a; sourceTree = "<group>"; };
 		CAE33E761B176F2500BBA84A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = osx/Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		CAE6E41728158E7E007002BC /* build.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
 		CAFBC78D1B17624E0063BA33 /* osx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = osx.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -59,7 +59,7 @@
 		CA1599E21B1759A600B26F9C = {
 			isa = PBXGroup;
 			children = (
-				CAE6E41728158E7E007002BC /* build.sh */,
+				CAD8F5232815C2FF0047CA67 /* build.txt */,
 				CA1599ED1B1759A600B26F9C /* gui */,
 				CAE235C51B176C2D005AEEBF /* libbibledit.a */,
 				CA43E08A1BB851BE00347EE1 /* libstdc++.tbd */,
@@ -172,9 +172,9 @@
 				CA48F1ED276FCC5D00D34BA8 /* README.md in Resources */,
 				CAE0196F1B1775C6000EAF46 /* webroot in Resources */,
 				CA48F1EB276FCC5800D34BA8 /* license.txt in Resources */,
-				CAE6E41828158E7E007002BC /* build.sh in Resources */,
 				CAF569171B177EBD00EE957E /* MainMenu.xib in Resources */,
 				CA1599F61B1759A600B26F9C /* Images.xcassets in Resources */,
+				CAD8F5242815C3000047CA67 /* build.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
