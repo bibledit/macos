@@ -209,7 +209,14 @@ bool kernel_ready = false;
 
 - (void) webView:(WebView *)webView decidePolicyForMIMEType:(NSString *)type request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id < WebPolicyDecisionListener >)listener
 {
-    if (![[webView class] canShowMIMEType:type]) [listener download];
+  //  NSLog (@"%@", type);
+  NSURL * url = [request URL];
+  NSString * absoluteUrl = [url absoluteString];
+  bool download = false;
+  if ([absoluteUrl hasSuffix:@".usfm"]) download = true;
+  if (![[webView class] canShowMIMEType:type]) download = true;
+  if (download) [listener download];
+  else [listener use];
 }
 
 
