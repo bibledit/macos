@@ -21,7 +21,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CA0CCC211B1764D300487D8E /* build.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; lineEnding = 0; path = build.sh; sourceTree = SOURCE_ROOT; };
 		CA0CCC231B1764DC00487D8E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; lineEnding = 0; path = README.md; sourceTree = SOURCE_ROOT; };
 		CA0CCC251B17694900487D8E /* bibledit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bibledit.h; sourceTree = "<group>"; };
 		CA1599EB1B1759A600B26F9C /* Bibledit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bibledit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,7 +88,6 @@
 				CA0CCC251B17694900487D8E /* bibledit.h */,
 				CA1599F51B1759A600B26F9C /* Images.xcassets */,
 				CA1599F71B1759A600B26F9C /* MainMenu.xib */,
-				CA0CCC211B1764D300487D8E /* build.sh */,
 				CA0CCC231B1764DC00487D8E /* README.md */,
 				CA1599EE1B1759A600B26F9C /* Supporting Files */,
 			);
@@ -323,7 +321,7 @@
 				CODE_SIGN_ENTITLEMENTS = osx/osx.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = L37WFUB5MH;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = osx/Info.plist;
@@ -333,7 +331,7 @@
 					"$(PROJECT_DIR)/webroot",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 5.0.979;
+				MARKETING_VERSION = 5.0.980;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bibledit.osx;
 				PRODUCT_NAME = Bibledit;
 			};
@@ -346,7 +344,7 @@
 				CODE_SIGN_ENTITLEMENTS = osx/osx.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = L37WFUB5MH;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = osx/Info.plist;
@@ -356,7 +354,7 @@
 					"$(PROJECT_DIR)/webroot",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 5.0.979;
+				MARKETING_VERSION = 5.0.980;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bibledit.osx;
 				PRODUCT_NAME = Bibledit;
 			};

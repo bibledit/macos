@@ -30,7 +30,7 @@ if [ $? != 0 ]; then exit; fi
 echo Synchronize the libbibledit data files in the source tree to macOS.
 rsync -a --delete ../../cloud/ .
 if [ $? != 0 ]; then exit; fi
-echo Dist-clean the Bibledit library.
+echo Do a dist-clean of the Bibledit library.
 ./configure
 if [ $? != 0 ]; then exit; fi
 make distclean
@@ -116,8 +116,11 @@ if [ $? != 0 ]; then exit; fi
 echo Clean out stuff no longer needed.
 find . -name "*.h" -delete
 find . -name "*.cpp" -delete
+find . -name "*.cxx" -delete
+find . -name "*.hpp" -delete
 find . -name "*.c" -delete
 find . -name "*.o" -delete
+find . -name "*.in" -delete
 rm *.m4
 rm -r autom*cache
 rm bibledit
@@ -140,6 +143,7 @@ rm generate
 rm -rf sources
 rm -rf unittests
 find .. -name "*.sh" -delete
+rm -rf xcode.xcodeproj
 
 
 popd

@@ -215,7 +215,10 @@ bool kernel_ready = false;
   bool download = false;
   if ([absoluteUrl hasSuffix:@".usfm"]) download = true;
   if (![[webView class] canShowMIMEType:type]) download = true;
-  if (download) [listener download];
+  if (download) {
+    NSURLDownload *downLoad = [[NSURLDownload alloc] initWithRequest:request delegate:self];
+    //[listener download];
+  }
   else [listener use];
 }
 
