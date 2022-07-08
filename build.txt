@@ -146,6 +146,15 @@ find .. -name "*.sh" -delete
 rm -rf xcode.xcodeproj
 
 
+echo Clean libraries away so they won't be included.
+cd ../..
+if [ $? != 0 ]; then exit; fi
+mv macos/webroot/libbibledit.a .
+if [ $? != 0 ]; then exit; fi
+rm macos/build/Release/Bibledit.app/Contents/Resources/webroot/libbibledit.a
+if [ $? != 0 ]; then exit; fi
+
+
 popd
 if [ $? != 0 ]; then exit; fi
 
@@ -154,6 +163,7 @@ echo Build the app.
 cd $BIBLEDITMACOS/macos
 xcodebuild
 if [ $? != 0 ]; then exit; fi
+
 
 
 echo To graphically build the app for macOS, open the project in Xcode:
