@@ -7,23 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CAA7161A2ADC392600162DC4 /* BibleditApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA716192ADC392600162DC4 /* BibleditApp.swift */; };
-		CAA7161C2ADC392600162DC4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA7161B2ADC392600162DC4 /* ContentView.swift */; };
-		CAA7161E2ADC392800162DC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAA7161D2ADC392800162DC4 /* Assets.xcassets */; };
-		CAA716212ADC392800162DC4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAA716202ADC392800162DC4 /* Preview Assets.xcassets */; };
+		CA88EE3C2ADC4590001AE436 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA88EE3B2ADC4590001AE436 /* AppDelegate.swift */; };
+		CA88EE3E2ADC4590001AE436 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA88EE3D2ADC4590001AE436 /* ViewController.swift */; };
+		CA88EE402ADC4591001AE436 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA88EE3F2ADC4591001AE436 /* Assets.xcassets */; };
+		CA88EE432ADC4591001AE436 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA88EE412ADC4591001AE436 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CAA716162ADC392600162DC4 /* Bibledit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bibledit.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CAA716192ADC392600162DC4 /* BibleditApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleditApp.swift; sourceTree = "<group>"; };
-		CAA7161B2ADC392600162DC4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		CAA7161D2ADC392800162DC4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		CAA716202ADC392800162DC4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		CAA716222ADC392800162DC4 /* Bibledit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bibledit.entitlements; sourceTree = "<group>"; };
+		CA88EE382ADC4590001AE436 /* Bibledit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bibledit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA88EE3B2ADC4590001AE436 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CA88EE3D2ADC4590001AE436 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CA88EE3F2ADC4591001AE436 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CA88EE422ADC4591001AE436 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CA88EE442ADC4591001AE436 /* Bibledit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bibledit.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		CAA716132ADC392600162DC4 /* Frameworks */ = {
+		CA88EE352ADC4590001AE436 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,52 +33,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CAA7160D2ADC392600162DC4 = {
+		CA88EE2F2ADC4590001AE436 = {
 			isa = PBXGroup;
 			children = (
-				CAA716182ADC392600162DC4 /* Bibledit */,
-				CAA716172ADC392600162DC4 /* Products */,
+				CA88EE3A2ADC4590001AE436 /* Bibledit */,
+				CA88EE392ADC4590001AE436 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		CAA716172ADC392600162DC4 /* Products */ = {
+		CA88EE392ADC4590001AE436 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CAA716162ADC392600162DC4 /* Bibledit.app */,
+				CA88EE382ADC4590001AE436 /* Bibledit.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CAA716182ADC392600162DC4 /* Bibledit */ = {
+		CA88EE3A2ADC4590001AE436 /* Bibledit */ = {
 			isa = PBXGroup;
 			children = (
-				CAA716192ADC392600162DC4 /* BibleditApp.swift */,
-				CAA7161B2ADC392600162DC4 /* ContentView.swift */,
-				CAA7161D2ADC392800162DC4 /* Assets.xcassets */,
-				CAA716222ADC392800162DC4 /* Bibledit.entitlements */,
-				CAA7161F2ADC392800162DC4 /* Preview Content */,
+				CA88EE3B2ADC4590001AE436 /* AppDelegate.swift */,
+				CA88EE3D2ADC4590001AE436 /* ViewController.swift */,
+				CA88EE3F2ADC4591001AE436 /* Assets.xcassets */,
+				CA88EE412ADC4591001AE436 /* Main.storyboard */,
+				CA88EE442ADC4591001AE436 /* Bibledit.entitlements */,
 			);
 			path = Bibledit;
-			sourceTree = "<group>";
-		};
-		CAA7161F2ADC392800162DC4 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				CAA716202ADC392800162DC4 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CAA716152ADC392600162DC4 /* Bibledit */ = {
+		CA88EE372ADC4590001AE436 /* Bibledit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CAA7163B2ADC392800162DC4 /* Build configuration list for PBXNativeTarget "Bibledit" */;
+			buildConfigurationList = CA88EE472ADC4591001AE436 /* Build configuration list for PBXNativeTarget "Bibledit" */;
 			buildPhases = (
-				CAA716122ADC392600162DC4 /* Sources */,
-				CAA716132ADC392600162DC4 /* Frameworks */,
-				CAA716142ADC392600162DC4 /* Resources */,
+				CA88EE342ADC4590001AE436 /* Sources */,
+				CA88EE352ADC4590001AE436 /* Frameworks */,
+				CA88EE362ADC4590001AE436 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -86,25 +78,25 @@
 			);
 			name = Bibledit;
 			productName = Bibledit;
-			productReference = CAA716162ADC392600162DC4 /* Bibledit.app */;
+			productReference = CA88EE382ADC4590001AE436 /* Bibledit.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		CAA7160E2ADC392600162DC4 /* Project object */ = {
+		CA88EE302ADC4590001AE436 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
-					CAA716152ADC392600162DC4 = {
+					CA88EE372ADC4590001AE436 = {
 						CreatedOnToolsVersion = 15.0;
 					};
 				};
 			};
-			buildConfigurationList = CAA716112ADC392600162DC4 /* Build configuration list for PBXProject "Bibledit" */;
+			buildConfigurationList = CA88EE332ADC4590001AE436 /* Build configuration list for PBXProject "Bibledit" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -112,42 +104,53 @@
 				en,
 				Base,
 			);
-			mainGroup = CAA7160D2ADC392600162DC4;
-			productRefGroup = CAA716172ADC392600162DC4 /* Products */;
+			mainGroup = CA88EE2F2ADC4590001AE436;
+			productRefGroup = CA88EE392ADC4590001AE436 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CAA716152ADC392600162DC4 /* Bibledit */,
+				CA88EE372ADC4590001AE436 /* Bibledit */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		CAA716142ADC392600162DC4 /* Resources */ = {
+		CA88EE362ADC4590001AE436 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CAA716212ADC392800162DC4 /* Preview Assets.xcassets in Resources */,
-				CAA7161E2ADC392800162DC4 /* Assets.xcassets in Resources */,
+				CA88EE402ADC4591001AE436 /* Assets.xcassets in Resources */,
+				CA88EE432ADC4591001AE436 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		CAA716122ADC392600162DC4 /* Sources */ = {
+		CA88EE342ADC4590001AE436 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CAA7161C2ADC392600162DC4 /* ContentView.swift in Sources */,
-				CAA7161A2ADC392600162DC4 /* BibleditApp.swift in Sources */,
+				CA88EE3E2ADC4590001AE436 /* ViewController.swift in Sources */,
+				CA88EE3C2ADC4590001AE436 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		CA88EE412ADC4591001AE436 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CA88EE422ADC4591001AE436 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
-		CAA716392ADC392800162DC4 /* Debug */ = {
+		CA88EE452ADC4591001AE436 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -210,7 +213,7 @@
 			};
 			name = Debug;
 		};
-		CAA7163A2ADC392800162DC4 /* Release */ = {
+		CA88EE462ADC4591001AE436 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -265,7 +268,7 @@
 			};
 			name = Release;
 		};
-		CAA7163C2ADC392800162DC4 /* Debug */ = {
+		CA88EE482ADC4591001AE436 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -274,19 +277,18 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Bibledit/Preview Content\"";
 				DEVELOPMENT_TEAM = L37WFUB5MH;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Bibledit;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 5.1.009;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bibledit.osx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -294,7 +296,7 @@
 			};
 			name = Debug;
 		};
-		CAA7163D2ADC392800162DC4 /* Release */ = {
+		CA88EE492ADC4591001AE436 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -303,19 +305,18 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Bibledit/Preview Content\"";
 				DEVELOPMENT_TEAM = L37WFUB5MH;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Bibledit;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 5.1.009;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bibledit.osx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -326,25 +327,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CAA716112ADC392600162DC4 /* Build configuration list for PBXProject "Bibledit" */ = {
+		CA88EE332ADC4590001AE436 /* Build configuration list for PBXProject "Bibledit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CAA716392ADC392800162DC4 /* Debug */,
-				CAA7163A2ADC392800162DC4 /* Release */,
+				CA88EE452ADC4591001AE436 /* Debug */,
+				CA88EE462ADC4591001AE436 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CAA7163B2ADC392800162DC4 /* Build configuration list for PBXNativeTarget "Bibledit" */ = {
+		CA88EE472ADC4591001AE436 /* Build configuration list for PBXNativeTarget "Bibledit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CAA7163C2ADC392800162DC4 /* Debug */,
-				CAA7163D2ADC392800162DC4 /* Release */,
+				CA88EE482ADC4591001AE436 /* Debug */,
+				CA88EE492ADC4591001AE436 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = CAA7160E2ADC392600162DC4 /* Project object */;
+	rootObject = CA88EE302ADC4590001AE436 /* Project object */;
 }
