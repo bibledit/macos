@@ -35,11 +35,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CA591B112ADC670400BA841F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CA88EE2F2ADC4590001AE436 = {
 			isa = PBXGroup;
 			children = (
 				CA88EE3A2ADC4590001AE436 /* Bibledit */,
 				CA88EE392ADC4590001AE436 /* Products */,
+				CA591B112ADC670400BA841F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -55,11 +63,11 @@
 			isa = PBXGroup;
 			children = (
 				CA476DF32ADC4A26005481E4 /* webroot */,
+				CA88EE442ADC4591001AE436 /* Bibledit.entitlements */,
 				CA88EE3B2ADC4590001AE436 /* AppDelegate.swift */,
 				CA88EE3D2ADC4590001AE436 /* ViewController.swift */,
 				CA88EE3F2ADC4591001AE436 /* Assets.xcassets */,
 				CA88EE412ADC4591001AE436 /* Main.storyboard */,
-				CA88EE442ADC4591001AE436 /* Bibledit.entitlements */,
 			);
 			path = Bibledit;
 			sourceTree = "<group>";
