@@ -28,9 +28,9 @@ class ViewController: NSViewController, WKUIDelegate
     
     override func loadView()
     {
-        let web_configuration = WKWebViewConfiguration ()
-        web_configuration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
-        web_view = WKWebView (frame: CGRect(x:0, y:0, width:800, height:600), configuration:web_configuration)
+        let web_view_configuration = WKWebViewConfiguration ()
+        web_view_configuration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
+        web_view = WKWebView (frame: CGRect(x:0, y:0, width:800, height:600), configuration:web_view_configuration)
         web_view.uiDelegate = self
         view = web_view
     }
