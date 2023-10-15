@@ -38,8 +38,13 @@ if [ $? != 0 ]; then exit; fi
 rm config.h
 
 
-echo Update the Makefile.am and reconfigure
+echo Update the build configuration and reconfigure.
 sed -i.bak '/mbedtls_ssl_init/d' configure.ac
+sed -i.bak 's/ unittest / /g' Makefile.am
+sed -i.bak '/UTF8PROC/d' Makefile.am
+sed -i.bak '/GUMBO/d' Makefile.am
+sed -i.bak '/PUGIXM/d' Makefile.am
+sed -i.bak '/GTEST/d' Makefile.am
 ./reconfigure
 
 
@@ -96,6 +101,10 @@ if [ $? != 0 ]; then exit; fi
 
 echo Update the configuration.
 sed -i.bak '/HAVE_ICU/d' config.h
+if [ $? != 0 ]; then exit; fi
+sed -i.bak '/HAVE_UTF8PROC/d' config.h
+if [ $? != 0 ]; then exit; fi
+sed -i.bak '/HAVE_PUGIXML/d' config.h
 if [ $? != 0 ]; then exit; fi
 sed -i.bak '/CONFIG_ENABLE_FILE_UPLOAD/d' config/config.h
 if [ $? != 0 ]; then exit; fi

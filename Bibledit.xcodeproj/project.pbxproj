@@ -331,7 +331,7 @@
 					"$(PROJECT_DIR)/webroot",
 					"/tmp/bibledit-macos",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 5.1.009;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bibledit.osx;
 				PRODUCT_NAME = Bibledit;
@@ -355,7 +355,7 @@
 					"$(PROJECT_DIR)/webroot",
 					"/tmp/bibledit-macos",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 5.1.009;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bibledit.osx;
 				PRODUCT_NAME = Bibledit;
