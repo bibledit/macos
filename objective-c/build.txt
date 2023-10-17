@@ -12,9 +12,9 @@ BIBLEDITMACOS=/tmp/bibledit-macos
 echo Synchronizing relevant source code to $BIBLEDITMACOS
 mkdir -p $BIBLEDITMACOS
 rm $BIBLEDITMACOS/* 2> /dev/null
-rsync --archive --delete ../cloud $BIBLEDITMACOS/
+rsync --archive --delete ../../cloud $BIBLEDITMACOS/
 if [ $? != 0 ]; then exit; fi
-rsync --archive --delete ../macos $BIBLEDITMACOS/
+rsync --archive --delete ../../macos $BIBLEDITMACOS/
 if [ $? != 0 ]; then exit; fi
 
 
@@ -23,12 +23,13 @@ cd $BIBLEDITMACOS/macos
 if [ $? != 0 ]; then exit; fi
 
 
-pushd webroot
+pushd objective-c/webroot
 if [ $? != 0 ]; then exit; fi
+echo Current directory: `pwd`
 
 
 echo Synchronize the libbibledit data files in the source tree to macOS.
-rsync -a --delete ../../cloud/ .
+rsync -a --delete ../../../cloud/ .
 if [ $? != 0 ]; then exit; fi
 echo Do a dist-clean of the Bibledit library.
 ./configure
@@ -75,8 +76,9 @@ echo The -mmmacosx-version-min is for fixing: ld: warning:
 echo object file libbibledit.a was built for newer macOS version than being linked.
 echo The added architectures to the CFLAGS are for Apple Silicon.
 echo See https://developer.apple.com/forums/thread/653233.
-sed -i.bak 's#-pedantic#-mmacosx-version-min=10.10\ -isysroot\ '$SDK'\ -arch\ x86_64\ -arch\ arm64#g' Makefile
-if [ $? != 0 ]; then exit; fi
+# sed -i.bak 's#-pedantic#-mmacosx-version-min=10.10\ -isysroot\ '$SDK'\ -arch\ x86_64\ -arch\ arm64#g' Makefile
+# if [ $? != 0 ]; then exit; fi
+
 sed -i.bak 's#/opt/local/include#. -I..#g' Makefile
 if [ $? != 0 ]; then exit; fi
 sed -i.bak 's#/opt/local/lib#.#g' Makefile
@@ -118,7 +120,7 @@ if [ $? != 0 ]; then exit; fi
 
 
 echo Save the header file.
-cp library/bibledit.h ../macos
+cp library/bibledit.h ../../objective-c
 if [ $? != 0 ]; then exit; fi
 
 
@@ -156,24 +158,28 @@ rm -rf xcode.xcodeproj
 
 
 echo Clean libraries away so they will not be included.
-cd ../..
+cd ../../objective-c
 if [ $? != 0 ]; then exit; fi
-mv macos/webroot/libbibledit.a .
+echo Current directory: `pwd`
+mv webroot/libbibledit.a .
 if [ $? != 0 ]; then exit; fi
-rm -f macos/build/Release/Bibledit.app/Contents/Resources/webroot/libbibledit.a
+rm -f objective-c/build/Release/Bibledit.app/Contents/Resources/webroot/libbibledit.a
 
 
 popd
 if [ $? != 0 ]; then exit; fi
+echo Current directory: `pwd`
 
 
 echo Build the app.
-cd $BIBLEDITMACOS/macos
+cd $BIBLEDITMACOS/macos/objective-c
+if [ $? != 0 ]; then exit; fi
+echo Current directory: `pwd`
 xcodebuild
 if [ $? != 0 ]; then exit; fi
 
 
 
 echo To graphically build the app for macOS, open the project in Xcode:
-echo open $BIBLEDITMACOS/macos/Bibledit.xcodeproj
+echo open $BIBLEDITMACOS/macos/objective-c/Bibledit.xcodeproj
 echo Then build it from within Xcode
