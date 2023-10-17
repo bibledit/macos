@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA0DB6032ADEF72700D16086 /* libbibledit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA0DB6022ADEF72700D16086 /* libbibledit.a */; };
 		CA1599F21B1759A600B26F9C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CA1599F11B1759A600B26F9C /* AppDelegate.m */; };
 		CA1599F41B1759A600B26F9C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CA1599F31B1759A600B26F9C /* main.m */; };
 		CA1599F61B1759A600B26F9C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA1599F51B1759A600B26F9C /* Images.xcassets */; };
@@ -16,13 +17,13 @@
 		CA99CFA11B175B8B00696023 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA99CFA01B175B8B00696023 /* WebKit.framework */; };
 		CAD8F5242815C3000047CA67 /* build.txt in Resources */ = {isa = PBXBuildFile; fileRef = CAD8F5232815C2FF0047CA67 /* build.txt */; };
 		CAE0196F1B1775C6000EAF46 /* webroot in Resources */ = {isa = PBXBuildFile; fileRef = CAE0196E1B1775C6000EAF46 /* webroot */; };
-		CAE235C61B176C2D005AEEBF /* libbibledit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE235C51B176C2D005AEEBF /* libbibledit.a */; };
 		CAF569171B177EBD00EE957E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAE33E751B176F2500BBA84A /* MainMenu.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CA0CCC231B1764DC00487D8E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; lineEnding = 0; path = README.md; sourceTree = SOURCE_ROOT; };
 		CA0CCC251B17694900487D8E /* bibledit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bibledit.h; sourceTree = "<group>"; };
+		CA0DB6022ADEF72700D16086 /* libbibledit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbibledit.a; path = osx/libbibledit.a; sourceTree = "<group>"; };
 		CA1599EB1B1759A600B26F9C /* Bibledit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bibledit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA1599EF1B1759A600B26F9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA1599F01B1759A600B26F9C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -46,8 +47,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA0DB6032ADEF72700D16086 /* libbibledit.a in Frameworks */,
 				CA43E08B1BB851BE00347EE1 /* libstdc++.tbd in Frameworks */,
-				CAE235C61B176C2D005AEEBF /* libbibledit.a in Frameworks */,
 				CA99CFA11B175B8B00696023 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -55,6 +56,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CA0DB6012ADEF72700D16086 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CA0DB6022ADEF72700D16086 /* libbibledit.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CA1599E21B1759A600B26F9C = {
 			isa = PBXGroup;
 			children = (
@@ -68,6 +77,7 @@
 				CA48F1EC276FCC5D00D34BA8 /* README.md */,
 				CA99CFA01B175B8B00696023 /* WebKit.framework */,
 				CAE0196E1B1775C6000EAF46 /* webroot */,
+				CA0DB6012ADEF72700D16086 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -330,6 +340,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/webroot",
 					"/tmp/bibledit-macos",
+					"$(PROJECT_DIR)/osx",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 5.1.009;
@@ -354,6 +365,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/webroot",
 					"/tmp/bibledit-macos",
+					"$(PROJECT_DIR)/osx",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 5.1.009;
