@@ -161,7 +161,7 @@ echo Clean libraries away so they will not be included.
 cd ../../objective-c
 if [ $? != 0 ]; then exit; fi
 echo Current directory: `pwd`
-mv webroot/libbibledit.a .
+mv webroot/libbibledit.a osx
 if [ $? != 0 ]; then exit; fi
 rm -f objective-c/build/Release/Bibledit.app/Contents/Resources/webroot/libbibledit.a
 
