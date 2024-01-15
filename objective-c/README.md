@@ -21,6 +21,14 @@ It needs the following entitlements: Network Server, Network Client, Printing.
 
 OSX 10.11 El Capitan has “App Transport Security”. This was disabled in the Info.plist.
 
+## Inspect embedded Webview
+
+To enable the developer tools in the embedded WebKit browser, enter the following into the Terminal:
+
+defaults write org.bibeldit.osx WebKitDeveloperExtras -bool true
+
+Then launch Bibledit. Web Inspector can now be accessed by a Control-click or right-click from within any web view. You must also enable contextual menus in your app.
+
 ## libcurl
 
 The bibledit library depends on libcurl. Bibledit should be linked with a working version of libcurl. 
