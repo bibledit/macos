@@ -15,7 +15,7 @@
 
 @interface AppDelegate ()
 
-@property (weak) IBOutlet WebView *webview;
+@property (unsafe_unretained) IBOutlet WKWebView *wk_web_view;
 @property (weak) IBOutlet NSWindow *window;
 - (IBAction)menuFind:(id)sender;
 - (IBAction)menuFindNext:(id)sender;
@@ -82,9 +82,13 @@ NSString * portNumber = @"";
   "<h2 class=\"center-screen\">... Bibledit loading ...</h2>"
   "</body>"
   "</html>";
-  [[[self webview] mainFrame] loadHTMLString:htmlString baseURL:nil];
-  [self.window setContentView:self.webview];
-
+    NSString* string = @"http://bibledit.org:8090/workspace/index?bench=1";
+    NSURL* url = [NSURL URLWithString:string];
+    NSURLRequest* url_request = [NSURLRequest requestWithURL:url];
+    self.wk_web_view = [[WKWebView alloc] initWithFrame: CGRectZero];
+    [self.wk_web_view loadHTMLString:htmlString baseURL:nil];
+    [self.window setContentView:self.wk_web_view];
+    
   // The following is to fix the following bug:
   //   We discovered one or more bugs in your app when reviewed on Mac running macOS 10.13.5.
   //   On first launch of the app, only a blank window is shown.
@@ -109,8 +113,8 @@ NSString * portNumber = @"";
   self.accordanceReceivedVerse = @"";
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidResize:) name:NSWindowDidResizeNotification object:self.window];
   
-  [self.webview setPolicyDelegate:self];
-  [self.webview setDownloadDelegate:self];
+//  [self.wk_web_view setPolicyDelegate:self];
+//  [self.wk_web_view setDownloadDelegate:self];
   
   [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerTimeout) userInfo:nil repeats:YES];
 
@@ -153,7 +157,9 @@ bool kernel_ready = false;
     urlNsTimer = nil;
     // Load the URL of the Bibledit kernel in the webview.
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-    [[[self webview] mainFrame] loadRequest:urlRequest];
+      [self.wk_web_view loadRequest: urlRequest];
+
+//    [[[self webview] mainFrame] loadRequest:urlRequest];
   }
   [task resume];
 }
@@ -171,7 +177,7 @@ bool kernel_ready = false;
 - (void) windowDidResize:(NSNotification *) notification
 {
     NSSize size = self.window.contentView.frame.size;
-    [[self webview] setFrame:CGRectMake(0, 0, size.width, size.height)];
+    [[self wk_web_view] setFrame:CGRectMake(0, 0, size.width, size.height)];
 }
 
 
@@ -194,16 +200,16 @@ bool kernel_ready = false;
     if (button == NSAlertFirstButtonReturn) {
         searchText = [input stringValue];
         if (searchText.length) {
-            [self.webview searchFor:searchText direction:TRUE caseSensitive:FALSE wrap:TRUE];
+            //[self.webview searchFor:searchText direction:TRUE caseSensitive:FALSE wrap:TRUE];
         } else {
-            [self.webview setSelectedDOMRange:nil affinity:NSSelectionAffinityDownstream];
+            //[self.webview setSelectedDOMRange:nil affinity:NSSelectionAffinityDownstream];
         }
     }
 }
 
 
 - (IBAction)menuFindNext:(id)sender {
-    [self.webview searchFor:searchText direction:TRUE caseSensitive:FALSE wrap:TRUE];
+    //[self.webview searchFor:searchText direction:TRUE caseSensitive:FALSE wrap:TRUE];
 }
 
 
