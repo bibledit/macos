@@ -12,6 +12,9 @@
 		CA88EE3E2ADC4590001AE436 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA88EE3D2ADC4590001AE436 /* ViewController.swift */; };
 		CA88EE402ADC4591001AE436 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA88EE3F2ADC4591001AE436 /* Assets.xcassets */; };
 		CA88EE432ADC4591001AE436 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA88EE412ADC4591001AE436 /* Main.storyboard */; };
+		CADCFDE92B5D43990015D8B2 /* c.c in Sources */ = {isa = PBXBuildFile; fileRef = CADCFDE52B5D43610015D8B2 /* c.c */; };
+		CADCFDEA2B5D43990015D8B2 /* cpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADCFDE82B5D43610015D8B2 /* cpp.cpp */; };
+		CADCFDEC2B5D44100015D8B2 /* Tutorial.tutorial in Resources */ = {isa = PBXBuildFile; fileRef = CADCFDEB2B5D44100015D8B2 /* Tutorial.tutorial */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,12 @@
 		CA88EE3F2ADC4591001AE436 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA88EE422ADC4591001AE436 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CA88EE442ADC4591001AE436 /* Bibledit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bibledit.entitlements; sourceTree = "<group>"; };
+		CADCFDE52B5D43610015D8B2 /* c.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = c.c; sourceTree = "<group>"; };
+		CADCFDE62B5D43610015D8B2 /* cpp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cpp.h; sourceTree = "<group>"; };
+		CADCFDE72B5D43610015D8B2 /* c.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = c.h; sourceTree = "<group>"; };
+		CADCFDE82B5D43610015D8B2 /* cpp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cpp.cpp; sourceTree = "<group>"; };
+		CADCFDEB2B5D44100015D8B2 /* Tutorial.tutorial */ = {isa = PBXFileReference; lastKnownFileType = text; path = Tutorial.tutorial; sourceTree = "<group>"; };
+		CAFCCF222B5A8FCC00E5869E /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +54,7 @@
 		CA88EE2F2ADC4590001AE436 = {
 			isa = PBXGroup;
 			children = (
+				CADCFDE42B5D43610015D8B2 /* kernel */,
 				CA88EE3A2ADC4590001AE436 /* Bibledit */,
 				CA88EE392ADC4590001AE436 /* Products */,
 				CA591B112ADC670400BA841F /* Frameworks */,
@@ -64,12 +74,26 @@
 			children = (
 				CA476DF32ADC4A26005481E4 /* webroot */,
 				CA88EE442ADC4591001AE436 /* Bibledit.entitlements */,
+				CAFCCF222B5A8FCC00E5869E /* Bridging-Header.h */,
+				CADCFDEB2B5D44100015D8B2 /* Tutorial.tutorial */,
 				CA88EE3B2ADC4590001AE436 /* AppDelegate.swift */,
 				CA88EE3D2ADC4590001AE436 /* ViewController.swift */,
 				CA88EE3F2ADC4591001AE436 /* Assets.xcassets */,
 				CA88EE412ADC4591001AE436 /* Main.storyboard */,
 			);
 			path = Bibledit;
+			sourceTree = "<group>";
+		};
+		CADCFDE42B5D43610015D8B2 /* kernel */ = {
+			isa = PBXGroup;
+			children = (
+				CADCFDE52B5D43610015D8B2 /* c.c */,
+				CADCFDE62B5D43610015D8B2 /* cpp.h */,
+				CADCFDE72B5D43610015D8B2 /* c.h */,
+				CADCFDE82B5D43610015D8B2 /* cpp.cpp */,
+			);
+			name = kernel;
+			path = Bibledit/kernel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -100,7 +124,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					CA88EE372ADC4590001AE436 = {
 						CreatedOnToolsVersion = 15.0;
@@ -133,6 +157,7 @@
 				CA476DF42ADC4A26005481E4 /* webroot in Resources */,
 				CA88EE402ADC4591001AE436 /* Assets.xcassets in Resources */,
 				CA88EE432ADC4591001AE436 /* Main.storyboard in Resources */,
+				CADCFDEC2B5D44100015D8B2 /* Tutorial.tutorial in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +168,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CADCFDE92B5D43990015D8B2 /* c.c in Sources */,
+				CADCFDEA2B5D43990015D8B2 /* cpp.cpp in Sources */,
 				CA88EE3E2ADC4590001AE436 /* ViewController.swift in Sources */,
 				CA88EE3C2ADC4590001AE436 /* AppDelegate.swift in Sources */,
 			);
@@ -196,6 +223,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -221,6 +249,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -259,6 +288,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -277,6 +307,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 			};
 			name = Release;
 		};
@@ -289,6 +320,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = L37WFUB5MH;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -305,6 +337,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.bibledit.osx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Bibledit/Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -318,6 +351,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = L37WFUB5MH;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -334,6 +368,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.bibledit.osx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Bibledit/Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

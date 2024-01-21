@@ -16,26 +16,10 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import Cocoa
-
-@main
-class AppDelegate: NSObject, NSApplicationDelegate {
-
-    
-
-
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
-    }
-
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
-    }
-
-    func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
-        return true
-    }
-
-
+#include "cpp.h"
+#include <iostream>
+#include <string>
+using namespace std;
+void hello_cpp(const char* name) {
+    cout << "Hello " << name << " in C++" << endl;
 }
-

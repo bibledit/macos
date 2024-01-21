@@ -1,0 +1,5 @@
+Here is how to include C++ source into this Swift project.
+1. Create a bridging header and in the Build Settings set this as the Objective-C Bridging Header.
+2. In the Build Settings set the C++ and Objective-C interoperability to both.
+
+

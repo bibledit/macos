@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2023 Teus Benschop.
+ Copyright (©) 2003-2024 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,10 @@
 // The initial steps to embed a webview were taken from this:
 // https://stackoverflow.com/questions/60082417/how-do-i-create-a-wkwebview-app-for-macos
 
+// Information how to embed C and C++ code in a Swift project was taken from this:
+// https://stackoverflow.com/questions/32541268/can-i-have-swift-objective-c-c-and-c-files-in-the-same-xcode-project/32546879#32546879
+// Full information here: https://www.swift.org/documentation/cxx-interop/
+
 import Cocoa
 import WebKit
 
@@ -31,8 +35,15 @@ class ViewController: NSViewController, WKUIDelegate
         let web_view_configuration = WKWebViewConfiguration ()
         web_view_configuration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
         web_view = WKWebView (frame: CGRect(x:0, y:0, width:800, height:600), configuration:web_view_configuration)
+        // web_view = WKWebView (frame: CGRectZero, configuration: web_view_configuration) This displays hidden, no use. Todo perhaps to connect to the resize event.
         web_view.uiDelegate = self
         view = web_view
+        
+        // Invoke C.
+        hello_c("World")
+        hello_c(("World" as NSString).cString(using: NSUTF8StringEncoding))
+        // Incode C++.
+        hello_cpp("World")
     }
     
     override func viewDidLoad() {
