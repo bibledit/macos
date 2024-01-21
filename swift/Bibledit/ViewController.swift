@@ -49,9 +49,9 @@ class ViewController: NSViewController, WKUIDelegate
     override func viewDidLoad() {
         print ("view did load")
         super.viewDidLoad()
-        let url = Bundle.main.url ( forResource: "index",
+        let url = Bundle.main.url ( forResource: "changelog",
                                     withExtension: "html",
-                                    subdirectory: "webroot")
+                                    subdirectory: "webroot/help")
         print (url!)
         let path = url!.deletingLastPathComponent();
         print (path)

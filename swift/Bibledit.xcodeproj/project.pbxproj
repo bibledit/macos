@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CA476DF42ADC4A26005481E4 /* webroot in Resources */ = {isa = PBXBuildFile; fileRef = CA476DF32ADC4A26005481E4 /* webroot */; };
 		CA4C5D602B5D53B700EE9057 /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = CA4C5D5D2B5D53B700EE9057 /* license.txt */; };
 		CA4C5D612B5D53B700EE9057 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CA4C5D5E2B5D53B700EE9057 /* README.md */; };
 		CA4C5D622B5D53B700EE9057 /* refresh.txt in Resources */ = {isa = PBXBuildFile; fileRef = CA4C5D5F2B5D53B700EE9057 /* refresh.txt */; };
+		CA4C5D662B5D800F00EE9057 /* webroot in Resources */ = {isa = PBXBuildFile; fileRef = CA4C5D652B5D800F00EE9057 /* webroot */; };
 		CA88EE3C2ADC4590001AE436 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA88EE3B2ADC4590001AE436 /* AppDelegate.swift */; };
 		CA88EE3E2ADC4590001AE436 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA88EE3D2ADC4590001AE436 /* ViewController.swift */; };
 		CA88EE402ADC4591001AE436 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA88EE3F2ADC4591001AE436 /* Assets.xcassets */; };
@@ -21,10 +21,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CA476DF32ADC4A26005481E4 /* webroot */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = webroot; sourceTree = SOURCE_ROOT; };
 		CA4C5D5D2B5D53B700EE9057 /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = SOURCE_ROOT; };
 		CA4C5D5E2B5D53B700EE9057 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		CA4C5D5F2B5D53B700EE9057 /* refresh.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = refresh.txt; sourceTree = SOURCE_ROOT; };
+		CA4C5D652B5D800F00EE9057 /* webroot */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = webroot; sourceTree = SOURCE_ROOT; };
 		CA88EE382ADC4590001AE436 /* Bibledit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bibledit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA88EE3B2ADC4590001AE436 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA88EE3D2ADC4590001AE436 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -78,6 +78,7 @@
 		CA88EE3A2ADC4590001AE436 /* Bibledit */ = {
 			isa = PBXGroup;
 			children = (
+				CA4C5D652B5D800F00EE9057 /* webroot */,
 				CA88EE3B2ADC4590001AE436 /* AppDelegate.swift */,
 				CA88EE3F2ADC4591001AE436 /* Assets.xcassets */,
 				CA88EE442ADC4591001AE436 /* Bibledit.entitlements */,
@@ -88,7 +89,6 @@
 				CA4C5D5E2B5D53B700EE9057 /* README.md */,
 				CADCFDEB2B5D44100015D8B2 /* Tutorial.tutorial */,
 				CA88EE3D2ADC4590001AE436 /* ViewController.swift */,
-				CA476DF32ADC4A26005481E4 /* webroot */,
 			);
 			path = Bibledit;
 			sourceTree = "<group>";
@@ -164,12 +164,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA4C5D612B5D53B700EE9057 /* README.md in Resources */,
-				CA476DF42ADC4A26005481E4 /* webroot in Resources */,
 				CA4C5D602B5D53B700EE9057 /* license.txt in Resources */,
 				CA88EE402ADC4591001AE436 /* Assets.xcassets in Resources */,
 				CA88EE432ADC4591001AE436 /* Main.storyboard in Resources */,
 				CADCFDEC2B5D44100015D8B2 /* Tutorial.tutorial in Resources */,
 				CA4C5D622B5D53B700EE9057 /* refresh.txt in Resources */,
+				CA4C5D662B5D800F00EE9057 /* webroot in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
