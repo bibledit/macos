@@ -1,0 +1,147 @@
+echo Refresh the source of the Bibledit kernel on macOS for macOS.
+
+SCRIPTDIR=`dirname $0`
+cd $SCRIPTDIR
+SCRIPTDIR=`pwd`
+if [ $? != 0 ]; then exit; fi
+WEBROOT=$SCRIPTDIR/webroot
+echo Synchronizing relevant source code to $WEBROOT
+mkdir -p $WEBROOT
+rsync --archive --delete ../../cloud/ $WEBROOT/
+if [ $? != 0 ]; then exit; fi
+
+echo From now on the working directory is the webroot location.
+cd $WEBROOT
+if [ $? != 0 ]; then exit; fi
+echo Current directory: `pwd`
+
+echo Do a dist-clean of the Bibledit library.
+./configure
+if [ $? != 0 ]; then exit; fi
+make distclean
+if [ $? != 0 ]; then exit; fi
+rm config.h
+
+echo Update the build configuration and reconfigure.
+sed -i.bak '/mbedtls_ssl_init/d' configure.ac
+sed -i.bak 's/ unittest / /g' Makefile.am
+sed -i.bak '/UTF8PROC/d' Makefile.am
+sed -i.bak '/GUMBO/d' Makefile.am
+sed -i.bak '/PUGIXM/d' Makefile.am
+sed -i.bak '/GTEST/d' Makefile.am
+./reconfigure
+
+echo Configure Bibledit in client mode.
+./configure --enable-mac
+if [ $? != 0 ]; then exit; fi
+# No longer set the network port.
+# The Bibledit kernel will negotiate its own network port number.
+# echo 9876 > config/network-port
+# if [ $? != 0 ]; then exit; fi
+
+echo Update the Makefile.
+echo The -mmmacosx-version-min is for fixing: ld: warning:
+echo object file libbibledit.a was built for newer macOS version than being linked.
+echo The added architectures to the CFLAGS are for Apple Silicon.
+echo See https://developer.apple.com/forums/thread/653233.
+# sed -i.bak 's#-pedantic#-mmacosx-version-min=10.10\ -isysroot\ '$SDK'\ -arch\ x86_64\ -arch\ arm64#g' Makefile
+# if [ $? != 0 ]; then exit; fi
+
+sed -i.bak 's#/opt/local/include#. -I..#g' Makefile
+if [ $? != 0 ]; then exit; fi
+sed -i.bak 's#/opt/local/lib#.#g' Makefile
+if [ $? != 0 ]; then exit; fi
+sed -i.bak '/SWORD_CFLAGS =/d' Makefile
+if [ $? != 0 ]; then exit; fi
+sed -i.bak '/SWORD_LIBS =/d' Makefile
+if [ $? != 0 ]; then exit; fi
+sed -i.bak '/OPENSSL_LIBS =/d' Makefile
+if [ $? != 0 ]; then exit; fi
+sed -i.bak 's#-lmimetic# #g' Makefile
+if [ $? != 0 ]; then exit; fi
+sed -i.bak '/ICU_CFLAGS =/d' Makefile
+if [ $? != 0 ]; then exit; fi
+sed -i.bak '/ICU_LIBS =/d' Makefile
+if [ $? != 0 ]; then exit; fi
+sed -i.bak '/XML2_CFLAGS =/d' Makefile
+if [ $? != 0 ]; then exit; fi
+sed -i.bak '/XML2_LIBS =/d' Makefile
+if [ $? != 0 ]; then exit; fi
+
+
+echo Update the configuration.
+sed -i.bak '/HAVE_ICU/d' config.h
+if [ $? != 0 ]; then exit; fi
+sed -i.bak '/HAVE_UTF8PROC/d' config.h
+if [ $? != 0 ]; then exit; fi
+sed -i.bak '/HAVE_PUGIXML/d' config.h
+if [ $? != 0 ]; then exit; fi
+sed -i.bak '/CONFIG_ENABLE_FILE_UPLOAD/d' config/config.h
+if [ $? != 0 ]; then exit; fi
+rm config/*.bak
+rm *.bak
+
+
+#echo Build the Bibledit library.
+#make -j `sysctl -n hw.logicalcpu_max`
+#if [ $? != 0 ]; then exit; fi
+
+
+echo Copy the source code to the kernel folder.
+pwd
+KERNELDIR=$SCRIPTDIR/Bibledit/kernel
+find . -name "*.h" -o -name "*.cpp" -exec rsync -R "{}" $KERNELDIR/ \;
+if [ $? != 0 ]; then exit; fi
+
+exit # Todo
+
+echo Clean out stuff no longer needed.
+find . -name "*.h" -delete
+find . -name "*.cpp" -delete
+find . -name "*.cxx" -delete
+find . -name "*.hpp" -delete
+find . -name "*.c" -delete
+find . -name "*.o" -delete
+find . -name "*.in" -delete
+rm *.m4
+rm -r autom*cache
+rm bibledit
+rm compile
+rm config.*
+rm configure*
+rm depcomp
+rm dev
+rm install-sh
+rm missing
+rm reconfigure
+rm valgrind
+find . -name ".deps" -exec rm -r "{}" \; > /dev/null 2>&1
+find . -name ".dirstamp" -delete
+rm Makefile*
+rm server
+rm -f unittest
+rm stamp-h1
+rm generate
+rm -rf sources
+rm -rf unittests
+find .. -name "*.sh" -delete
+rm -rf xcode.xcodeproj
+
+
+echo Clean libraries away so they will not be included.
+cd ../../objective-c
+if [ $? != 0 ]; then exit; fi
+echo Current directory: `pwd`
+mv webroot/libbibledit.a osx
+if [ $? != 0 ]; then exit; fi
+rm -f objective-c/build/Release/Bibledit.app/Contents/Resources/webroot/libbibledit.a
+
+
+popd
+if [ $? != 0 ]; then exit; fi
+echo Current directory: `pwd`
+
+
+echo To graphically build the app for macOS, open the project in Xcode:
+echo open $SCRIPTDIR/Bibledit.xcodeproj
+echo Then build it from within Xcode
