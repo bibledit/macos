@@ -11,7 +11,7 @@ rsync --archive --delete ../../cloud/ $WEBROOT/
 if [ $? != 0 ]; then exit; fi
 
 echo From now on the working directory is the webroot location.
-cd $WEBROOT
+pushd $WEBROOT
 if [ $? != 0 ]; then exit; fi
 echo Current directory: `pwd`
 
@@ -20,7 +20,6 @@ echo Do a dist-clean of the Bibledit library.
 if [ $? != 0 ]; then exit; fi
 make distclean
 if [ $? != 0 ]; then exit; fi
-rm config.h
 
 echo Update the build configuration and reconfigure.
 sed -i.bak '/mbedtls_ssl_init/d' configure.ac
@@ -34,17 +33,9 @@ sed -i.bak '/GTEST/d' Makefile.am
 echo Configure Bibledit in client mode.
 ./configure --enable-mac
 if [ $? != 0 ]; then exit; fi
-# No longer set the network port.
+# Do not set the network port.
 # The Bibledit kernel will negotiate its own network port number.
 # echo 9876 > config/network-port
-# if [ $? != 0 ]; then exit; fi
-
-echo Update the Makefile.
-echo The -mmmacosx-version-min is for fixing: ld: warning:
-echo object file libbibledit.a was built for newer macOS version than being linked.
-echo The added architectures to the CFLAGS are for Apple Silicon.
-echo See https://developer.apple.com/forums/thread/653233.
-# sed -i.bak 's#-pedantic#-mmacosx-version-min=10.10\ -isysroot\ '$SDK'\ -arch\ x86_64\ -arch\ arm64#g' Makefile
 # if [ $? != 0 ]; then exit; fi
 
 sed -i.bak 's#/opt/local/include#. -I..#g' Makefile
@@ -68,7 +59,6 @@ if [ $? != 0 ]; then exit; fi
 sed -i.bak '/XML2_LIBS =/d' Makefile
 if [ $? != 0 ]; then exit; fi
 
-
 echo Update the configuration.
 sed -i.bak '/HAVE_ICU/d' config.h
 if [ $? != 0 ]; then exit; fi
@@ -78,31 +68,39 @@ sed -i.bak '/HAVE_PUGIXML/d' config.h
 if [ $? != 0 ]; then exit; fi
 sed -i.bak '/CONFIG_ENABLE_FILE_UPLOAD/d' config/config.h
 if [ $? != 0 ]; then exit; fi
-rm config/*.bak
-rm *.bak
-
-
-#echo Build the Bibledit library.
-#make -j `sysctl -n hw.logicalcpu_max`
-#if [ $? != 0 ]; then exit; fi
-
 
 echo Copy the source code to the kernel folder.
 pwd
 KERNELDIR=$SCRIPTDIR/Bibledit/kernel
-find . -name "*.h" -o -name "*.cpp" -exec rsync -R "{}" $KERNELDIR/ \;
+rsync -a ./ $KERNELDIR/
 if [ $? != 0 ]; then exit; fi
+
+echo Return to the project directory where this script is located.
+popd
+pwd
+
+echo Clean out stuff no longer needed.
+find $WEBROOT \( -name "*.h" -o -name "*.cpp" -o -name "*.cxx" -o -name "*.hpp" -o -name "*.c" \) -delete
+find $KERNELDIR -not \( -name "*.h" -o -name "*.cpp" -o -name "*.cxx" -o -name "*.hpp" -o -name "*.c" \) -delete
+
 
 exit # Todo
 
-echo Clean out stuff no longer needed.
-find . -name "*.h" -delete
-find . -name "*.cpp" -delete
-find . -name "*.cxx" -delete
-find . -name "*.hpp" -delete
-find . -name "*.c" -delete
+
+
+rm config/*.bak
+rm *.bak
+
+
+echo Clean out files not needed in the kernel source code.
+
+
+
+
 find . -name "*.o" -delete
 find . -name "*.in" -delete
+
+
 rm *.m4
 rm -r autom*cache
 rm bibledit
@@ -128,13 +126,13 @@ find .. -name "*.sh" -delete
 rm -rf xcode.xcodeproj
 
 
-echo Clean libraries away so they will not be included.
-cd ../../objective-c
-if [ $? != 0 ]; then exit; fi
-echo Current directory: `pwd`
-mv webroot/libbibledit.a osx
-if [ $? != 0 ]; then exit; fi
-rm -f objective-c/build/Release/Bibledit.app/Contents/Resources/webroot/libbibledit.a
+#echo Clean libraries away so they will not be included.
+#cd ../../objective-c
+#if [ $? != 0 ]; then exit; fi
+#echo Current directory: `pwd`
+#mv webroot/libbibledit.a osx
+#if [ $? != 0 ]; then exit; fi
+#rm -f objective-c/build/Release/Bibledit.app/Contents/Resources/webroot/libbibledit.a
 
 
 popd

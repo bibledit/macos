@@ -15,8 +15,6 @@
 		CA88EE3E2ADC4590001AE436 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA88EE3D2ADC4590001AE436 /* ViewController.swift */; };
 		CA88EE402ADC4591001AE436 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA88EE3F2ADC4591001AE436 /* Assets.xcassets */; };
 		CA88EE432ADC4591001AE436 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA88EE412ADC4591001AE436 /* Main.storyboard */; };
-		CADCFDE92B5D43990015D8B2 /* c.c in Sources */ = {isa = PBXBuildFile; fileRef = CADCFDE52B5D43610015D8B2 /* c.c */; };
-		CADCFDEA2B5D43990015D8B2 /* cpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADCFDE82B5D43610015D8B2 /* cpp.cpp */; };
 		CADCFDEC2B5D44100015D8B2 /* Tutorial.tutorial in Resources */ = {isa = PBXBuildFile; fileRef = CADCFDEB2B5D44100015D8B2 /* Tutorial.tutorial */; };
 /* End PBXBuildFile section */
 
@@ -31,10 +29,6 @@
 		CA88EE3F2ADC4591001AE436 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA88EE422ADC4591001AE436 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CA88EE442ADC4591001AE436 /* Bibledit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bibledit.entitlements; sourceTree = "<group>"; };
-		CADCFDE52B5D43610015D8B2 /* c.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = c.c; sourceTree = "<group>"; };
-		CADCFDE62B5D43610015D8B2 /* cpp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cpp.h; sourceTree = "<group>"; };
-		CADCFDE72B5D43610015D8B2 /* c.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = c.h; sourceTree = "<group>"; };
-		CADCFDE82B5D43610015D8B2 /* cpp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cpp.cpp; sourceTree = "<group>"; };
 		CADCFDEB2B5D44100015D8B2 /* Tutorial.tutorial */ = {isa = PBXFileReference; lastKnownFileType = text; path = Tutorial.tutorial; sourceTree = "<group>"; };
 		CAFCCF222B5A8FCC00E5869E /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -60,7 +54,6 @@
 		CA88EE2F2ADC4590001AE436 = {
 			isa = PBXGroup;
 			children = (
-				CADCFDE42B5D43610015D8B2 /* kernel */,
 				CA88EE3A2ADC4590001AE436 /* Bibledit */,
 				CA88EE392ADC4590001AE436 /* Products */,
 				CA591B112ADC670400BA841F /* Frameworks */,
@@ -91,18 +84,6 @@
 				CA88EE3D2ADC4590001AE436 /* ViewController.swift */,
 			);
 			path = Bibledit;
-			sourceTree = "<group>";
-		};
-		CADCFDE42B5D43610015D8B2 /* kernel */ = {
-			isa = PBXGroup;
-			children = (
-				CADCFDE52B5D43610015D8B2 /* c.c */,
-				CADCFDE62B5D43610015D8B2 /* cpp.h */,
-				CADCFDE72B5D43610015D8B2 /* c.h */,
-				CADCFDE82B5D43610015D8B2 /* cpp.cpp */,
-			);
-			name = kernel;
-			path = Bibledit/kernel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,8 +161,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CADCFDE92B5D43990015D8B2 /* c.c in Sources */,
-				CADCFDEA2B5D43990015D8B2 /* cpp.cpp in Sources */,
 				CA88EE3E2ADC4590001AE436 /* ViewController.swift in Sources */,
 				CA88EE3C2ADC4590001AE436 /* AppDelegate.swift in Sources */,
 			);
