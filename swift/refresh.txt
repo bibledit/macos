@@ -7,7 +7,7 @@ if [ $? != 0 ]; then exit; fi
 WEBROOT=$SCRIPTDIR/webroot
 echo Synchronizing relevant source code to $WEBROOT
 mkdir -p $WEBROOT
-rsync --archive --delete ../../cloud/ $WEBROOT/
+rsync --archive --delete --exclude=.git ../../cloud/ $WEBROOT/
 if [ $? != 0 ]; then exit; fi
 
 echo From now on the working directory is the webroot location.
@@ -79,66 +79,40 @@ echo Return to the project directory where this script is located.
 popd
 pwd
 
-echo Clean out stuff no longer needed.
+echo Remove the source code from $WEBROOT.
 find $WEBROOT \( -name "*.h" -o -name "*.cpp" -o -name "*.cxx" -o -name "*.hpp" -o -name "*.c" \) -delete
+echo Remove everything but the source code from $KERNELDIR.
 find $KERNELDIR -not \( -name "*.h" -o -name "*.cpp" -o -name "*.cxx" -o -name "*.hpp" -o -name "*.c" \) -delete
 
-
-exit # Todo
-
-
-
-rm config/*.bak
-rm *.bak
-
-
-echo Clean out files not needed in the kernel source code.
-
-
-
-
+echo Removing non-essential files.
+find . -name "*.bak" -delete
 find . -name "*.o" -delete
 find . -name "*.in" -delete
-
-
-rm *.m4
-rm -r autom*cache
-rm bibledit
-rm compile
-rm config.*
-rm configure*
-rm depcomp
-rm dev
-rm install-sh
-rm missing
-rm reconfigure
-rm valgrind
+find . -name "*.m4" -delete
+find . -name "autom*cache" -exec rm -r "{}" \; > /dev/null 2>&1
+find . -name "bibledit" -delete
+find . -name "compile" -delete
+rm $WEBROOT/config.*
+rm $WEBROOT/configure*
+rm $WEBROOT/depcomp
+rm $WEBROOT/dev
+rm $WEBROOT/install-sh
+rm $WEBROOT/missing
+rm $WEBROOT/reconfigure
+rm $WEBROOT/valgrind
 find . -name ".deps" -exec rm -r "{}" \; > /dev/null 2>&1
 find . -name ".dirstamp" -delete
-rm Makefile*
-rm server
-rm -f unittest
-rm stamp-h1
-rm generate
-rm -rf sources
-rm -rf unittests
+rm $WEBROOT/Makefile*
+rm -f $WEBROOT/server
+rm -f $WEBROOT/unittest
+rm $WEBROOT/stamp-h1
+rm -f $WEBROOT/generate
+rm -rf $WEBROOT/sources
+rm -rf $WEBROOT/unittests
 find .. -name "*.sh" -delete
-rm -rf xcode.xcodeproj
-
-
-#echo Clean libraries away so they will not be included.
-#cd ../../objective-c
-#if [ $? != 0 ]; then exit; fi
-#echo Current directory: `pwd`
-#mv webroot/libbibledit.a osx
-#if [ $? != 0 ]; then exit; fi
-#rm -f objective-c/build/Release/Bibledit.app/Contents/Resources/webroot/libbibledit.a
-
-
-popd
-if [ $? != 0 ]; then exit; fi
-echo Current directory: `pwd`
-
+rm -rf $WEBROOT/xcode.xcodeproj
+rm -rf $WEBROOT/.github
+rm -f $WEBROOT/.gitignore
 
 echo To graphically build the app for macOS, open the project in Xcode:
 echo open $SCRIPTDIR/Bibledit.xcodeproj
