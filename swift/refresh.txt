@@ -66,8 +66,15 @@ sed -i.bak '/HAVE_UTF8PROC/d' config.h
 if [ $? != 0 ]; then exit; fi
 sed -i.bak '/HAVE_PUGIXML/d' config.h
 if [ $? != 0 ]; then exit; fi
+sed -i.bak '/HAVE_GTEST/d' config.h
+if [ $? != 0 ]; then exit; fi
 sed -i.bak '/CONFIG_ENABLE_FILE_UPLOAD/d' config/config.h
 if [ $? != 0 ]; then exit; fi
+
+echo Remove the data sources
+rm -rf sources
+echo Remove the unit tests
+rm -rf unittests
 
 echo Copy the source code to the kernel folder.
 pwd
