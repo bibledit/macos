@@ -16,13 +16,6 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-// The initial steps to embed a webview were taken from this:
-// https://stackoverflow.com/questions/60082417/how-do-i-create-a-wkwebview-app-for-macos
-
-// Information how to embed C and C++ code in a Swift project was taken from this:
-// https://stackoverflow.com/questions/32541268/can-i-have-swift-objective-c-c-and-c-files-in-the-same-xcode-project/32546879#32546879
-// Full information here: https://www.swift.org/documentation/cxx-interop/
-
 import Cocoa
 import WebKit
 

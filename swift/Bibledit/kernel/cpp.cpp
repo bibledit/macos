@@ -23,3 +23,4 @@ using namespace std;
 void hello_cpp(const char* name) {
     cout << "Hello " << name << " in C++" << endl;
 }
+// Todo goes out.

@@ -7,10 +7,12 @@ Bibledit for macOS source code repository and developer assistance
 Bibledit has been working on macOS in various forms:
 * Bibledit-Gtk written for Linux and ported to Mac macOS.
 * Bibledit-Web written in PHP and adapted to run on Mac macOS.
+* Bibledit-macOS written in Objective-C and running natively on macOS.
 
 The current port of Bibledit for macOS consists of the following parts:
-* A native Bibledit macOS app with a WebView.
-* The bibledit library written in C++, compiled for macOS.
+* A native Bibledit macOS app written in Swift.
+* An embedded WebKit View.
+* The bibledit kernel written in C++, compiled for macOS.
 
 ## Sandboxing
 
@@ -29,18 +31,18 @@ defaults write org.bibeldit.osx WebKitDeveloperExtras -bool true
 
 Then launch Bibledit. Web Inspector can now be accessed by a Control-click or right-click from within any web view. You must also enable contextual menus in your app.
 
-## libcurl
-
-The bibledit library depends on libcurl. Bibledit should be linked with a working version of libcurl. 
-
-* Linking with macOS 10.10 SDK libcurl.dylib: It initially works but after a few minutes of synchronizing with Bibledit Cloud it starts to time out, and then stops working.
-
-* Linking with the static library (libcurl.a) of a Macports installation, and add all the macports dependent *.a libraries to the Bibledit Xcode project to include them: This works well. No timeouts occur.
-
 ## Refreshing Bibledit kernel
 
 Run script "bash ./refresh.txt".
 
+## Setting up Xcode
+
+* The initial steps to embed a webview were taken from this: https://stackoverflow.com/questions/60082417/how-do-i-create-a-wkwebview-app-for-macos
+* Information how to embed C and C++ code in a Swift project was taken from this: https://stackoverflow.com/questions/32541268/can-i-have-swift-objective-c-c-and-c-files-in-the-same-xcode-project/32546879#32546879 with full information here: https://www.swift.org/documentation/cxx-interop/
+* Set the header search path and the user header search path.
+* Set the location of the bridging header.
+* Set the C++ and Objective-C interoperability to "C++/Objective-C++".
+"
 ## Building and distributing the app
 
 * Open the Bibledit Xcode project.

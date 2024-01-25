@@ -11,7 +11,6 @@
 #define HAVE_EXECINFO 1
 
 /* Define whether GTest is available */
-#define HAVE_GTEST 1
 
 /* Define whether ICU is available */
 
