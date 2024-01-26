@@ -39,7 +39,7 @@ Run script "bash ./refresh.txt".
 
 * The initial steps to embed a webview were taken from this: https://stackoverflow.com/questions/60082417/how-do-i-create-a-wkwebview-app-for-macos
 * Information how to embed C and C++ code in a Swift project was taken from this: https://stackoverflow.com/questions/32541268/can-i-have-swift-objective-c-c-and-c-files-in-the-same-xcode-project/32546879#32546879 with full information here: https://www.swift.org/documentation/cxx-interop/
-* Set the header search path and the user header search path.
+* Set the header search path and the user header search path to ${PROJECT_DIR}/Bibledit/kernel
 * Set the location of the bridging header.
 * Set the C++ and Objective-C interoperability to "C++/Objective-C++".
 "

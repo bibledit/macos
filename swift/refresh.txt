@@ -80,7 +80,7 @@ rm -rf unittests
 echo Copy the source code to the kernel folder.
 pwd
 KERNELDIR=$SCRIPTDIR/Bibledit/kernel
-rsync -a ./ $KERNELDIR/
+rsync --archive --delete ./ $KERNELDIR/
 if [ $? != 0 ]; then exit; fi
 
 echo Return to the project directory where this script is located.

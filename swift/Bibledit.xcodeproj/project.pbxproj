@@ -434,7 +434,6 @@
 		CAEE510E2B6052DE00913572 /* memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E142B6052DA00913572 /* memory.cpp */; };
 		CAEE510F2B6052DE00913572 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E152B6052DA00913572 /* md5.cpp */; };
 		CAEE51102B6052DE00913572 /* passage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E172B6052DA00913572 /* passage.cpp */; };
-		CAEE51112B6052DE00913572 /* UriCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E1A2B6052DA00913572 /* UriCodec.cpp */; };
 		CAEE51122B6052DE00913572 /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E1B2B6052DA00913572 /* image.cpp */; };
 		CAEE51132B6052DE00913572 /* text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E1C2B6052DA00913572 /* text.cpp */; };
 		CAEE51142B6052DE00913572 /* date.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E212B6052DA00913572 /* date.cpp */; };
@@ -505,7 +504,6 @@
 		CAEE51552B6052DF00913572 /* download.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EA82B6052DB00913572 /* download.cpp */; };
 		CAEE51562B6052DF00913572 /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EAB2B6052DB00913572 /* logic.cpp */; };
 		CAEE51572B6052DF00913572 /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EAE2B6052DB00913572 /* logic.cpp */; };
-		CAEE51582B6052DF00913572 /* i18n.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EAF2B6052DB00913572 /* i18n.cpp */; };
 		CAEE51592B6052DF00913572 /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EB22B6052DB00913572 /* logic.cpp */; };
 		CAEE515A2B6052DF00913572 /* burndown.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EB62B6052DB00913572 /* burndown.cpp */; };
 		CAEE515B2B6052DF00913572 /* index.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EB82B6052DB00913572 /* index.cpp */; };
@@ -521,7 +519,6 @@
 		CAEE51652B6052DF00913572 /* index.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4ED02B6052DB00913572 /* index.cpp */; };
 		CAEE51662B6052DF00913572 /* ParseMultipartFormData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4ED52B6052DB00913572 /* ParseMultipartFormData.cpp */; };
 		CAEE51672B6052DF00913572 /* ParseWebData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4ED62B6052DB00913572 /* ParseWebData.cpp */; };
-		CAEE51682B6052DF00913572 /* exampleProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4ED72B6052DB00913572 /* exampleProgram.cpp */; };
 		CAEE51692B6052DF00913572 /* send.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EDB2B6052DB00913572 /* send.cpp */; };
 		CAEE516A2B6052DF00913572 /* receive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EDD2B6052DB00913572 /* receive.cpp */; };
 		CAEE516B2B6052DF00913572 /* index.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EDE2B6052DB00913572 /* index.cpp */; };
@@ -3820,7 +3817,6 @@
 				CAEE50A52B6052DD00913572 /* logic.cpp in Sources */,
 				CAEE4FC22B6052DC00913572 /* debug.c in Sources */,
 				CAEE4F602B6052DB00913572 /* import.cpp in Sources */,
-				CAEE51582B6052DF00913572 /* i18n.cpp in Sources */,
 				CAEE51602B6052DF00913572 /* external.cpp in Sources */,
 				CAEE50E92B6052DE00913572 /* microtar.c in Sources */,
 				CAEE50582B6052DD00913572 /* contentdescription.cxx in Sources */,
@@ -4049,7 +4045,6 @@
 				CAEE505F2B6052DD00913572 /* messageid.cxx in Sources */,
 				CAEE51032B6052DE00913572 /* notes.cpp in Sources */,
 				CAEE51182B6052DE00913572 /* html.cpp in Sources */,
-				CAEE51112B6052DE00913572 /* UriCodec.cpp in Sources */,
 				CAEE50E02B6052DE00913572 /* bb-1.cpp in Sources */,
 				CAEE50CE2B6052DE00913572 /* language.c in Sources */,
 				CAEE515C2B6052DF00913572 /* logic.cpp in Sources */,
@@ -4254,7 +4249,6 @@
 				CAEE4F712B6052DB00913572 /* sentences.cpp in Sources */,
 				CAEE51462B6052DF00913572 /* user9view.cpp in Sources */,
 				CAEE51522B6052DF00913572 /* external.cpp in Sources */,
-				CAEE51682B6052DF00913572 /* exampleProgram.cpp in Sources */,
 				CAEE51322B6052DE00913572 /* html.cpp in Sources */,
 				CAEE4F7C2B6052DC00913572 /* modifications.cpp in Sources */,
 				CAEE4F852B6052DC00913572 /* verse.cpp in Sources */,
