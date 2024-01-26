@@ -76,6 +76,13 @@ rm -rf sources
 rm executable/generate.*
 echo Remove the unit tests
 rm -rf unittests
+echo Remove internationalisation helper
+rm -rf i18n
+echo Remove examples
+find . -name exampleProgram.cpp -delete
+echo Remove main executable code
+rm executable/bibledit.*
+rm sqlite/shell.c
 
 echo Copy the source code to the kernel folder.
 pwd

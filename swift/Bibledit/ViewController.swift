@@ -32,11 +32,11 @@ class ViewController: NSViewController, WKUIDelegate
         web_view.uiDelegate = self
         view = web_view
         
-        // Invoke C.
-        hello_c("World")
-        hello_c(("World" as NSString).cString(using: NSUTF8StringEncoding))
+        // Invoke C. // Todo
+//        hello_c("World")
+//        hello_c(("World" as NSString).cString(using: NSUTF8StringEncoding))
         // Incode C++.
-        hello_cpp("World")
+//        hello_cpp("World")
     }
     
     override func viewDidLoad() {

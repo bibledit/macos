@@ -20,7 +20,6 @@
 		CAEE4F0B2B6052DB00913572 /* index.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE49CE2B6052D900913572 /* index.cpp */; };
 		CAEE4F0C2B6052DB00913572 /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE49D02B6052D900913572 /* logic.cpp */; };
 		CAEE4F0D2B6052DB00913572 /* statistics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE49D32B6052D900913572 /* statistics.cpp */; };
-		CAEE4F0E2B6052DB00913572 /* bibledit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE49D82B6052D900913572 /* bibledit.cpp */; };
 		CAEE4F102B6052DB00913572 /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE49DD2B6052D900913572 /* map.cpp */; };
 		CAEE4F112B6052DB00913572 /* index.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE49DE2B6052D900913572 /* index.cpp */; };
 		CAEE4F122B6052DB00913572 /* bibleimages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE49E22B6052D900913572 /* bibleimages.cpp */; };
@@ -288,7 +287,6 @@
 		CAEE50742B6052DD00913572 /* contentdisposition.cxx in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4C982B6052DA00913572 /* contentdisposition.cxx */; };
 		CAEE50752B6052DD00913572 /* handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4C9C2B6052DA00913572 /* handler.cpp */; };
 		CAEE50762B6052DD00913572 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4C9F2B6052DA00913572 /* sqlite3.c */; };
-		CAEE50772B6052DD00913572 /* shell.c in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4CA02B6052DA00913572 /* shell.c */; };
 		CAEE50782B6052DD00913572 /* miniz.c in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4CA42B6052DA00913572 /* miniz.c */; };
 		CAEE50792B6052DD00913572 /* text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4CA72B6052DA00913572 /* text.cpp */; };
 		CAEE507A2B6052DD00913572 /* stb_vorbis.c in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4CB12B6052DA00913572 /* stb_vorbis.c */; };
@@ -502,7 +500,6 @@
 		CAEE51542B6052DF00913572 /* index.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EA72B6052DB00913572 /* index.cpp */; };
 		CAEE51552B6052DF00913572 /* download.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EA82B6052DB00913572 /* download.cpp */; };
 		CAEE51562B6052DF00913572 /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EAB2B6052DB00913572 /* logic.cpp */; };
-		CAEE51572B6052DF00913572 /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EAE2B6052DB00913572 /* logic.cpp */; };
 		CAEE51592B6052DF00913572 /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EB22B6052DB00913572 /* logic.cpp */; };
 		CAEE515A2B6052DF00913572 /* burndown.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EB62B6052DB00913572 /* burndown.cpp */; };
 		CAEE515B2B6052DF00913572 /* index.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EB82B6052DB00913572 /* index.cpp */; };
@@ -561,8 +558,6 @@
 		CAEE49D12B6052D900913572 /* logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logic.h; sourceTree = "<group>"; };
 		CAEE49D32B6052D900913572 /* statistics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = statistics.cpp; sourceTree = "<group>"; };
 		CAEE49D42B6052D900913572 /* statistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = statistics.h; sourceTree = "<group>"; };
-		CAEE49D72B6052D900913572 /* bibledit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bibledit.h; sourceTree = "<group>"; };
-		CAEE49D82B6052D900913572 /* bibledit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bibledit.cpp; sourceTree = "<group>"; };
 		CAEE49DB2B6052D900913572 /* index.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = index.h; sourceTree = "<group>"; };
 		CAEE49DC2B6052D900913572 /* map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = map.h; sourceTree = "<group>"; };
 		CAEE49DD2B6052D900913572 /* map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = map.cpp; sourceTree = "<group>"; };
@@ -1129,7 +1124,6 @@
 		CAEE4C9B2B6052DA00913572 /* handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = handler.h; sourceTree = "<group>"; };
 		CAEE4C9C2B6052DA00913572 /* handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = handler.cpp; sourceTree = "<group>"; };
 		CAEE4C9F2B6052DA00913572 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
-		CAEE4CA02B6052DA00913572 /* shell.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = shell.c; sourceTree = "<group>"; };
 		CAEE4CA12B6052DA00913572 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		CAEE4CA22B6052DA00913572 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
 		CAEE4CA42B6052DA00913572 /* miniz.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = miniz.c; sourceTree = "<group>"; };
@@ -1600,9 +1594,6 @@
 		CAEE4EA92B6052DB00913572 /* select.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = select.h; sourceTree = "<group>"; };
 		CAEE4EAB2B6052DB00913572 /* logic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = logic.cpp; sourceTree = "<group>"; };
 		CAEE4EAC2B6052DB00913572 /* logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logic.h; sourceTree = "<group>"; };
-		CAEE4EAE2B6052DB00913572 /* logic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = logic.cpp; sourceTree = "<group>"; };
-		CAEE4EAF2B6052DB00913572 /* i18n.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = i18n.cpp; sourceTree = "<group>"; };
-		CAEE4EB02B6052DB00913572 /* logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logic.h; sourceTree = "<group>"; };
 		CAEE4EB22B6052DB00913572 /* logic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = logic.cpp; sourceTree = "<group>"; };
 		CAEE4EB32B6052DB00913572 /* logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logic.h; sourceTree = "<group>"; };
 		CAEE4EB52B6052DB00913572 /* index.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = index.h; sourceTree = "<group>"; };
@@ -1632,7 +1623,6 @@
 		CAEE4ED42B6052DB00913572 /* ParseMultipartFormData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseMultipartFormData.h; sourceTree = "<group>"; };
 		CAEE4ED52B6052DB00913572 /* ParseMultipartFormData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParseMultipartFormData.cpp; sourceTree = "<group>"; };
 		CAEE4ED62B6052DB00913572 /* ParseWebData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParseWebData.cpp; sourceTree = "<group>"; };
-		CAEE4ED72B6052DB00913572 /* exampleProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exampleProgram.cpp; sourceTree = "<group>"; };
 		CAEE4ED92B6052DB00913572 /* index.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = index.h; sourceTree = "<group>"; };
 		CAEE4EDA2B6052DB00913572 /* receive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = receive.h; sourceTree = "<group>"; };
 		CAEE4EDB2B6052DB00913572 /* send.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = send.cpp; sourceTree = "<group>"; };
@@ -1765,14 +1755,12 @@
 				CAEE4C222B6052DA00913572 /* editusfm */,
 				CAEE4ED82B6052DB00913572 /* email */,
 				CAEE4C2D2B6052DA00913572 /* esword */,
-				CAEE49D52B6052D900913572 /* executable */,
 				CAEE4E532B6052DA00913572 /* export */,
 				CAEE4E112B6052DA00913572 /* filter */,
 				CAEE4C1A2B6052DA00913572 /* flate */,
 				CAEE4EB12B6052DB00913572 /* fonts */,
 				CAEE4EF52B6052DB00913572 /* help */,
 				CAEE4C352B6052DA00913572 /* html */,
-				CAEE4EAD2B6052DB00913572 /* i18n */,
 				CAEE4AA12B6052D900913572 /* images */,
 				CAEE4DE12B6052DA00913572 /* index */,
 				CAEE4DF72B6052DA00913572 /* ipc */,
@@ -1863,15 +1851,6 @@
 				CAEE49D42B6052D900913572 /* statistics.h */,
 			);
 			path = statistics;
-			sourceTree = "<group>";
-		};
-		CAEE49D52B6052D900913572 /* executable */ = {
-			isa = PBXGroup;
-			children = (
-				CAEE49D82B6052D900913572 /* bibledit.cpp */,
-				CAEE49D72B6052D900913572 /* bibledit.h */,
-			);
-			path = executable;
 			sourceTree = "<group>";
 		};
 		CAEE49DA2B6052D900913572 /* mapping */ = {
@@ -2769,7 +2748,6 @@
 			isa = PBXGroup;
 			children = (
 				CAEE4C9F2B6052DA00913572 /* sqlite3.c */,
-				CAEE4CA02B6052DA00913572 /* shell.c */,
 				CAEE4CA12B6052DA00913572 /* sqlite3.h */,
 				CAEE4CA22B6052DA00913572 /* sqlite3ext.h */,
 			);
@@ -2798,25 +2776,25 @@
 			isa = PBXGroup;
 			children = (
 				CAEE4CAA2B6052DA00913572 /* stb_c_lexer.h */,
-				CAEE4CAB2B6052DA00913572 /* stb_image_write.h */,
-				CAEE4CAC2B6052DA00913572 /* stb_image_resize.h */,
-				CAEE4CAD2B6052DA00913572 /* stb_rect_pack.h */,
-				CAEE4CAE2B6052DA00913572 /* stb_divide.h */,
-				CAEE4CAF2B6052DA00913572 /* stb_sprintf.h */,
-				CAEE4CB02B6052DA00913572 /* stb_dxt.h */,
-				CAEE4CB12B6052DA00913572 /* stb_vorbis.c */,
 				CAEE4CB22B6052DA00913572 /* stb_connected_components.h */,
-				CAEE4CB32B6052DA00913572 /* stb_image.h */,
-				CAEE4CB42B6052DA00913572 /* stb_truetype.h */,
-				CAEE4CB52B6052DA00913572 /* stb_hexwave.h */,
-				CAEE4CB62B6052DA00913572 /* stb_leakcheck.h */,
-				CAEE4CB72B6052DA00913572 /* stb_textedit.h */,
+				CAEE4CAE2B6052DA00913572 /* stb_divide.h */,
+				CAEE4CBD2B6052DA00913572 /* stb_ds.h */,
+				CAEE4CB02B6052DA00913572 /* stb_dxt.h */,
 				CAEE4CB82B6052DA00913572 /* stb_easy_font.h */,
 				CAEE4CB92B6052DA00913572 /* stb_herringbone_wang_tile.h */,
-				CAEE4CBA2B6052DA00913572 /* stb_voxel_render.h */,
-				CAEE4CBB2B6052DA00913572 /* stb_tilemap_editor.h */,
+				CAEE4CB52B6052DA00913572 /* stb_hexwave.h */,
+				CAEE4CAC2B6052DA00913572 /* stb_image_resize.h */,
+				CAEE4CAB2B6052DA00913572 /* stb_image_write.h */,
+				CAEE4CB32B6052DA00913572 /* stb_image.h */,
 				CAEE4CBC2B6052DA00913572 /* stb_include.h */,
-				CAEE4CBD2B6052DA00913572 /* stb_ds.h */,
+				CAEE4CB62B6052DA00913572 /* stb_leakcheck.h */,
+				CAEE4CAD2B6052DA00913572 /* stb_rect_pack.h */,
+				CAEE4CAF2B6052DA00913572 /* stb_sprintf.h */,
+				CAEE4CB72B6052DA00913572 /* stb_textedit.h */,
+				CAEE4CBB2B6052DA00913572 /* stb_tilemap_editor.h */,
+				CAEE4CB42B6052DA00913572 /* stb_truetype.h */,
+				CAEE4CB12B6052DA00913572 /* stb_vorbis.c */,
+				CAEE4CBA2B6052DA00913572 /* stb_voxel_render.h */,
 			);
 			path = stb;
 			sourceTree = "<group>";
@@ -3475,16 +3453,6 @@
 			path = checksum;
 			sourceTree = "<group>";
 		};
-		CAEE4EAD2B6052DB00913572 /* i18n */ = {
-			isa = PBXGroup;
-			children = (
-				CAEE4EAE2B6052DB00913572 /* logic.cpp */,
-				CAEE4EAF2B6052DB00913572 /* i18n.cpp */,
-				CAEE4EB02B6052DB00913572 /* logic.h */,
-			);
-			path = i18n;
-			sourceTree = "<group>";
-		};
 		CAEE4EB12B6052DB00913572 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -3566,7 +3534,6 @@
 				CAEE4ED42B6052DB00913572 /* ParseMultipartFormData.h */,
 				CAEE4ED52B6052DB00913572 /* ParseMultipartFormData.cpp */,
 				CAEE4ED62B6052DB00913572 /* ParseWebData.cpp */,
-				CAEE4ED72B6052DB00913572 /* exampleProgram.cpp */,
 			);
 			path = parsewebdata;
 			sourceTree = "<group>";
@@ -3995,10 +3962,8 @@
 				CAEE517C2B6052DF00913572 /* signup.cpp in Sources */,
 				CAEE513A2B6052DF00913572 /* convert2resource.cpp in Sources */,
 				CAEE51792B6052DF00913572 /* confirm.cpp in Sources */,
-				CAEE51572B6052DF00913572 /* logic.cpp in Sources */,
 				CAEE50D42B6052DE00913572 /* unassign-n.cpp in Sources */,
 				CAEE51212B6052DE00913572 /* note.cpp in Sources */,
-				CAEE4F0E2B6052DB00913572 /* bibledit.cpp in Sources */,
 				CAEE51502B6052DF00913572 /* img.cpp in Sources */,
 				CAEE4F5A2B6052DB00913572 /* manage.cpp in Sources */,
 				CAEE509D2B6052DD00913572 /* preview.cpp in Sources */,
@@ -4159,7 +4124,6 @@
 				CAEE514F2B6052DF00913572 /* translated1edit.cpp in Sources */,
 				CAEE51672B6052DF00913572 /* ParseWebData.cpp in Sources */,
 				CAEE4FE72B6052DC00913572 /* cipher.c in Sources */,
-				CAEE50772B6052DD00913572 /* shell.c in Sources */,
 				CAEE50B42B6052DE00913572 /* create.cpp in Sources */,
 				CAEE51102B6052DE00913572 /* passage.cpp in Sources */,
 				CAEE4FBC2B6052DC00913572 /* entropy_poll.c in Sources */,
