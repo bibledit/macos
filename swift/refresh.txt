@@ -71,8 +71,9 @@ if [ $? != 0 ]; then exit; fi
 sed -i.bak '/CONFIG_ENABLE_FILE_UPLOAD/d' config/config.h
 if [ $? != 0 ]; then exit; fi
 
-echo Remove the data sources
+echo Remove the data generation
 rm -rf sources
+rm executable/generate.*
 echo Remove the unit tests
 rm -rf unittests
 
