@@ -76,7 +76,6 @@
 		CAEE4F442B6052DB00913572 /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4A4B2B6052D900913572 /* logic.cpp */; };
 		CAEE4F452B6052DB00913572 /* delay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4A4D2B6052D900913572 /* delay.cpp */; };
 		CAEE4F462B6052DB00913572 /* index.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4A4F2B6052D900913572 /* index.cpp */; };
-		CAEE4F472B6052DB00913572 /* c.c in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4A502B6052D900913572 /* c.c */; };
 		CAEE4F482B6052DB00913572 /* text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4A522B6052D900913572 /* text.cpp */; };
 		CAEE4F492B6052DB00913572 /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4A552B6052D900913572 /* logic.cpp */; };
 		CAEE4F4A2B6052DB00913572 /* run.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4A562B6052D900913572 /* run.cpp */; };
@@ -512,7 +511,6 @@
 		CAEE515E2B6052DF00913572 /* header.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EC12B6052DB00913572 /* header.cpp */; };
 		CAEE515F2B6052DF00913572 /* view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EC32B6052DB00913572 /* view.cpp */; };
 		CAEE51602B6052DF00913572 /* external.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EC42B6052DB00913572 /* external.cpp */; };
-		CAEE51612B6052DF00913572 /* cpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EC52B6052DB00913572 /* cpp.cpp */; };
 		CAEE51622B6052DF00913572 /* tmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EC82B6052DB00913572 /* tmp.cpp */; };
 		CAEE51632B6052DF00913572 /* search.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4ECA2B6052DB00913572 /* search.cpp */; };
 		CAEE51642B6052DF00913572 /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4ECE2B6052DB00913572 /* logic.cpp */; };
@@ -677,7 +675,6 @@
 		CAEE4A4D2B6052D900913572 /* delay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = delay.cpp; sourceTree = "<group>"; };
 		CAEE4A4E2B6052D900913572 /* delay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = delay.h; sourceTree = "<group>"; };
 		CAEE4A4F2B6052D900913572 /* index.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = index.cpp; sourceTree = "<group>"; };
-		CAEE4A502B6052D900913572 /* c.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = c.c; sourceTree = "<group>"; };
 		CAEE4A522B6052D900913572 /* text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = text.cpp; sourceTree = "<group>"; };
 		CAEE4A532B6052D900913572 /* text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = text.h; sourceTree = "<group>"; };
 		CAEE4A552B6052D900913572 /* logic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = logic.cpp; sourceTree = "<group>"; };
@@ -1131,7 +1128,6 @@
 		CAEE4C992B6052DA00913572 /* mimeversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mimeversion.h; sourceTree = "<group>"; };
 		CAEE4C9B2B6052DA00913572 /* handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = handler.h; sourceTree = "<group>"; };
 		CAEE4C9C2B6052DA00913572 /* handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = handler.cpp; sourceTree = "<group>"; };
-		CAEE4C9D2B6052DA00913572 /* cpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpp.h; sourceTree = "<group>"; };
 		CAEE4C9F2B6052DA00913572 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
 		CAEE4CA02B6052DA00913572 /* shell.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = shell.c; sourceTree = "<group>"; };
 		CAEE4CA12B6052DA00913572 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
@@ -1168,7 +1164,6 @@
 		CAEE4CC42B6052DA00913572 /* logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logic.h; sourceTree = "<group>"; };
 		CAEE4CC52B6052DA00913572 /* poll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = poll.h; sourceTree = "<group>"; };
 		CAEE4CC62B6052DA00913572 /* index.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = index.cpp; sourceTree = "<group>"; };
-		CAEE4CC72B6052DA00913572 /* c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = c.h; sourceTree = "<group>"; };
 		CAEE4CC92B6052DA00913572 /* index.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = index.h; sourceTree = "<group>"; };
 		CAEE4CCA2B6052DA00913572 /* strongs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = strongs.cpp; sourceTree = "<group>"; };
 		CAEE4CCB2B6052DA00913572 /* renotes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = renotes.cpp; sourceTree = "<group>"; };
@@ -1624,7 +1619,6 @@
 		CAEE4EC22B6052DB00913572 /* view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = view.h; sourceTree = "<group>"; };
 		CAEE4EC32B6052DB00913572 /* view.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = view.cpp; sourceTree = "<group>"; };
 		CAEE4EC42B6052DB00913572 /* external.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = external.cpp; sourceTree = "<group>"; };
-		CAEE4EC52B6052DB00913572 /* cpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cpp.cpp; sourceTree = "<group>"; };
 		CAEE4EC72B6052DB00913572 /* tmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tmp.h; sourceTree = "<group>"; };
 		CAEE4EC82B6052DB00913572 /* tmp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tmp.cpp; sourceTree = "<group>"; };
 		CAEE4ECA2B6052DB00913572 /* search.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = search.cpp; sourceTree = "<group>"; };
@@ -1749,8 +1743,6 @@
 				CAEE4DC22B6052DA00913572 /* book */,
 				CAEE4A752B6052D900913572 /* bootstrap */,
 				CAEE4E0F2B6052DA00913572 /* build */,
-				CAEE4A502B6052D900913572 /* c.c */,
-				CAEE4CC72B6052DA00913572 /* c.h */,
 				CAEE4AD02B6052D900913572 /* changes */,
 				CAEE4AAF2B6052D900913572 /* checks */,
 				CAEE4EAA2B6052DB00913572 /* checksum */,
@@ -1762,8 +1754,6 @@
 				CAEE4A922B6052D900913572 /* config.h */,
 				CAEE4B172B6052D900913572 /* confirm */,
 				CAEE4CBE2B6052DA00913572 /* consistency */,
-				CAEE4EC52B6052DB00913572 /* cpp.cpp */,
-				CAEE4C9D2B6052DA00913572 /* cpp.h */,
 				CAEE49DF2B6052D900913572 /* database */,
 				CAEE49CF2B6052D900913572 /* demo */,
 				CAEE4A492B6052D900913572 /* developer */,
@@ -3856,7 +3846,6 @@
 				CAEE4F462B6052DB00913572 /* index.cpp in Sources */,
 				CAEE50C72B6052DE00913572 /* alloc.c in Sources */,
 				CAEE504A2B6052DD00913572 /* load.cpp in Sources */,
-				CAEE51612B6052DF00913572 /* cpp.cpp in Sources */,
 				CAEE4FDA2B6052DC00913572 /* timing.c in Sources */,
 				CAEE4F2E2B6052DB00913572 /* oshb.cpp in Sources */,
 				CAEE4F2C2B6052DB00913572 /* privileges.cpp in Sources */,
@@ -4130,7 +4119,6 @@
 				CAEE4F682B6052DB00913572 /* fetch.cpp in Sources */,
 				CAEE4FA12B6052DC00913572 /* pk_wrap.c in Sources */,
 				CAEE51722B6052DF00913572 /* usfm2html.cpp in Sources */,
-				CAEE4F472B6052DB00913572 /* c.c in Sources */,
 				CAEE511D2B6052DE00913572 /* archive.cpp in Sources */,
 				CAEE50492B6052DD00913572 /* offset.cpp in Sources */,
 				CAEE515B2B6052DF00913572 /* index.cpp in Sources */,
