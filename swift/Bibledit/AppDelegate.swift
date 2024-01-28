@@ -18,24 +18,43 @@
 
 import Cocoa
 
+
+// This must be kept alive through the applications's duration to retain the settings made on it.
+var activityToken: NSObjectProtocol?
+
+
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-
     
 
-
+    // Put code here to initialize the application.
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+        disableAppNap()
     }
 
+    
+    // Put code here to tear down the application.
     func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
     }
 
+    
+    // Restoring the state of the application has not been implemented.
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
-        return true
+        return false
     }
 
-
+    // Disable App Nap.
+    func disableAppNap () {
+        // When the Bibledit app is in the background, macOS puts it to sleep.
+        // This is the "App Nap".
+        // It has been noticed that even after coming out of the nap, 
+        // Bibledit remains slowish and uses a lot of CPU resources.
+        // Simple solution: Disable App Nap.
+        activityToken = ProcessInfo.processInfo.beginActivity(options: .userInitiated, reason: "runs a web server")
+        // The Activity Monitor shows the intended effects.
+        // Upon minimizing Bibledit, the App Nap remains "No".
+        // Without the code above it would change to "Yes".
+        // This proves that disabling App Nap works.
+    }
 }
 
