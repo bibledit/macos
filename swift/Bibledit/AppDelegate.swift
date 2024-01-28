@@ -38,6 +38,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         getNegotiatedLocalWebServerPortNumber()
         
         initializeBibleditLibrary()
+
+        activateWindows()
     }
 
     
@@ -103,5 +105,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let package: UnsafePointer<Int8>? = NSString(string: packagePath).utf8String
         let webroot: UnsafePointer<Int8>? = NSString(string: webrootPath).utf8String
         bibledit_initialize_library (package, webroot);
+    }
+    
+    func activateWindows() -> Void {
+        NSApp.activate(ignoringOtherApps: true)
+        NSApp.windows.first?.orderFrontRegardless()
     }
 }

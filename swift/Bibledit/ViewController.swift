@@ -26,16 +26,18 @@ class ViewController: NSViewController, WKUIDelegate
     
     override func loadView()
     {
+        print ("loadView()")
+        super.loadView()
         let web_view_configuration = WKWebViewConfiguration ()
         web_view_configuration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
         web_view = WKWebView (frame: CGRect(x:0, y:0, width:800, height:600), configuration:web_view_configuration)
-        // web_view = WKWebView (frame: CGRectZero, configuration: web_view_configuration) This displays hidden, no use. Todo perhaps to connect to the resize event.
         web_view.uiDelegate = self
         view = web_view
     }
     
-    override func viewDidLoad() {
-        print ("view did load")
+    override func viewDidLoad() 
+    {
+        print ("viewDidLoad()")
         super.viewDidLoad()
         let url = Bundle.main.url ( forResource: "changelog",
                                     withExtension: "html",
@@ -45,7 +47,5 @@ class ViewController: NSViewController, WKUIDelegate
         print (path)
         web_view.loadFileURL ( url!, allowingReadAccessTo: path)
         self.view = web_view
-        NSApp.activate(ignoringOtherApps: true)
-        NSApp.windows.first?.orderFrontRegardless()
     }
 }
