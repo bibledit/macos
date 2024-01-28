@@ -1443,7 +1443,6 @@
 		CAEE4E0B2B6052DA00913572 /* pugixml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pugixml.cpp; sourceTree = "<group>"; };
 		CAEE4E0D2B6052DA00913572 /* text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = text.cpp; sourceTree = "<group>"; };
 		CAEE4E0E2B6052DA00913572 /* text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = text.h; sourceTree = "<group>"; };
-		CAEE4E102B6052DA00913572 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		CAEE4E122B6052DA00913572 /* google.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = google.cpp; sourceTree = "<group>"; };
 		CAEE4E132B6052DA00913572 /* css.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = css.cpp; sourceTree = "<group>"; };
 		CAEE4E142B6052DA00913572 /* memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = memory.cpp; sourceTree = "<group>"; };
@@ -1732,7 +1731,6 @@
 				CAEE4A782B6052D900913572 /* bb */,
 				CAEE4DC22B6052DA00913572 /* book */,
 				CAEE4A752B6052D900913572 /* bootstrap */,
-				CAEE4E0F2B6052DA00913572 /* build */,
 				CAEE4AD02B6052D900913572 /* changes */,
 				CAEE4AAF2B6052D900913572 /* checks */,
 				CAEE4EAA2B6052DB00913572 /* checksum */,
@@ -3251,14 +3249,6 @@
 				CAEE4E0E2B6052DA00913572 /* text.h */,
 			);
 			path = text;
-			sourceTree = "<group>";
-		};
-		CAEE4E0F2B6052DA00913572 /* build */ = {
-			isa = PBXGroup;
-			children = (
-				CAEE4E102B6052DA00913572 /* config.h */,
-			);
-			path = build;
 			sourceTree = "<group>";
 		};
 		CAEE4E112B6052DA00913572 /* filter */ = {
