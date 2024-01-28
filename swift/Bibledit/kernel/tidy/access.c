@@ -3195,8 +3195,8 @@ static void CheckForListElements( TidyDocImpl* doc, Node* node )
 /******************************************************
 * CheckListUsage
 *
-* Ensures that lists are properly used.  <ol> and <ul>
-* must contain <li> within itself, and <li> must not be
+* Ensures that lists are properly used. The tags "ol" and "ul"
+* must contain "li" within itself, and "li" must not be
 * by itself.
 ******************************************************/
 
