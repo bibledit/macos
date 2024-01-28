@@ -19,9 +19,10 @@
 import Cocoa
 import WebKit
 
+public var web_view: WKWebView!
+
 class ViewController: NSViewController, WKUIDelegate
 {
-    var web_view: WKWebView!
     
     override func loadView()
     {
@@ -31,12 +32,6 @@ class ViewController: NSViewController, WKUIDelegate
         // web_view = WKWebView (frame: CGRectZero, configuration: web_view_configuration) This displays hidden, no use. Todo perhaps to connect to the resize event.
         web_view.uiDelegate = self
         view = web_view
-        
-        // Invoke C. // Todo
-//        hello_c("World")
-//        hello_c(("World" as NSString).cString(using: NSUTF8StringEncoding))
-        // Incode C++.
-//        hello_cpp("World")
     }
     
     override func viewDidLoad() {
@@ -48,7 +43,7 @@ class ViewController: NSViewController, WKUIDelegate
         print (url!)
         let path = url!.deletingLastPathComponent();
         print (path)
-        self.web_view.loadFileURL ( url!, allowingReadAccessTo: path)
+        web_view.loadFileURL ( url!, allowingReadAccessTo: path)
         self.view = web_view
         NSApp.activate(ignoringOtherApps: true)
         NSApp.windows.first?.orderFrontRegardless()
