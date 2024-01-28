@@ -32,7 +32,7 @@ class ViewController: NSViewController, WKUIDelegate
         web_view_configuration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
         web_view = WKWebView (frame: CGRect(x:0, y:0, width:800, height:600), configuration:web_view_configuration)
         web_view.uiDelegate = self
-        view = web_view
+        self.view = web_view
     }
     
     override func viewDidLoad() 
@@ -46,6 +46,35 @@ class ViewController: NSViewController, WKUIDelegate
         let path = url!.deletingLastPathComponent();
         print (path)
         web_view.loadFileURL ( url!, allowingReadAccessTo: path)
-        self.view = web_view
+        displayLoading()
     }
+
+    func displayLoading()
+    {
+        // Open a "loading" message in the WebView.
+        // This message will be displayed for as long as the Bibledit kernel server is not yet available.
+        let htmlString : String = 
+"""
+<html>
+<head>
+<style>
+.center-screen {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ text-align: center;
+ min-height: 100vh;
+ background: radial-gradient(gold, yellow, white);
+}
+</style>
+</head>
+<body>
+<h2 class=\"center-screen\">... Bibledit loading ...</h2>
+</body>
+</html>
+"""
+        web_view.loadHTMLString(htmlString, baseURL: nil)
+    }
+    
 }
