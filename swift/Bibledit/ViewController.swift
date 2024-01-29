@@ -19,7 +19,11 @@
 import Cocoa
 import WebKit
 
+// The WebKit view.
 public var web_view: WKWebView!
+
+// Flag for whether the kernel is ready.
+public var kernelReady : Bool = false
 
 class ViewController: NSViewController, WKUIDelegate
 {
@@ -34,21 +38,22 @@ class ViewController: NSViewController, WKUIDelegate
         web_view.uiDelegate = self
         self.view = web_view
     }
+
     
-    override func viewDidLoad() 
+    override func viewDidLoad()
     {
         print ("viewDidLoad()")
         super.viewDidLoad()
-        let url = Bundle.main.url ( forResource: "changelog",
-                                    withExtension: "html",
-                                    subdirectory: "webroot/help")
-        print (url!)
-        let path = url!.deletingLastPathComponent();
-        print (path)
-        web_view.loadFileURL ( url!, allowingReadAccessTo: path)
+//        let url = Bundle.main.url ( forResource: "changelog",
+//                                    withExtension: "html",
+//                                    subdirectory: "webroot/help")
+//        let path = url!.deletingLastPathComponent();
+//        web_view.loadFileURL ( url!, allowingReadAccessTo: path)
         displayLoading()
+        urlTimer()
     }
 
+    
     func displayLoading()
     {
         // Open a "loading" message in the WebView.
@@ -77,4 +82,61 @@ class ViewController: NSViewController, WKUIDelegate
         web_view.loadHTMLString(htmlString, baseURL: nil)
     }
     
+    
+    // The following is to fix the following bug:
+    //   We discovered one or more bugs in your app when reviewed on Mac running macOS 10.13.5.
+    //   On first launch of the app, only a blank window is shown.
+    //   On the second launch of the app, the UI then properly appears.
+    // While resolving this bug, it was discovered that on initial run,
+    // the internal webserver did indeed start, but could not be contacted right away.
+    // That caused the blank window.
+    // The solution is this:
+    //   Start the internal web server plus the browser after a delay.
+    // Obviously the sandbox does not assign the server privilege right away.
+    // But it does do so after a slight delay.
+    func urlTimer () -> Void {
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+
+            // Start the embedded server.
+            // Note that it may seem to be started multiple times, each timer iteration,
+            // but the function's implementation limits this to just once.
+            bibledit_start_library ();
+
+            // Wait shortly to give the system time to start. The value is in seconds.
+            Thread.sleep(forTimeInterval: 0.2)
+
+            // The server listens on another port than 8080.
+            // Goal: Not to interfere with possible development on the same host.
+            // It used to connect to localhost but this led to errors like:
+            // nw_socket_handle_socket_event [C2.1:2] Socket SO_ERROR [61: Connection refused]
+            // The fix is to connect to 127.0.0.1 instead.
+            // This timer will keep testing the embedded Bibledit kernel webserver
+            // till it becomes available.
+            let urlString : String = "http://127.0.0.1:" + portNumber
+            let url = URL(string: urlString)!
+            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                // The data task fails or succeeds.
+                // If the data task fails, then error has a value. 
+                // If the data task succeeds, then data and response have a value.
+                // If data is received, it means that the Bibledit kernel is ready for use.
+                if data != nil {
+                    kernelReady = true
+                }
+            }
+
+            // The data task is created, but the HTTP request isn't executed.
+            // Call resume() on the task to execute it.
+            task.resume()
+
+            // If the Bibledit kernel is now ready to accept requests,
+            // stop the timer and cancel the task,
+            // and open the web app in the WebKit view.
+            if (kernelReady) {
+                timer.invalidate()
+                task.cancel()
+                let request = URLRequest(url: url)
+                web_view.load(request)
+            }
+        }
+    }
 }
