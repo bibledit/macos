@@ -30,19 +30,19 @@ class ViewController: NSViewController, WKUIDelegate
     
     override func loadView()
     {
-        print ("loadView()")
         super.loadView()
         let web_view_configuration = WKWebViewConfiguration ()
         web_view_configuration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
         web_view = WKWebView (frame: CGRect(x:0, y:0, width:800, height:600), configuration:web_view_configuration)
         web_view.uiDelegate = self
         self.view = web_view
+        // For the developer console in the webview, enter the following from a terminal:
+        //   defaults write org.bibledit.osx WebKitDeveloperExtras TRUE
     }
 
     
     override func viewDidLoad()
     {
-        print ("viewDidLoad()")
         super.viewDidLoad()
         displayLoading()
         urlTimer()

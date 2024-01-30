@@ -40,11 +40,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         initializeBibleditLibrary()
 
         activateWindows()
+        
+        //handleResize()
+        
     }
 
     
     // Put code here to tear down the application.
     func applicationWillTerminate(_ aNotification: Notification) {
+        let name = NSNotification.Name(rawValue: "com.santafemac.scrolledToVerse")
+        DistributedNotificationCenter.default().removeObserver(self, name: name, object: nil)
+        bibledit_stop_library ();
+        while (bibledit_is_running ()) {}
+        bibledit_shutdown_library ();
     }
 
     
@@ -77,7 +85,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             portNumber = "9876"
         }
-        print ("port number: ", portNumber)
     }
 
     
@@ -111,4 +118,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.activate(ignoringOtherApps: true)
         NSApp.windows.first?.orderFrontRegardless()
     }
+    
+//    func handleResize() -> Void {
+//        NotificationCenter.default.addObserver(self, selector: #selector(NSWindowDelegate.windowDidResize(_:)), name: NSWindow.didResizeNotification, object: nil)
+//    }
+    
+//    func windowDidResize(_ notification: Notification) {
+//        //print(view.window?.frame.size as Any)
+//        print ("resize")
+//    }
 }
