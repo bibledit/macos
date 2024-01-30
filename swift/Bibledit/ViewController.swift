@@ -44,11 +44,6 @@ class ViewController: NSViewController, WKUIDelegate
     {
         print ("viewDidLoad()")
         super.viewDidLoad()
-//        let url = Bundle.main.url ( forResource: "changelog",
-//                                    withExtension: "html",
-//                                    subdirectory: "webroot/help")
-//        let path = url!.deletingLastPathComponent();
-//        web_view.loadFileURL ( url!, allowingReadAccessTo: path)
         displayLoading()
         urlTimer()
     }
@@ -58,28 +53,11 @@ class ViewController: NSViewController, WKUIDelegate
     {
         // Open a "loading" message in the WebView.
         // This message will be displayed for as long as the Bibledit kernel server is not yet available.
-        let htmlString : String = 
-"""
-<html>
-<head>
-<style>
-.center-screen {
- display: flex;
- flex-direction: column;
- justify-content: center;
- align-items: center;
- text-align: center;
- min-height: 100vh;
- background: radial-gradient(gold, yellow, white);
-}
-</style>
-</head>
-<body>
-<h2 class=\"center-screen\">... Bibledit loading ...</h2>
-</body>
-</html>
-"""
-        web_view.loadHTMLString(htmlString, baseURL: nil)
+        let url = Bundle.main.url ( forResource: "loading",
+                                    withExtension: "html",
+                                    subdirectory: "webroot/bootstrap")
+        let path = url!.deletingLastPathComponent();
+        web_view.loadFileURL ( url!, allowingReadAccessTo: path )
     }
     
     
