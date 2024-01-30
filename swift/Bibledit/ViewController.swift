@@ -56,7 +56,7 @@ class ViewController: NSViewController, WKUIDelegate
         let url = Bundle.main.url ( forResource: "loading",
                                     withExtension: "html",
                                     subdirectory: "webroot/bootstrap")
-        let path = url!.deletingLastPathComponent();
+        let path = url!.deletingLastPathComponent()
         web_view.loadFileURL ( url!, allowingReadAccessTo: path )
     }
     
@@ -78,7 +78,7 @@ class ViewController: NSViewController, WKUIDelegate
             // Start the embedded server.
             // Note that it may seem to be started multiple times, each timer iteration,
             // but the function's implementation limits this to just once.
-            bibledit_start_library ();
+            bibledit_start_library ()
 
             // Wait shortly to give the system time to start. The value is in seconds.
             Thread.sleep(forTimeInterval: 0.2)
@@ -91,8 +91,8 @@ class ViewController: NSViewController, WKUIDelegate
             // This timer will keep testing the embedded Bibledit kernel webserver
             // till it becomes available.
             let urlString : String = "http://127.0.0.1:" + portNumber
-            let url = URL(string: urlString)!
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            let url = URL(string: urlString)
+            let task = URLSession.shared.dataTask(with: url!) { data, response, error in
                 // The data task fails or succeeds.
                 // If the data task fails, then error has a value. 
                 // If the data task succeeds, then data and response have a value.
@@ -112,7 +112,7 @@ class ViewController: NSViewController, WKUIDelegate
             if (kernelReady) {
                 timer.invalidate()
                 task.cancel()
-                let request = URLRequest(url: url)
+                let request = URLRequest(url: url!)
                 web_view.load(request)
             }
         }
