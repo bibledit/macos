@@ -41,8 +41,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         activateWindows()
         
-        //handleResize()
-        
+        startGeneralTimer()
     }
 
     
@@ -119,12 +118,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.windows.first?.orderFrontRegardless()
     }
     
-//    func handleResize() -> Void {
-//        NotificationCenter.default.addObserver(self, selector: #selector(NSWindowDelegate.windowDidResize(_:)), name: NSWindow.didResizeNotification, object: nil)
-//    }
+    func handleResize() -> Void {
+        NotificationCenter.default.addObserver(self, selector: #selector(NSWindowDelegate.windowDidResize(_:)), name: NSWindow.didResizeNotification, object: nil) // Not used.
+    }
     
-//    func windowDidResize(_ notification: Notification) {
-//        //print(view.window?.frame.size as Any)
-//        print ("resize")
-//    }
+    func windowDidResize(_ notification: Notification) {
+        //print(view.window?.frame.size as Any)
+    }
+
+    
+    func startGeneralTimer () -> Void {
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            
+            // Checking whether Bibledit wants to open a URL in the default system browser.
+            let externalUrl = String (cString: bibledit_get_external_url ());
+            if (!externalUrl.isEmpty) {
+                let url = URL(string: externalUrl)
+                NSWorkspace.shared.open(url!)
+            }
+        }
+    }
+
+    
 }
