@@ -23,7 +23,15 @@ import Cocoa
 var activityToken: NSObjectProtocol?
 
 // The negotiated port number for the webserver to listen on.
-public var portNumber : String = "";
+public var portNumber : String = ""
+
+
+// Variables for sending and receiving passages to and from Accordance.
+public var accordanceReceivedVerse : String = ""
+public var previous_sent_reference : String = ""
+public var previous_received_reference : String = ""
+public var send_counter : Int = 0
+public var receive_counter : Int = 0;
 
 
 @main
@@ -42,6 +50,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         activateWindows()
         
         startGeneralTimer()
+        
+        listenToAccordance()
     }
 
     
@@ -136,7 +146,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 let url = URL(string: externalUrl)
                 NSWorkspace.shared.open(url!)
             }
+            
+            
         }
+    }
+
+    
+    func listenToAccordance() -> Void {
+        let name = NSNotification.Name(rawValue: "com.santafemac.scrolledToVerse")
+        DistributedNotificationCenter.default().addObserver(self, selector: #selector(accordanceDidScroll(_:)), name: name, object: nil, suspensionBehavior: DistributedNotificationCenter.SuspensionBehavior.coalesce)
+    }
+
+    // When a new verse references comes in from Accordance,
+    // store this verse reference,
+    // to be processed later by the general one-second repeating timer.
+    @objc func accordanceDidScroll(_ notification:Notification) {
+        accordanceReceivedVerse = notification.object as! String;
+        print (accordanceReceivedVerse)
     }
 
     
