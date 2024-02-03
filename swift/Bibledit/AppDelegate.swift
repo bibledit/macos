@@ -65,6 +65,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool
+    {
+        return true
+    }
+
+    
     // Restoring the state of the application has not been implemented.
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
         return false
