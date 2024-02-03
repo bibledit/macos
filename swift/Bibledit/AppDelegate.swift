@@ -28,10 +28,10 @@ public var portNumber : String = ""
 
 // Variables for sending and receiving passages to and from Accordance.
 public var accordanceReceivedVerse : String = ""
-public var previous_sent_reference : String = ""
-public var previous_received_reference : String = ""
-public var send_counter : Int = 0
-public var receive_counter : Int = 0;
+public var previousSentReference : String = ""
+public var previousReceivedReference : String = ""
+public var sendCounter : Int = 0
+public var receiveCounter : Int = 0;
 
 
 @main
@@ -146,8 +146,38 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 let url = URL(string: externalUrl)
                 NSWorkspace.shared.open(url!)
             }
+
             
-            
+            // Accordance have implemented a ’SantaFeMac’ scheme
+            // that should allow intra-app scrolling,
+            // even if in the Mac App Store.
+            // As of Accordance 13.1.5 that supports it for both sending and receiving.
+            // Sandboxed apps can send notifications only if they do not contain a dictionary.
+            // If the sending application is in an App Sandbox, userInfo must be nil.
+            // Since Bibledit is on the Mac App Store, any additional information cannot be sent.
+            // To that end the information can be still sent and retrieved as the “object” of the notification.
+            // The Accordance developer has defined the notification string as:
+            //   com.santafemac.scrolledToVerse
+            // There's counters to prevent oscillation between send and received verse references.
+            sendCounter += 1
+            receiveCounter += 1
+            let reference = String(cString: bibledit_get_reference_for_accordance ())
+            if (reference != previousSentReference) {
+                if (sendCounter > 1) {
+                    previousSentReference = reference
+                    let scrolledToVerse = NSNotification.Name(rawValue: "com.santafemac.scrolledToVerse")
+                    DistributedNotificationCenter.default().postNotificationName(scrolledToVerse, object: reference, userInfo: nil, deliverImmediately: true)
+                    receiveCounter = 0;
+                }
+            }
+            if (accordanceReceivedVerse != previousReceivedReference) {
+                if (receiveCounter > 1) {
+                    previousReceivedReference = accordanceReceivedVerse
+                    let cReference: UnsafePointer<Int8>? = NSString(string: accordanceReceivedVerse).utf8String
+                    bibledit_put_reference_from_accordance (cReference);
+                    sendCounter = 0;
+                }
+            }
         }
     }
 
@@ -162,7 +192,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // to be processed later by the general one-second repeating timer.
     @objc func accordanceDidScroll(_ notification:Notification) {
         accordanceReceivedVerse = notification.object as! String;
-        print (accordanceReceivedVerse)
     }
 
     
