@@ -25,7 +25,7 @@ public var web_view: WKWebView!
 // Flag for whether the kernel is ready.
 public var kernelReady : Bool = false
 
-class ViewController: NSViewController, WKUIDelegate
+class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDownloadDelegate
 {
     
     override func loadView()
@@ -38,6 +38,7 @@ class ViewController: NSViewController, WKUIDelegate
         self.view = web_view
         // For the developer console in the webview, enter the following from a terminal:
         //   defaults write org.bibledit.osx WebKitDeveloperExtras TRUE
+        web_view.navigationDelegate = self
     }
 
     
@@ -47,8 +48,112 @@ class ViewController: NSViewController, WKUIDelegate
         displayLoading()
         urlTimer()
     }
+    
+    
+    func webView(_ webView: WKWebView, navigationAction: WKNavigationAction, didBecome download: WKDownload) {
+        // Set the delegate for downloading. In this case it is set to self.
+        // It could also be set to an object that handles the download.
+        download.delegate = self
+    }
 
     
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationAction: WKNavigationAction,
+                 preferences: WKWebpagePreferences,
+                 decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void)
+    {
+        // This occurs if the "download" attribute in the HTML has been specified.
+        if navigationAction.shouldPerformDownload {
+            // Express the intent to download the URL.
+            decisionHandler(.download, preferences)
+        } else {
+            // Express the intent to open the URL in the browser.
+            decisionHandler(.allow, preferences)
+        }
+    }
+
+
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationResponse: WKNavigationResponse,
+                 decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void)
+    {
+        // if let mimeType = navigationResponse.response.mimeType {
+        // }
+        if let url = navigationResponse.response.url {
+            if url.pathExtension == "usfm" {
+                // Express the intent to download the URL.
+                decisionHandler(.download)
+                return
+            }
+        }
+        if navigationResponse.canShowMIMEType {
+            // Express the intent to open the URL in the browser.
+            decisionHandler(.allow)
+            return
+        } else {
+            // The browser cannot show this MIME type, so express the intent to download it.
+            decisionHandler(.download)
+            return
+        }
+    }
+
+
+    // The name of the downloaded file.
+    var downloadedFilename : String = ""
+
+    
+    // Asks the delegate to provide a file destination
+    // where the system should write the download data.
+    func download(_ download: WKDownload,
+                  decideDestinationUsing response: URLResponse,
+                  suggestedFilename: String,
+                  completionHandler: @escaping (URL?) -> Void) {
+
+        // Store the file in the Downloads directory using the suggested file name.
+        let downloadsDirectory = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
+        let fileName = downloadsDirectory.appendingPathComponent(suggestedFilename)
+
+        // If the file to download already exists, delete it, and keep a note of that.
+        do {
+            try FileManager.default.removeItem(at: fileName)
+        }
+        catch { }
+
+        // Store the suggested filename.
+        downloadedFilename = suggestedFilename
+
+        // Pass the filename to download to actually start the download.
+        completionHandler(fileName)
+    }
+
+    
+    // Tells the delegate that the download finished.
+    // Inform the user.
+    func downloadDidFinish(_ download: WKDownload) {
+        let alert = NSAlert()
+        alert.messageText = "Download complete"
+        alert.informativeText = "The file was saved to the Downloads directory as " + downloadedFilename
+        alert.addButton(withTitle: "OK")
+        alert.alertStyle = .informational
+        alert.runModal() 
+    }
+
+    
+    // Tells the delegate that the download failed,
+    // with error information and data you can use to restart the download.
+    // Inform the user.
+    public func download(_ download: WKDownload,
+                         didFailWithError error: Error,
+                         resumeData: Data?) {
+        let alert = NSAlert()
+        alert.messageText = "Download failed"
+        alert.informativeText = error.localizedDescription
+        alert.addButton(withTitle: "OK")
+        alert.alertStyle = .warning
+        alert.runModal()
+    }
+
+
     func displayLoading()
     {
         // Open a "loading" message in the WebView.
