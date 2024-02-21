@@ -79,13 +79,13 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDo
     {
         // if let mimeType = navigationResponse.response.mimeType {
         // }
-        if let url = navigationResponse.response.url {
-            if url.pathExtension == "usfm" {
-                // Express the intent to download the URL.
-                decisionHandler(.download)
-                return
-            }
-        }
+//        if let url = navigationResponse.response.url {
+//            if url.pathExtension == "usfm" {
+//                // Express the intent to download the URL.
+//                decisionHandler(.download)
+//                return
+//            }
+//        }
         if navigationResponse.canShowMIMEType {
             // Express the intent to open the URL in the browser.
             decisionHandler(.allow)
