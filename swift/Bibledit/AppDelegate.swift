@@ -106,15 +106,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func initializeBibleditLibrary() -> Void {
 
         // Get the path of the resources to copy.
-        let resourcesUrl = URL(fileURLWithPath: Bundle.main.resourcePath!)
-        let resourceWebroot = resourcesUrl.appendingPathComponent("webroot")
-        let packagePath = resourceWebroot.path()
-
+        //let resourcesUrl = URL(fileURLWithPath: Bundle.main.resourcePath!)
+        //let resourceWebroot = resourcesUrl.appendingPathComponent("webroot")
+        //let packagePath = resourceWebroot.path()
+        let packagePath = Bundle.main.resourcePath! + "/webroot/"
         // Get the path of where to copy the resources to.
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let documentsUrl = URL(fileURLWithPath: documentsPath)
-        let documentsWebroot = documentsUrl.appendingPathComponent("webroot")
-        let webrootPath = documentsWebroot.path()
+        //let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        //let documentsUrl = URL(fileURLWithPath: documentsPath)
+        //let documentsWebroot = documentsUrl.appendingPathComponent("webroot")
+        //let webrootPath = documentsWebroot.path()
+        let webrootPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! + "/webroot/"
 
         // Initialize the Bibledit kernel with the paths where to copy the resource data from,
         // and where to copy that data too.

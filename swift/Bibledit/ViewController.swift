@@ -186,7 +186,7 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDo
             bibledit_start_library ()
 
             // Wait shortly to give the system time to start. The value is in seconds.
-            Thread.sleep(forTimeInterval: 0.2)
+            Thread.sleep(forTimeInterval: 0.5)
 
             // The server listens on another port than 8080.
             // Goal: Not to interfere with possible development on the same host.
@@ -206,6 +206,7 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDo
                     kernelReady = true
                 }
             }
+            print ("kernel ready:", kernelReady)
 
             // The data task is created, but the HTTP request isn't executed.
             // Call resume() on the task to execute it.
