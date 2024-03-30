@@ -20,7 +20,7 @@ import Cocoa
 import WebKit
 
 // The WebKit view.
-public var web_view: WKWebView!
+public var webview: WKWebView!
 
 // Flag for whether the kernel is ready.
 public var kernelReady : Bool = false
@@ -33,12 +33,12 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDo
         super.loadView()
         let web_view_configuration = WKWebViewConfiguration ()
         web_view_configuration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
-        web_view = WKWebView (frame: CGRect(x:0, y:0, width:800, height:600), configuration:web_view_configuration)
-        web_view.uiDelegate = self
-        self.view = web_view
+        webview = WKWebView (frame: CGRect(x:0, y:0, width:800, height:600), configuration:web_view_configuration)
+        webview.uiDelegate = self
+        self.view = webview
         // For the developer console in the webview, enter the following from a terminal:
         //   defaults write org.bibledit.osx WebKitDeveloperExtras TRUE
-        web_view.navigationDelegate = self
+        webview.navigationDelegate = self
     }
 
     
@@ -166,7 +166,7 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDo
                                     withExtension: "html",
                                     subdirectory: "webroot/bootstrap")
         let path = url!.deletingLastPathComponent()
-        web_view.loadFileURL ( url!, allowingReadAccessTo: path )
+        webview.loadFileURL ( url!, allowingReadAccessTo: path )
     }
     
     
@@ -223,7 +223,7 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDo
                 timer.invalidate()
                 task.cancel()
                 let request = URLRequest(url: url!)
-                web_view.load(request)
+                webview.load(request)
             }
         }
     }
