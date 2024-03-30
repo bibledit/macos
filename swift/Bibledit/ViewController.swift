@@ -241,7 +241,21 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDo
 
     
     func printWebview () {
-        print ("print webview")
+        let printInfo = NSPrintInfo.shared
+        printInfo.horizontalPagination = .fit
+        printInfo.verticalPagination = .automatic
+        printInfo.isVerticallyCentered = true
+        printInfo.isHorizontallyCentered = true
+        printInfo.orientation = .portrait
+        printInfo.topMargin = 20
+        printInfo.bottomMargin = 20
+        printInfo.rightMargin = 20
+        printInfo.leftMargin = 20
+        let operation = webview.printOperation(with: printInfo)
+        operation.showsPrintPanel = true
+        operation.showsProgressPanel = true
+        operation.view?.frame = webview.bounds
+        operation.runModal(for: self.view.window!, delegate: self, didRun: nil, contextInfo: nil)
     }
     
     
