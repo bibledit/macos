@@ -223,4 +223,17 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDo
             }
         }
     }
+
+    
+    override func keyDown(with event: NSEvent) {
+        if (event.modifierFlags.contains(.command)) {
+            let code = event.keyCode
+            // Handle Cmd-F to Find.
+            if (code == 3) {
+                print ("Cmd-F")
+            }
+        }
+    }
+   
+    
 }
