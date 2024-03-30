@@ -199,5 +199,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         accordanceReceivedVerse = notification.object as! String;
     }
 
+    @IBAction func CmdPrint(_ sender: Any) {
+        NotificationCenter.default.post(name: Notification.Name("CmdPrint"), object: nil, userInfo: nil)
+    }
     
 }

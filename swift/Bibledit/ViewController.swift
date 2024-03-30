@@ -47,6 +47,10 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDo
         super.viewDidLoad()
         displayLoading()
         urlTimer()
+        // Observe and handle a notification for printing the webview.
+        NotificationCenter.default.addObserver(forName: Notification.Name("CmdPrint"), object: nil, queue: nil) { (notification) in
+            self.printWebview ()
+        }
     }
     
     
@@ -230,11 +234,15 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDo
             let code = event.keyCode
             // Handle Cmd-F to find text.
             if (code == 3) {
-                print ("Cmd-F")
+                printWebview ()
             }
         }
     }
 
+    
+    func printWebview () {
+        print ("print webview")
+    }
     
     
 }
