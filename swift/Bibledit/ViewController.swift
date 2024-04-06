@@ -25,6 +25,10 @@ public var webview: WKWebView!
 // Flag for whether the kernel is ready.
 public var kernelReady : Bool = false
 
+// The text to search the GUI for
+public var searchText : String = "";
+
+
 class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDownloadDelegate
 {
     
@@ -50,6 +54,10 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDo
         // Observe and handle a notification for printing the webview.
         NotificationCenter.default.addObserver(forName: Notification.Name("CmdPrint"), object: nil, queue: nil) { (notification) in
             self.printWebview ()
+        }
+        // Observe and handle a notification for finding text in the webview.
+        NotificationCenter.default.addObserver(forName: Notification.Name("CmdFind"), object: nil, queue: nil) { (notification) in
+            self.findText ()
         }
     }
     
@@ -231,11 +239,8 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDo
     
     override func keyDown(with event: NSEvent) {
         if (event.modifierFlags.contains(.command)) {
-            let code = event.keyCode
-            // Handle Cmd-F to find text.
-            if (code == 3) {
-                printWebview ()
-            }
+            //let code = event.keyCode
+            //print (code)
         }
     }
 
@@ -257,6 +262,34 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDo
         operation.view?.frame = webview.bounds
         operation.runModal(for: self.view.window!, delegate: self, didRun: nil, contextInfo: nil)
     }
+
     
+    func findText () {
+        let alert = NSAlert()
+        alert.messageText = "Search"
+        alert.addButton(withTitle:"OK")
+        alert.addButton(withTitle:"Cancel")
+        alert.informativeText = "Search for"
+        let rectangle = NSRect(x: 0, y: 0, width: 200, height: 24)
+        let input = NSTextField(frame: rectangle)
+        input.stringValue = searchText
+        alert.accessoryView = input
+        alert.window.initialFirstResponder = input
+        let button = alert.runModal()
+        if (button == NSApplication.ModalResponse.alertFirstButtonReturn) {
+            searchText = input.stringValue
+            if (!searchText.isEmpty) {
+                Task {
+                    // Highlight the first occurrence of the text to search for.
+                    _ = try await webview.find(searchText)
+                }
+            } else {
+                Task {
+                    // Search for text unlikely there: Result is to clear any highlights.
+                    _ = try await webview.find("b.i.b.l.e.d.i.t")
+                }
+            }
+        }
+    }
     
 }

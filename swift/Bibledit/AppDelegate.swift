@@ -203,4 +203,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NotificationCenter.default.post(name: Notification.Name("CmdPrint"), object: nil, userInfo: nil)
     }
     
+    @IBAction func CmdFind(_ sender: Any) {
+        NotificationCenter.default.post(name: Notification.Name("CmdFind"), object: nil, userInfo: nil)
+    }
+    
 }
