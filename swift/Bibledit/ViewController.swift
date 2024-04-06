@@ -298,5 +298,24 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDo
             }
         }
     }
+
+    func webView(_ webView: WKWebView, runOpenPanelWith parameters: WKOpenPanelParameters, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping ([URL]?) -> Void) {
+        // Create the file open dialog.
+        let openPanel = NSOpenPanel()
+        // Enable the selection of files in the dialog.
+        openPanel.canChooseFiles = true
+        // Enable the selection of directories in the dialog.
+        openPanel.canChooseDirectories = false
+        // Run it.
+        openPanel.begin { (result) in
+            if result == NSApplication.ModalResponse.OK {
+                if let url = openPanel.url {
+                    completionHandler([url])
+                }
+            } else if result == NSApplication.ModalResponse.cancel {
+                completionHandler(nil)
+            }
+        }
+    }
     
 }
