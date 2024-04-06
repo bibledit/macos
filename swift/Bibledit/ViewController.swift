@@ -239,8 +239,17 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDo
     
     override func keyDown(with event: NSEvent) {
         if (event.modifierFlags.contains(.command)) {
-            //let code = event.keyCode
-            //print (code)
+            let code = event.keyCode
+            // Handle Cmd-G - find next.
+            if (code == 5) {
+                Task {
+                    if (!searchText.isEmpty) {
+                        _ = try await webview.find(searchText)
+                    } else {
+                        _ = try await webview.find("b.i.b.l.e.d.i.t")
+                    }
+                }
+            }
         }
     }
 
@@ -278,13 +287,11 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, WKDo
         let button = alert.runModal()
         if (button == NSApplication.ModalResponse.alertFirstButtonReturn) {
             searchText = input.stringValue
-            if (!searchText.isEmpty) {
-                Task {
+            Task {
+                if (!searchText.isEmpty) {
                     // Highlight the first occurrence of the text to search for.
                     _ = try await webview.find(searchText)
-                }
-            } else {
-                Task {
+                } else {
                     // Search for text unlikely there: Result is to clear any highlights.
                     _ = try await webview.find("b.i.b.l.e.d.i.t")
                 }
