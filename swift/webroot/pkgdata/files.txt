@@ -1,3 +1,4 @@
+/0readme.txt
 /access
 /assets
 /assets/browserconfig.xml
@@ -397,6 +398,8 @@
 /mapping/Vulgate.txt
 /mbedtls
 /mbedtls/0readme.txt
+/mbedtls2
+/mbedtls2/0readme.txt
 /menu
 /microtar
 /microtar/LICENSE
@@ -515,12 +518,12 @@
 /pix/safari-pinned-tab.svg
 /pix/splash.jpg
 /pkgdata
-/pkgdata/.!16152!files.txt
 /pkgdata/create.sh
 /pkgdata/files.txt
 /pkgdata/install.sh
 /processes
 /processes/gitflag
+/psa
 /public
 /public/comment.html
 /public/create.html

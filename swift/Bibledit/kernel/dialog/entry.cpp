@@ -21,10 +21,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #include <assets/view.h>
 #include <assets/page.h>
 #include <filter/url.h>
-using namespace std;
 
 
-// Entry dialog constructor
+// Entry dialog constructor.
 // $url     : The base URL of the page.
 // $query   : A map with query variables, e.g. ("search" => "bibledit").
 //            If any $query is passed, if Cancel is clicked in this dialog, it should go go back
@@ -34,7 +33,7 @@ using namespace std;
 // $value   : The initial value to be put into the entry.
 // $submit  : Name of POST request to submit the information.
 // $help    : Help information explaining to the user what's going on.
-Dialog_Entry::Dialog_Entry (string url, string question, string value, string submit, string help)
+Dialog_Entry::Dialog_Entry (std::string url, std::string question, std::string value, std::string submit, std::string help)
 {
   base_url =  url;
   assets_view.set_variable ("question", question);
@@ -49,16 +48,16 @@ Dialog_Entry::~Dialog_Entry ()
 }
 
 
-void Dialog_Entry::add_query (string parameter, string value)
+void Dialog_Entry::add_query (std::string parameter, std::string value)
 {
   base_url = filter_url_build_http_query (base_url, parameter, value);
 }
 
 
-string Dialog_Entry::run ()
+std::string Dialog_Entry::run ()
 {
   assets_view.set_variable ("base_url", base_url);
-  string page =assets_view.render ("dialog", "entry");
+  std::string page =assets_view.render ("dialog", "entry");
   page += assets_page::footer ();
   return page;
 }
