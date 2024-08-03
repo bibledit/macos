@@ -83,6 +83,11 @@ find . -name exampleProgram.cpp -delete
 echo Remove main executable code
 rm executable/bibledit.*
 rm sqlite/shell.c
+echo Remove MbedTLS 3.x and enable version 2.x
+rm -rf mbedtls
+if [ $? != 0 ]; then exit; fi
+mv mbedtls2 mbedtls
+if [ $? != 0 ]; then exit; fi
 
 echo Copy the source code to the kernel folder.
 pwd
