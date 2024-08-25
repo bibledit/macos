@@ -461,7 +461,6 @@
 		CAEE512D2B6052DE00913572 /* esword.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E562B6052DA00913572 /* esword.cpp */; };
 		CAEE512E2B6052DE00913572 /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E5A2B6052DA00913572 /* logic.cpp */; };
 		CAEE512F2B6052DE00913572 /* textusfm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E5C2B6052DA00913572 /* textusfm.cpp */; };
-		CAEE51302B6052DE00913572 /* bibledropbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E5D2B6052DA00913572 /* bibledropbox.cpp */; };
 		CAEE51312B6052DE00913572 /* web.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E5F2B6052DA00913572 /* web.cpp */; };
 		CAEE51322B6052DE00913572 /* html.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E602B6052DA00913572 /* html.cpp */; };
 		CAEE51332B6052DE00913572 /* usfm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E612B6052DA00913572 /* usfm.cpp */; };
@@ -3964,7 +3963,6 @@
 				CAEE4F7B2B6052DC00913572 /* changes.cpp in Sources */,
 				CAEE514D2B6052DF00913572 /* convert2bible.cpp in Sources */,
 				CAEE4FA72B6052DC00913572 /* chacha20.c in Sources */,
-				CAEE51302B6052DE00913572 /* bibledropbox.cpp in Sources */,
 				CAEE50662B6052DD00913572 /* contentid.cxx in Sources */,
 				CAEE513E2B6052DF00913572 /* images.cpp in Sources */,
 				CAEE4FDB2B6052DC00913572 /* poly1305.c in Sources */,

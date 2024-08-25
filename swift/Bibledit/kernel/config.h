@@ -26,11 +26,11 @@
 /* Define whether to compile for Linux */
 /* #undef HAVE_LINUX */
 
-/* Define whether to compile for Mac */
-#define HAVE_MAC 1
-
 /* Define whether mach/mach.h is present */
 #define HAVE_MACH_MACH 1
+
+/* Define whether to compile for macOS */
+#define HAVE_MACOS 1
 
 /* Define whether pthread.h is present */
 #define HAVE_PTHREAD 1
@@ -85,7 +85,7 @@
 #define PACKAGE_PREFIX_DIR "NONE"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "bibledit 5.1.016"
+#define PACKAGE_STRING "bibledit 5.1.018"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "bibledit"
@@ -94,7 +94,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "5.1.016"
+#define PACKAGE_VERSION "5.1.018"
 
 /* Define to 1 if all of the C89 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for
@@ -102,7 +102,7 @@
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "5.1.016"
+#define VERSION "5.1.018"
 
 /* Define whether to compile on Windows */
 /* #undef WIN32 */
