@@ -38,27 +38,6 @@ if [ $? != 0 ]; then exit; fi
 # echo 9876 > config/network-port
 # if [ $? != 0 ]; then exit; fi
 
-sed -i.bak 's#/opt/local/include#. -I..#g' Makefile
-if [ $? != 0 ]; then exit; fi
-sed -i.bak 's#/opt/local/lib#.#g' Makefile
-if [ $? != 0 ]; then exit; fi
-sed -i.bak '/SWORD_CFLAGS =/d' Makefile
-if [ $? != 0 ]; then exit; fi
-sed -i.bak '/SWORD_LIBS =/d' Makefile
-if [ $? != 0 ]; then exit; fi
-sed -i.bak '/OPENSSL_LIBS =/d' Makefile
-if [ $? != 0 ]; then exit; fi
-sed -i.bak 's#-lmimetic# #g' Makefile
-if [ $? != 0 ]; then exit; fi
-sed -i.bak '/ICU_CFLAGS =/d' Makefile
-if [ $? != 0 ]; then exit; fi
-sed -i.bak '/ICU_LIBS =/d' Makefile
-if [ $? != 0 ]; then exit; fi
-sed -i.bak '/XML2_CFLAGS =/d' Makefile
-if [ $? != 0 ]; then exit; fi
-sed -i.bak '/XML2_LIBS =/d' Makefile
-if [ $? != 0 ]; then exit; fi
-
 echo Update the configuration.
 sed -i.bak '/HAVE_ICU/d' config.h
 if [ $? != 0 ]; then exit; fi
