@@ -5,9 +5,10 @@ Bibledit for macOS source code repository and developer assistance
 ## Introduction
 
 Bibledit has been working on macOS in various forms:
-* Bibledit-Gtk written for Linux and ported to Mac macOS.
-* Bibledit-Web written in PHP and adapted to run on Mac macOS.
-* Bibledit-macOS written in Objective-C and running natively on macOS.
+1. Bibledit-Gtk written for Linux and ported to Mac macOS.
+2. Bibledit-Web written in PHP and adapted to run on Mac macOS.
+3. Bibledit-macOS written in Objective-C and running natively on macOS.
+4. Bibledit-macOS written in Swift and running natively on macOS.
 
 The current port of Bibledit for macOS consists of the following parts:
 * A native Bibledit macOS app written in Swift.
