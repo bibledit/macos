@@ -1,5 +1,6 @@
 /0readme.txt
 /access
+/a.out
 /assets
 /assets/browserconfig.xml
 /assets/checkbox.js
@@ -236,9 +237,9 @@
 /edit/index.html
 /edit/index.js
 /edit/keys.js
-/editone2
-/editone2/index.html
-/editone2/index.js
+/editone
+/editone/index.html
+/editone/index.js
 /editor
 /editor/select.html
 /editor/select.js
@@ -275,6 +276,10 @@
 /generate
 /git
 /git/gitflag
+/gumbo
+/gumbo/0readme.txt
+/gumbo/char_ref.rl
+/gumbo/tag.in
 /help
 /help/about.html
 /help/changelog.html
@@ -288,8 +293,9 @@
 /help/installandroid.html
 /help/installation.html
 /help/installchromeos.html
-/help/installcloudcentos.html
-/help/installcloudubuntu.html
+/help/installcloudlinux.html
+/help/installcloudpackages.html
+/help/installcloudsource.html
 /help/installios.html
 /help/installlinux.html
 /help/installosx.html
@@ -319,6 +325,7 @@
 /images/index.html
 /images/view.html
 /index
+/index.html
 /index/index.html
 /index/listing.html
 /ipc
@@ -455,8 +462,6 @@
 /nicedit/nicedit.min.js
 /nicedit/nicEditorIcons.gif
 /nicedit/readme.txt
-/nmt
-/nmt/index.html
 /notes
 /notes/actions.html
 /notes/assign-1.html
@@ -565,7 +570,6 @@
 /read
 /read/index.html
 /read/index.js
-/redirect
 /related
 /related/ot-quotations-in-nt.xml
 /related/parallel-passages-nt.xml
@@ -746,8 +750,9 @@
 /styles
 /styles/indexm.html
 /styles/sheetm.html
-/styles/view.html
-/styles/view.js
+/stylesv2
+/styles/view2.html
+/styles/view2.js
 /sword
 /sword/dev.txt
 /sword/locales.d
@@ -885,7 +890,6 @@
 /unittests/tests/changed_verses.html
 /unittests/tests/chapters_new.usfm
 /unittests/tests/chapters_old.usfm
-/unittests/tests/css.css
 /unittests/tests/diff.txt
 /unittests/tests/editone01.html
 /unittests/tests/editone01prefix.usfm
@@ -1063,6 +1067,10 @@
 /unittests/tests/Genesis-1-1-18.gif
 /unittests/tests/html-fixed-1-gumbo.html
 /unittests/tests/html-invalid-1.html
+/unittests/tests/http-post-content-1.txt
+/unittests/tests/http-post-content-2.txt
+/unittests/tests/http-post-type-1.txt
+/unittests/tests/http-post-type-2.txt
 /unittests/tests/invalid-utf8-2.usfm
 /unittests/tests/invalid-utf8-new.txt
 /unittests/tests/invalid-utf8-old.txt
@@ -1089,9 +1097,11 @@
 /unittests/tests/odf2txt
 /unittests/tests/odf2txt/odf2txt.py
 /unittests/tests/odf2txt/out.txt
+/unittests/tests/odt2.txt
 /unittests/tests/onlinebible1.exp
 /unittests/tests/onlinebible2.exp
 /unittests/tests/ShonaNumbers23.usfm
+/unittests/tests/text2.txt
 /unittests/tests/usfm01.usfm
 /unittests/tests/verses_new.txt
 /unittests/tests/verses_new.usfm

@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2024 Teus Benschop.
+Copyright (©) 2003-2025 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #include <pugixml.hpp>
 #endif
 #pragma GCC diagnostic pop
+#include <styles/logic.h>
 
 class HtmlText
 {
@@ -43,7 +44,8 @@ public:
   std::string get_inner_html ();
   void new_heading1 (const std::string& text);
   void new_page_break ();
-  void open_text_style (const Database_Styles_Item& style, const bool note, const bool embed);
+  void open_text_style (const stylesv2::Style* stylev2,
+                        const bool note, const bool embed);
   void close_text_style (const bool note, const bool embed);
   void add_note (const std::string& citation, const std::string& style, const bool endnote = false);
   void add_note_text (const std::string& text);

@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2024 Teus Benschop.
+ Copyright (©) 2003-2025 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ void export_info (std::string bible, bool log)
   
   
   // Save files.
-  filter_text.produceInfoDocument (informationdFilename);
+  filter_text.produce_info_document (informationdFilename);
   filter_text.produceFalloutDocument (falloutFilename);
   
   

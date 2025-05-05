@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2024 Teus Benschop.
+ Copyright (©) 2003-2025 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -45,10 +45,10 @@ private:
   void preprocess ();
   void postprocess ();
   void process ();
-  void processNode (pugi::xml_node node);
-  void openElementNode (pugi::xml_node node);
-  void closeElementNode (pugi::xml_node node);
-  void openInline (std::string className);
-  std::string update_quill_class (std::string classname);
+  void process_node (pugi::xml_node node);
+  void open_element_node (pugi::xml_node node);
+  void close_element_node (pugi::xml_node node);
+  void open_inline (std::string class_name);
+  std::string update_quill_class (std::string class_name);
   std::string current_character_format {};
 };

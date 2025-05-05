@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2024 Teus Benschop.
+ Copyright (©) 2003-2025 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -519,7 +519,7 @@ std::string search_logic_plain_replace_verse_text (std::string usfm)
   filter_text.text_text = new Text_Text ();
   filter_text.initializeHeadingsAndTextPerVerse (true);
   filter_text.add_usfm_code (usfm);
-  filter_text.run (styles_logic_standard_sheet ());
+  filter_text.run (stylesv2::standard_sheet ());
   
   // The resulting plain text.
   std::string plain_text;

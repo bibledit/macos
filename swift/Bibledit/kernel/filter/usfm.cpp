@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2024 Teus Benschop.
+Copyright (©) 2003-2025 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -210,25 +210,23 @@ std::vector <BookChapterData> usfm_import (std::string input, std::string styles
         chapter_data = filter::strings::trim (chapter_data);
         if (!chapter_data.empty()) result.push_back ( { static_cast<int>(bookid), chapter_number, chapter_data } );
         chapter_number = 0;
-        chapter_data = "";
+        chapter_data.clear();
         store_chapter_data = false;
       }
-      Database_Styles database_styles;
-      Database_Styles_Item marker_data = database_styles.getMarkerData (stylesheet, marker);
-      int type = marker_data.type;
-      int subtype = marker_data.subtype;
       // Only opening markers can start on a new line.
       // Closing markers never do.
       if (opener) {
-        if (styles_logic_starts_new_line_in_usfm (type, subtype)) {
-          chapter_data.append ("\n");
+        if (const stylesv2::Style* style {database::styles::get_marker_data (stylesheet, marker)}; style) {
+          if (stylesv2::starts_new_line_in_usfm (style))
+            chapter_data.append ("\n");
         }
       }
     }
-    chapter_data += marker_or_text;
+    chapter_data.append(marker_or_text);
   }
   chapter_data = filter::strings::trim (chapter_data);
-  if (!chapter_data.empty()) result.push_back (BookChapterData (static_cast<int>(bookid), chapter_number, chapter_data));
+  if (!chapter_data.empty())
+    result.push_back (BookChapterData (static_cast<int>(bookid), chapter_number, chapter_data));
   return result;
 }
 
@@ -559,14 +557,13 @@ std::string get_book_identifier (const std::vector <std::string>& usfm, unsigned
 // Returns the text that follows a USFM marker.
 // $usfm: array of strings alternating between USFM code and subsequent text.
 // $pointer: should point to the marker in $usfm. It gets increased by one.
-std::string get_text_following_marker (const std::vector <std::string>& usfm, unsigned int & pointer)
+std::string get_text_following_marker (const std::vector <std::string>& usfm, unsigned int& pointer)
 {
-  std::string text = ""; // Fallback value.
-  ++pointer;
+  pointer++;
   if (pointer < usfm.size()) {
-    text = usfm [pointer];
+    return usfm [pointer];
   }
-  return text;
+  return std::string();
 }
 
 
@@ -934,23 +931,26 @@ const char * marker_vp ()
 // It will dispose of e.g. this: |strong="H3068"
 // It handles the default attribute: \w gracious|grace\w*
 void remove_word_level_attributes (const std::string& marker,
-                                   std::vector <std::string> & container, unsigned int & pointer)
+                                   std::vector <std::string> & container, const unsigned int pointer)
 {
   // USFM 3.0 has four markers providing attributes.
   // https://ubsicap.github.io/usfm/attributes/index.html.
   // Deal with those only, and don't deal with any others.
   // Note that the \fig markup is handled elsewhere in this class.
-  if ((marker != "w") && (marker != "rb") && (marker != "xt")) return;
+  if ((marker != "w") && (marker != "rb") && (marker != "xt"))
+    return;
   
   // Check the text following this markup whether it contains word-level attributes.
   std::string possible_markup = filter::usfm::peek_text_following_marker (container, pointer);
   
   // If the markup is too short to contain the required characters, then bail out.
-  if (possible_markup.length() < 4) return;
+  if (possible_markup.length() < 4)
+    return;
   
   // Look for the vertical bar. If it's not there, bail out.
-  size_t bar_position = possible_markup.find("|");
-  if (bar_position == std::string::npos) return;
+  const size_t bar_position = possible_markup.find("|");
+  if (bar_position == std::string::npos)
+    return;
   
   // Remove the fragment and store the remainder back into the object.
   possible_markup.erase(bar_position);

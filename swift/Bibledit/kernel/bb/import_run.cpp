@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2024 Teus Benschop.
+ Copyright (©) 2003-2025 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -82,7 +82,7 @@ void bible_import_usfm (const std::string& data, const std::string& bible, int b
 {
   (void) book;
   (void) chapter;
-  const std::string stylesheet = styles_logic_standard_sheet ();
+  const std::string stylesheet = stylesv2::standard_sheet ();
   const std::vector <filter::usfm::BookChapterData> book_chapter_text = filter::usfm::usfm_import (data, stylesheet);
   for (const auto& data2 : book_chapter_text) {
     const int book_number = data2.m_book;

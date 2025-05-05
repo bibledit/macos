@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2024 Teus Benschop.
+ Copyright (©) 2003-2025 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -128,7 +128,7 @@ std::string notes_create (Webserver_Request& webserver_request)
     std::string versetext;
     std::string chapter_usfm = database::bibles::get_chapter (bible, book, chapter);
     std::string verse_usfm = filter::usfm::get_verse_text (chapter_usfm, verse);
-    const std::string stylesheet = styles_logic_standard_sheet ();
+    const std::string stylesheet = stylesv2::standard_sheet ();
     Filter_Text filter_text = Filter_Text (bible);
     filter_text.text_text = new Text_Text ();
     filter_text.add_usfm_code (verse_usfm);
@@ -138,7 +138,6 @@ std::string notes_create (Webserver_Request& webserver_request)
   }
                                                                                                       
   
-  // page += view.render ("notes", "create");
   page += view.render ("notes", "create");
 
   page += assets_page::footer ();

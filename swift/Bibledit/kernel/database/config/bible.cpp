@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2024 Teus Benschop.
+Copyright (©) 2003-2025 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -574,7 +574,7 @@ void set_hyphenation_second_set (const std::string& bible, const std::string& va
 constexpr const auto editor_stylesheet_key {"editor-stylesheet"};
 std::string get_editor_stylesheet (const std::string& bible)
 {
-  return get_value (bible, editor_stylesheet_key, styles_logic_standard_sheet ().c_str());
+  return get_value (bible, editor_stylesheet_key, stylesv2::standard_sheet ().c_str());
 }
 void set_editor_stylesheet (const std::string& bible, const std::string& value)
 {
@@ -585,7 +585,7 @@ void set_editor_stylesheet (const std::string& bible, const std::string& value)
 constexpr const auto export_stylesheet_key {"export-stylesheet"};
 std::string get_export_stylesheet (const std::string& bible)
 {
-  return get_value (bible, export_stylesheet_key, styles_logic_standard_sheet ().c_str());
+  return get_value (bible, export_stylesheet_key, stylesv2::standard_sheet ().c_str());
 }
 void set_export_stylesheet (const std::string& bible, const std::string& value)
 {

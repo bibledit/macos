@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2024 Teus Benschop.
+ Copyright (©) 2003-2025 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -26,10 +26,10 @@ class Webserver_Request;
 class Editor_Styles
 {
 public:
-  static std::string getRecentlyUsed (Webserver_Request& webserver_request);
-  static std::string getAll (Webserver_Request& webserver_request);
-  static void recordUsage (Webserver_Request& webserver_request, const std::string& style);
-  static std::string getAction (Webserver_Request& webserver_request, const std::string& style);
+  static std::string get_recently_used (Webserver_Request& webserver_request);
+  static std::string get_all (Webserver_Request& webserver_request);
+  static void record_usage (Webserver_Request& webserver_request, const std::string& style);
+  static std::string get_action (Webserver_Request& webserver_request, const std::string& style);
 private:
   static std::string unknown ();
   static std::string paragraph ();

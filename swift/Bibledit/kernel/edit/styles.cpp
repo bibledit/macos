@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2024 Teus Benschop.
+ Copyright (©) 2003-2025 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -45,17 +45,17 @@ std::string edit_styles (Webserver_Request& webserver_request)
 {
   if (webserver_request.query.count ("style")) {
     std::string style = webserver_request.query["style"];
-    Editor_Styles::recordUsage (webserver_request, style);
-    std::string action = Editor_Styles::getAction (webserver_request, style);
+    Editor_Styles::record_usage (webserver_request, style);
+    std::string action = Editor_Styles::get_action (webserver_request, style);
     return style + "\n" + action;
   }
   
   
   if (webserver_request.query.count ("all")) {
-    return Editor_Styles::getAll (webserver_request);
+    return Editor_Styles::get_all (webserver_request);
   }
   
   
-  return Editor_Styles::getRecentlyUsed (webserver_request);
+  return Editor_Styles::get_recently_used (webserver_request);
 }
 

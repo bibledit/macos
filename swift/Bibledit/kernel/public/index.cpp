@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2024 Teus Benschop.
+ Copyright (©) 2003-2025 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -119,7 +119,7 @@ std::string public_index (Webserver_Request& webserver_request)
   view.set_variable ("custom_css", Filter_Css::get_css (clss, fonts::logic::get_font_path (font),
                                                         direction, lineheight, letterspacing));
   
-  Styles_Css styles_css (webserver_request, stylesheet);
+  Styles_Css styles_css (stylesheet);
   styles_css.exports ();
   styles_css.generate ();
   const std::string css = styles_css.css ();
