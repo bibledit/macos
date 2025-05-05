@@ -14,6 +14,8 @@
 		CA133CF02DC9207900F2584E /* verse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4AE72B6052D900913572 /* verse.cpp */; };
 		CA133CF12DC9208A00F2584E /* update.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4AE42B6052D900913572 /* update.cpp */; };
 		CA133CF22DC920A000F2584E /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4AE02B6052D900913572 /* logic.cpp */; };
+		CA133CF42DC9213B00F2584E /* number.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA133CF32DC9213B00F2584E /* number.cpp */; };
+		CA133CF52DC9217600F2584E /* temporal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE49E72B6052D900913572 /* temporal.cpp */; };
 		CA4C5D602B5D53B700EE9057 /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = CA4C5D5D2B5D53B700EE9057 /* license.txt */; };
 		CA4C5D612B5D53B700EE9057 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CA4C5D5E2B5D53B700EE9057 /* README.md */; };
 		CA4C5D622B5D53B700EE9057 /* refresh.txt in Resources */ = {isa = PBXBuildFile; fileRef = CA4C5D5F2B5D53B700EE9057 /* refresh.txt */; };
@@ -562,6 +564,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CA133CF32DC9213B00F2584E /* number.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = number.cpp; sourceTree = "<group>"; };
 		CA4C5D5D2B5D53B700EE9057 /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = SOURCE_ROOT; };
 		CA4C5D5E2B5D53B700EE9057 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		CA4C5D5F2B5D53B700EE9057 /* refresh.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = refresh.txt; sourceTree = SOURCE_ROOT; };
@@ -827,13 +830,12 @@
 		CAEE49DD2B6052D900913572 /* map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = map.cpp; sourceTree = "<group>"; };
 		CAEE49DE2B6052D900913572 /* index.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = index.cpp; sourceTree = "<group>"; };
 		CAEE49E02B6052D900913572 /* jobs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jobs.h; sourceTree = "<group>"; };
-		CAEE49E12B6052D900913572 /* stylesdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stylesdata.h; sourceTree = "<group>"; };
 		CAEE49E22B6052D900913572 /* bibleimages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bibleimages.cpp; sourceTree = "<group>"; };
 		CAEE49E32B6052D900913572 /* localization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = localization.h; sourceTree = "<group>"; };
 		CAEE49E42B6052D900913572 /* bibleactions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bibleactions.cpp; sourceTree = "<group>"; };
 		CAEE49E52B6052D900913572 /* ipc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ipc.cpp; sourceTree = "<group>"; };
 		CAEE49E62B6052D900913572 /* noteactions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noteactions.h; sourceTree = "<group>"; };
-		CAEE49E72B6052D900913572 /* volatile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = volatile.cpp; sourceTree = "<group>"; };
+		CAEE49E72B6052D900913572 /* temporal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = temporal.cpp; sourceTree = "<group>"; };
 		CAEE49E82B6052D900913572 /* privileges.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = privileges.h; sourceTree = "<group>"; };
 		CAEE49E92B6052D900913572 /* morphgnt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = morphgnt.h; sourceTree = "<group>"; };
 		CAEE49EA2B6052D900913572 /* navigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = navigation.h; sourceTree = "<group>"; };
@@ -1962,13 +1964,12 @@
 			isa = PBXGroup;
 			children = (
 				CAEE49E02B6052D900913572 /* jobs.h */,
-				CAEE49E12B6052D900913572 /* stylesdata.h */,
 				CAEE49E22B6052D900913572 /* bibleimages.cpp */,
 				CAEE49E32B6052D900913572 /* localization.h */,
 				CAEE49E42B6052D900913572 /* bibleactions.cpp */,
 				CAEE49E52B6052D900913572 /* ipc.cpp */,
 				CAEE49E62B6052D900913572 /* noteactions.h */,
-				CAEE49E72B6052D900913572 /* volatile.cpp */,
+				CAEE49E72B6052D900913572 /* temporal.cpp */,
 				CAEE49E82B6052D900913572 /* privileges.h */,
 				CAEE49E92B6052D900913572 /* morphgnt.h */,
 				CAEE49EA2B6052D900913572 /* navigation.h */,
@@ -3414,50 +3415,51 @@
 		CAEE4E112B6052DA00913572 /* filter */ = {
 			isa = PBXGroup;
 			children = (
-				CAEE4E122B6052DA00913572 /* google.cpp */,
-				CAEE4E132B6052DA00913572 /* css.cpp */,
-				CAEE4E142B6052DA00913572 /* memory.cpp */,
-				CAEE4E152B6052DA00913572 /* md5.cpp */,
 				CAEE4E162B6052DA00913572 /* archive.h */,
-				CAEE4E172B6052DA00913572 /* passage.cpp */,
-				CAEE4E182B6052DA00913572 /* shell.h */,
-				CAEE4E192B6052DA00913572 /* html.h */,
-				CAEE4E1A2B6052DA00913572 /* UriCodec.cpp */,
-				CAEE4E1B2B6052DA00913572 /* image.cpp */,
-				CAEE4E1C2B6052DA00913572 /* text.cpp */,
-				CAEE4E1D2B6052DA00913572 /* text.h */,
-				CAEE4E1E2B6052DA00913572 /* passage.h */,
-				CAEE4E1F2B6052DA00913572 /* roles.h */,
-				CAEE4E202B6052DA00913572 /* usfm.h */,
-				CAEE4E212B6052DA00913572 /* date.cpp */,
-				CAEE4E222B6052DA00913572 /* merge.cpp */,
-				CAEE4E232B6052DA00913572 /* md5.h */,
-				CAEE4E242B6052DA00913572 /* url.cpp */,
-				CAEE4E252B6052DA00913572 /* date.h */,
-				CAEE4E262B6052DA00913572 /* merge.h */,
-				CAEE4E272B6052DA00913572 /* string.cpp */,
-				CAEE4E282B6052DA00913572 /* git.h */,
-				CAEE4E292B6052DA00913572 /* html.cpp */,
-				CAEE4E2A2B6052DA00913572 /* usfm.cpp */,
-				CAEE4E2B2B6052DA00913572 /* mail.h */,
-				CAEE4E2C2B6052DA00913572 /* diff.h */,
-				CAEE4E2D2B6052DA00913572 /* webview.h */,
-				CAEE4E2E2B6052DA00913572 /* url.h */,
-				CAEE4E2F2B6052DA00913572 /* webview.cpp */,
-				CAEE4E302B6052DA00913572 /* string.hpp */,
-				CAEE4E312B6052DA00913572 /* memory.h */,
-				CAEE4E322B6052DA00913572 /* google.h */,
-				CAEE4E332B6052DA00913572 /* css.h */,
-				CAEE4E342B6052DA00913572 /* shell.cpp */,
-				CAEE4E352B6052DA00913572 /* image.h */,
-				CAEE4E362B6052DA00913572 /* note.h */,
-				CAEE4E372B6052DA00913572 /* diff.cpp */,
 				CAEE4E382B6052DA00913572 /* archive.cpp */,
-				CAEE4E392B6052DA00913572 /* mail.cpp */,
-				CAEE4E3A2B6052DA00913572 /* roles.cpp */,
+				CAEE4E332B6052DA00913572 /* css.h */,
+				CAEE4E132B6052DA00913572 /* css.cpp */,
+				CAEE4E252B6052DA00913572 /* date.h */,
+				CAEE4E212B6052DA00913572 /* date.cpp */,
+				CAEE4E2C2B6052DA00913572 /* diff.h */,
+				CAEE4E372B6052DA00913572 /* diff.cpp */,
+				CAEE4E282B6052DA00913572 /* git.h */,
 				CAEE4E3B2B6052DA00913572 /* git.cpp */,
+				CAEE4E322B6052DA00913572 /* google.h */,
+				CAEE4E122B6052DA00913572 /* google.cpp */,
+				CAEE4E192B6052DA00913572 /* html.h */,
+				CAEE4E292B6052DA00913572 /* html.cpp */,
+				CAEE4E352B6052DA00913572 /* image.h */,
+				CAEE4E1B2B6052DA00913572 /* image.cpp */,
+				CAEE4E2B2B6052DA00913572 /* mail.h */,
+				CAEE4E392B6052DA00913572 /* mail.cpp */,
+				CAEE4E232B6052DA00913572 /* md5.h */,
+				CAEE4E152B6052DA00913572 /* md5.cpp */,
+				CAEE4E312B6052DA00913572 /* memory.h */,
+				CAEE4E142B6052DA00913572 /* memory.cpp */,
+				CAEE4E262B6052DA00913572 /* merge.h */,
+				CAEE4E222B6052DA00913572 /* merge.cpp */,
+				CAEE4E362B6052DA00913572 /* note.h */,
 				CAEE4E3C2B6052DA00913572 /* note.cpp */,
+				CA133CF32DC9213B00F2584E /* number.cpp */,
+				CAEE4E1E2B6052DA00913572 /* passage.h */,
+				CAEE4E172B6052DA00913572 /* passage.cpp */,
+				CAEE4E1F2B6052DA00913572 /* roles.h */,
+				CAEE4E3A2B6052DA00913572 /* roles.cpp */,
+				CAEE4E182B6052DA00913572 /* shell.h */,
+				CAEE4E342B6052DA00913572 /* shell.cpp */,
 				CAEE4E3D2B6052DA00913572 /* string.h */,
+				CAEE4E302B6052DA00913572 /* string.hpp */,
+				CAEE4E272B6052DA00913572 /* string.cpp */,
+				CAEE4E1D2B6052DA00913572 /* text.h */,
+				CAEE4E1C2B6052DA00913572 /* text.cpp */,
+				CAEE4E1A2B6052DA00913572 /* UriCodec.cpp */,
+				CAEE4E2E2B6052DA00913572 /* url.h */,
+				CAEE4E242B6052DA00913572 /* url.cpp */,
+				CAEE4E202B6052DA00913572 /* usfm.h */,
+				CAEE4E2A2B6052DA00913572 /* usfm.cpp */,
+				CAEE4E2D2B6052DA00913572 /* webview.h */,
+				CAEE4E2F2B6052DA00913572 /* webview.cpp */,
 			);
 			path = filter;
 			sourceTree = "<group>";
@@ -3840,6 +3842,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA133CF52DC9217600F2584E /* temporal.cpp in Sources */,
 				CA133CF22DC920A000F2584E /* logic.cpp in Sources */,
 				CA133CF12DC9208A00F2584E /* update.cpp in Sources */,
 				CA133CF02DC9207900F2584E /* verse.cpp in Sources */,
@@ -3926,6 +3929,7 @@
 				CAEE50E92B6052DE00913572 /* microtar.c in Sources */,
 				CA5EE3E22C8B7D91001FA968 /* psa_crypto_se.c in Sources */,
 				CAEE50582B6052DD00913572 /* contentdescription.cxx in Sources */,
+				CA133CF42DC9213B00F2584E /* number.cpp in Sources */,
 				CA5EE3DA2C8B7D91001FA968 /* x509write_csr.c in Sources */,
 				CA88EE3E2ADC4590001AE436 /* ViewController.swift in Sources */,
 				CAEE4F592B6052DB00913572 /* logic.cpp in Sources */,
