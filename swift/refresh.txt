@@ -1,25 +1,23 @@
 echo Refresh the source of the Bibledit kernel on macOS for macOS.
 
+# Exit script on error.
+set -e
+
 SCRIPTDIR=`dirname $0`
 cd $SCRIPTDIR
 SCRIPTDIR=`pwd`
-if [ $? != 0 ]; then exit; fi
 WEBROOT=$SCRIPTDIR/webroot
 echo Synchronizing relevant source code to $WEBROOT
 mkdir -p $WEBROOT
 rsync --archive --delete --exclude=.git ../../cloud/ $WEBROOT/
-if [ $? != 0 ]; then exit; fi
 
 echo From now on the working directory is the webroot location.
 pushd $WEBROOT
-if [ $? != 0 ]; then exit; fi
 echo Current directory: `pwd`
 
 echo Do a dist-clean of the Bibledit library.
 ./configure
-if [ $? != 0 ]; then exit; fi
 make distclean
-if [ $? != 0 ]; then exit; fi
 
 echo Update the build configuration and reconfigure.
 sed -i.bak '/mbedtls_ssl_init/d' configure.ac
@@ -32,23 +30,16 @@ sed -i.bak '/GTEST/d' Makefile.am
 
 echo Configure Bibledit in client mode.
 ./configure --enable-mac
-if [ $? != 0 ]; then exit; fi
 # Do not set the network port.
 # The Bibledit kernel will negotiate its own network port number.
 # echo 9876 > config/network-port
-# if [ $? != 0 ]; then exit; fi
-
+# 
 echo Update the configuration.
 sed -i.bak '/HAVE_ICU/d' config.h
-if [ $? != 0 ]; then exit; fi
 sed -i.bak '/HAVE_UTF8PROC/d' config.h
-if [ $? != 0 ]; then exit; fi
 sed -i.bak '/HAVE_PUGIXML/d' config.h
-if [ $? != 0 ]; then exit; fi
 sed -i.bak '/HAVE_GTEST/d' config.h
-if [ $? != 0 ]; then exit; fi
 sed -i.bak '/CONFIG_ENABLE_FILE_UPLOAD/d' config/config.h
-if [ $? != 0 ]; then exit; fi
 
 echo Remove the data generation
 rm -rf sources
@@ -64,19 +55,15 @@ rm executable/bibledit.*
 rm sqlite/shell.c
 #echo Remove MbedTLS 3.x and enable version 2.x
 #rm -rf mbedtls
-#if [ $? != 0 ]; then exit; fi
-#mv mbedtls2 mbedtls
-#if [ $? != 0 ]; then exit; fi
-echo Remove MbedTLS 2.x.
+##mv mbedtls2 mbedtls
+#echo Remove MbedTLS 2.x.
 rm -rf mbedtls2
-if [ $? != 0 ]; then exit; fi
 
 
 echo Copy the source code to the kernel folder.
 pwd
 KERNELDIR=$SCRIPTDIR/Bibledit/kernel
 rsync --archive --delete ./ $KERNELDIR/
-if [ $? != 0 ]; then exit; fi
 
 echo Return to the project directory where this script is located.
 popd
