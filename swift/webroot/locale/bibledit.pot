@@ -235,13 +235,19 @@ msgstr ""
 msgid "Repository"
 msgstr ""
 
-msgid "Which Bible are you going to use?"
-msgstr ""
-
 msgid "Preferences"
 msgstr ""
 
-msgid "Select which Bible to make the active one for editing"
+msgid "Which visual Bible editors to enable?"
+msgstr ""
+
+msgid "Enable the USFM Bible editor?"
+msgstr ""
+
+msgid "Which verse separator to use for notes entry?"
+msgstr ""
+
+msgid "The date format to use for consultation notes?"
 msgstr ""
 
 msgid "Changes"
@@ -377,9 +383,6 @@ msgid "Sending and receiving:"
 msgstr ""
 
 msgid "Send/Receive"
-msgstr ""
-
-msgid "Select a Bible"
 msgstr ""
 
 msgid "Starting to send and receive now."
@@ -613,27 +616,10 @@ msgstr ""
 msgid "Order"
 msgstr ""
 
-msgid "Would you like to change the versification system?"
-msgstr ""
-
-msgid ""
-"A versification system determines how many chapters are in each book, and "
-"how many verses are in each chapter. Please make your choice below."
-msgstr ""
-
 msgid "Create book"
 msgstr ""
 
 msgid "Would you like to delete this book?"
-msgstr ""
-
-msgid "Select a resource to import into the Bible"
-msgstr ""
-
-msgid "The resource will be imported."
-msgstr ""
-
-msgid "It will overwrite the content of the Bible."
 msgstr ""
 
 msgid "The resource will be imported into the Bible."
@@ -642,19 +628,7 @@ msgstr ""
 msgid "The journal shows the progress."
 msgstr ""
 
-msgid "Would you like to change the stylesheet for editing?"
-msgstr ""
-
-msgid "The stylesheet affects how the Bible text in the editor looks."
-msgstr ""
-
-msgid "Please make your choice below."
-msgstr ""
-
-msgid "Would you like to change the stylesheet for export?"
-msgstr ""
-
-msgid "The stylesheet affects how the Bible text looks when exported."
+msgid "Cannot import because the Bible still has books."
 msgstr ""
 
 msgid "More operations in the Cloud"
@@ -690,39 +664,6 @@ msgstr ""
 msgid "The image was deleted."
 msgstr ""
 
-msgid "This book is absent from the Bible"
-msgstr ""
-
-msgid "This book is extra in the Bible"
-msgstr ""
-
-msgid "This chapter is missing"
-msgstr ""
-
-msgid "This chapter is extra"
-msgstr ""
-
-msgid "This verse is missing according to the versification system"
-msgstr ""
-
-msgid "This verse is extra according to the versification system"
-msgstr ""
-
-msgid "The verse is out of sequence"
-msgstr ""
-
-msgid "Closing character"
-msgstr ""
-
-msgid "without its matching opening character"
-msgstr ""
-
-msgid "Opening character"
-msgstr ""
-
-msgid "without its matching closing character"
-msgstr ""
-
 msgid "Suppressed checking results"
 msgstr ""
 
@@ -738,171 +679,10 @@ msgstr ""
 msgid "The pairs were saved"
 msgstr ""
 
-msgid "No punctuation at end of verse:"
-msgstr ""
-
-msgid "Pattern found in text:"
-msgstr ""
-
-msgid "Capital follows mid-sentence punctuation mark"
-msgstr ""
-
-msgid "Small letter follows straight after a mid-sentence punctuation mark"
-msgstr ""
-
-msgid "Capital follows straight after a mid-sentence punctuation mark"
-msgstr ""
-
-msgid "A letter follows straight after an end-sentence punctuation mark"
-msgstr ""
-
-msgid "No capital after an end-sentence punctuation mark"
-msgstr ""
-
-msgid "Two punctuation marks in sequence"
-msgstr ""
-
-msgid "Paragraph does not start with a capital:"
-msgstr ""
-
-msgid "Paragraph does not end with an end marker:"
-msgstr ""
-
-msgid "Unknown character"
-msgstr ""
-
 msgid "Checking results online"
 msgstr ""
 
 msgid "Bible Checks"
-msgstr ""
-
-msgid "Unclosed markers:"
-msgstr ""
-
-msgid "Malformed verse number"
-msgstr ""
-
-msgid "New line within USFM:"
-msgstr ""
-
-msgid "Marker not in stylesheet"
-msgstr ""
-
-msgid "Unknown ID"
-msgstr ""
-
-msgid "ID is not in uppercase"
-msgstr ""
-
-msgid "Forward slash instead of backslash:"
-msgstr ""
-
-msgid "Widow backslash"
-msgstr ""
-
-msgid "Repeating opening marker"
-msgstr ""
-
-msgid "Closing marker does not match opening marker"
-msgstr ""
-
-msgid "Embedded marker requires a plus sign"
-msgstr ""
-
-msgid "The book lacks the marker for the verbose book name:"
-msgstr ""
-
-msgid "The book lacks the marker for the short book name:"
-msgstr ""
-
-msgid "The following marker belongs in chapter 0:"
-msgstr ""
-
-msgid "Empty figure source:"
-msgstr ""
-
-msgid "Could not find Bible image:"
-msgstr ""
-
-msgid "Unusual quotation mark found:"
-msgstr ""
-
-msgid "Opening markup is followed by closing markup without intervening text:"
-msgstr ""
-
-msgid "This sequence in the note does not look right:"
-msgstr ""
-
-msgid "Sentence Structure"
-msgstr ""
-
-msgid "The capitals were stored"
-msgstr ""
-
-msgid "The small letters were stored"
-msgstr ""
-
-msgid "The punctuation marks at the ends of sentences were stored"
-msgstr ""
-
-msgid "The punctuation marks within the sentences were stored"
-msgstr ""
-
-msgid ""
-"The characters that should be disregarded within the sentences were stored"
-msgstr ""
-
-msgid "The names that may occur after mid-sentence punctuation were stored"
-msgstr ""
-
-msgid ""
-"The markers that start a new line but not necessarily a new sentence were "
-"saved"
-msgstr ""
-
-msgid "Punctuation at end of heading:"
-msgstr ""
-
-msgid "Manage Checks"
-msgstr ""
-
-msgid "Select which Bible to manage"
-msgstr ""
-
-msgid "Will run the checks."
-msgstr ""
-
-msgid ""
-"Should be followed by a no-break space rather than a plain space in French"
-msgstr ""
-
-msgid "Should be followed by a no-break space in French"
-msgstr ""
-
-msgid ""
-"Should be preceded by a no-break space rather than a plain space in French"
-msgstr ""
-
-msgid "Should be preceded by a no-break space in French"
-msgstr ""
-
-msgid ""
-"The previous paragraph contains a citation not closed with a » therefore the "
-"current paragraph is expected to start with a « to continue that citation in "
-"French"
-msgstr ""
-
-msgid "The paragraph contains more left guillements than needed"
-msgstr ""
-
-msgid "The paragraph contains more right guillements than needed"
-msgstr ""
-
-msgid "Patterns"
-msgstr ""
-
-msgid "The patterns were saved"
 msgstr ""
 
 msgid "Double space:"
@@ -935,6 +715,200 @@ msgstr ""
 msgid "Space before final cross reference markup"
 msgstr ""
 
+msgid ""
+"Should be followed by a no-break space rather than a plain space in French"
+msgstr ""
+
+msgid "Should be followed by a no-break space in French"
+msgstr ""
+
+msgid ""
+"Should be preceded by a no-break space rather than a plain space in French"
+msgstr ""
+
+msgid "Should be preceded by a no-break space in French"
+msgstr ""
+
+msgid ""
+"The previous paragraph contains a citation not closed with a » therefore the "
+"current paragraph is expected to start with a « to continue that citation in "
+"French"
+msgstr ""
+
+msgid "The paragraph contains more left guillements than needed"
+msgstr ""
+
+msgid "The paragraph contains more right guillements than needed"
+msgstr ""
+
+msgid "Punctuation at end of heading"
+msgstr ""
+
+msgid "Closing character"
+msgstr ""
+
+msgid "without its matching opening character"
+msgstr ""
+
+msgid "Opening character"
+msgstr ""
+
+msgid "without its matching closing character"
+msgstr ""
+
+msgid "Capital follows mid-sentence punctuation mark"
+msgstr ""
+
+msgid "Small letter follows straight after a mid-sentence punctuation mark"
+msgstr ""
+
+msgid "Capital follows straight after a mid-sentence punctuation mark"
+msgstr ""
+
+msgid "A letter follows straight after an end-sentence punctuation mark"
+msgstr ""
+
+msgid "No capital after an end-sentence punctuation mark"
+msgstr ""
+
+msgid "Two punctuation marks in sequence"
+msgstr ""
+
+msgid "Paragraph does not start with a capital"
+msgstr ""
+
+msgid "Paragraph does not end with an end marker"
+msgstr ""
+
+msgid "Unknown character"
+msgstr ""
+
+msgid "Double space"
+msgstr ""
+
+msgid "Unclosed markers"
+msgstr ""
+
+msgid "Malformed verse number"
+msgstr ""
+
+msgid "New line within USFM"
+msgstr ""
+
+msgid "Marker not in stylesheet"
+msgstr ""
+
+msgid "Unknown ID"
+msgstr ""
+
+msgid "ID is not in uppercase"
+msgstr ""
+
+msgid "Forward slash instead of backslash"
+msgstr ""
+
+msgid "Widow backslash"
+msgstr ""
+
+msgid "Repeating opening marker"
+msgstr ""
+
+msgid "Closing marker does not match opening marker"
+msgstr ""
+
+msgid "Embedded marker requires a plus sign"
+msgstr ""
+
+msgid "The book lacks the marker for the verbose book name"
+msgstr ""
+
+msgid "The book lacks the marker for the short book name"
+msgstr ""
+
+msgid "The following marker belongs in chapter 0"
+msgstr ""
+
+msgid "Empty figure source"
+msgstr ""
+
+msgid "Could not find Bible image"
+msgstr ""
+
+msgid "Unusual quotation mark found"
+msgstr ""
+
+msgid "Opening markup is followed by closing markup without intervening text"
+msgstr ""
+
+msgid "This sequence in the note does not look right"
+msgstr ""
+
+msgid "No punctuation at end of verse"
+msgstr ""
+
+msgid "Pattern found in text"
+msgstr ""
+
+msgid "This book is absent from the Bible"
+msgstr ""
+
+msgid "This book is extra in the Bible"
+msgstr ""
+
+msgid "This chapter is missing"
+msgstr ""
+
+msgid "This chapter is extra"
+msgstr ""
+
+msgid "This verse is missing according to the versification system"
+msgstr ""
+
+msgid "This verse is extra according to the versification system"
+msgstr ""
+
+msgid "The verse is out of sequence"
+msgstr ""
+
+msgid "Sentence Structure"
+msgstr ""
+
+msgid "The capitals were stored"
+msgstr ""
+
+msgid "The small letters were stored"
+msgstr ""
+
+msgid "The punctuation marks at the ends of sentences were stored"
+msgstr ""
+
+msgid "The punctuation marks within the sentences were stored"
+msgstr ""
+
+msgid ""
+"The characters that should be disregarded within the sentences were stored"
+msgstr ""
+
+msgid "The names that may occur after mid-sentence punctuation were stored"
+msgstr ""
+
+msgid ""
+"The markers that start a new line but not necessarily a new sentence were "
+"saved"
+msgstr ""
+
+msgid "Manage Checks"
+msgstr ""
+
+msgid "Will run the checks."
+msgstr ""
+
+msgid "Patterns"
+msgstr ""
+
+msgid "The patterns were saved"
+msgstr ""
+
 msgid "Checks"
 msgstr ""
 
@@ -942,6 +916,21 @@ msgid "The entry was suppressed."
 msgstr ""
 
 msgid "The entry was deleted for just now."
+msgstr ""
+
+msgid "The matching entries were deleted for just now."
+msgstr ""
+
+msgid "This group of issues is not known."
+msgstr ""
+
+msgid "approve"
+msgstr ""
+
+msgid "delete"
+msgstr ""
+
+msgid "Delete items with"
 msgstr ""
 
 msgid "Loading ..."
@@ -1130,10 +1119,22 @@ msgstr ""
 msgid "Go forward or long-press to show history"
 msgstr ""
 
+msgid "Go to previous book"
+msgstr ""
+
 msgid "Select book"
 msgstr ""
 
+msgid "Go to next book"
+msgstr ""
+
+msgid "Go to previous chapter"
+msgstr ""
+
 msgid "Select chapter"
+msgstr ""
+
+msgid "Go to next chapter"
 msgstr ""
 
 msgid "Go to previous verse"
@@ -1205,25 +1206,7 @@ msgstr ""
 msgid "not found"
 msgstr ""
 
-msgid "Which Paratext project are you going to use?"
-msgstr ""
-
-msgid "Where are you going to take the initial Bible data from?"
-msgstr ""
-
 msgid "The collaboration will be set up"
-msgstr ""
-
-msgid "Merging and saving chapter."
-msgstr ""
-
-msgid "No write access"
-msgstr ""
-
-msgid "Passage mismatch"
-msgstr ""
-
-msgid "Needs Unicode"
 msgstr ""
 
 msgid "Nothing to save"
@@ -1232,7 +1215,25 @@ msgstr ""
 msgid "Checksum error"
 msgstr ""
 
+msgid "Needs Unicode"
+msgstr ""
+
+msgid "No chapter data"
+msgstr ""
+
+msgid "Multiple chapters"
+msgstr ""
+
 msgid "Confusing data"
+msgstr ""
+
+msgid "Chapter number mismatch"
+msgstr ""
+
+msgid "Merging and saving chapter."
+msgstr ""
+
+msgid "No write access"
 msgstr ""
 
 msgid "Edit USFM"
@@ -1317,12 +1318,6 @@ msgstr ""
 msgid "Ready"
 msgstr ""
 
-msgid "Here are the various options:"
-msgstr ""
-
-msgid "Please pick one."
-msgstr ""
-
 msgid "The passage has been opened in the existing Bible editor"
 msgstr ""
 
@@ -1371,16 +1366,19 @@ msgstr ""
 msgid "Stylesheet"
 msgstr ""
 
-msgid "This style already exists"
+msgid "Enter a name for the new style"
 msgstr ""
 
-msgid "The style has been created"
+msgid "Allowed characters for the style are:"
 msgstr ""
 
-msgid "Please enter the name for the new style"
+msgid "Select an existing style to base the new style on"
 msgstr ""
 
-msgid "delete"
+msgid "The style already exists in the stylesheet"
+msgstr ""
+
+msgid "You don't have sufficient privileges to add a style to the stylesheet"
 msgstr ""
 
 msgid "Style"
@@ -1548,9 +1546,6 @@ msgid "This account needs a password."
 msgstr ""
 
 msgid "Please login the other way, through Menu / Login."
-msgstr ""
-
-msgid "Select which Bible to display"
 msgstr ""
 
 msgid "Public feedback"
@@ -1748,9 +1743,6 @@ msgstr ""
 msgid "Planning"
 msgstr ""
 
-msgid "Hyphenate"
-msgstr ""
-
 msgid "Develop"
 msgstr ""
 
@@ -1767,9 +1759,6 @@ msgid "Basic mode"
 msgstr ""
 
 msgid "USFM"
-msgstr ""
-
-msgid "Images"
 msgstr ""
 
 msgid "SWORD"
@@ -1799,9 +1788,6 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-msgid "Image resources"
-msgstr ""
-
 msgid "Users"
 msgstr ""
 
@@ -1815,6 +1801,9 @@ msgid "Edit stylesheet"
 msgstr ""
 
 msgid "Menu"
+msgstr ""
+
+msgid "Images"
 msgstr ""
 
 msgid "Both the visual chapter and visual verse editors"
@@ -1983,7 +1972,7 @@ msgid ""
 "changes, and when."
 msgstr ""
 
-msgid "Select Bible."
+msgid "Select Bible"
 msgstr ""
 
 msgid "clear"
@@ -2195,13 +2184,7 @@ msgstr ""
 msgid "Text editors:"
 msgstr ""
 
-msgid "Which visual Bible editors to enable?"
-msgstr ""
-
 msgid "USFM editor:"
-msgstr ""
-
-msgid "Enable the USFM Bible editor?"
 msgstr ""
 
 msgid "Enable the Styles button in the visual Bible editors."
@@ -2281,9 +2264,6 @@ msgstr ""
 msgid "Verse separator for Bible notes entry"
 msgstr ""
 
-msgid "Which verse separator to use for notes entry?"
-msgstr ""
-
 msgid "Receive focused verse reference from Paratext and Accordance."
 msgstr ""
 
@@ -2301,10 +2281,12 @@ msgstr ""
 msgid "Date format in consultation notes"
 msgstr ""
 
-msgid "The date format to use for consultation notes?"
+msgid "Enable spell check in the Bible editors."
 msgstr ""
 
-msgid "Enable spell check in the Bible editors."
+msgid ""
+"Show arrows in the passage navigator for previous and next book and chapter "
+"and verse."
 msgstr ""
 
 msgid "Go back"
@@ -2602,6 +2584,9 @@ msgstr ""
 msgid "Versification system"
 msgstr ""
 
+msgid "The number of chapters in a book and the number of verses in a chapter."
+msgstr ""
+
 msgid "Import text"
 msgstr ""
 
@@ -2632,7 +2617,13 @@ msgstr ""
 msgid "Stylesheet for editing"
 msgstr ""
 
+msgid "This affects how the Bible text looks in the editor."
+msgstr ""
+
 msgid "Stylesheet for export"
+msgstr ""
+
+msgid "This affects how the Bible text looks when exported."
 msgstr ""
 
 msgid "Run an automatic daily check on the text"
@@ -2653,10 +2644,13 @@ msgstr ""
 msgid "The page displays a list of results of running the checks."
 msgstr ""
 
-msgid "Click ✔ to suppress the entry."
+msgid "Click a passage to open it in the Bible text editor."
 msgstr ""
 
-msgid "Click 🗑 to remove the entry for just now."
+msgid "Click approve to suppress the entry."
+msgstr ""
+
+msgid "Click delete to remove the entry for just now."
 msgstr ""
 
 msgid ""
@@ -2664,7 +2658,7 @@ msgid ""
 "has been corrected."
 msgstr ""
 
-msgid "Click a passage to open it in the Bible text editor."
+msgid "Delete all entries."
 msgstr ""
 
 msgid "The Manager can enable or disable checks."
@@ -3199,13 +3193,13 @@ msgstr ""
 msgid "Bible in Bibledit"
 msgstr ""
 
-msgid "change"
-msgstr ""
-
 msgid "disable"
 msgstr ""
 
 msgid "Paratext Projects folder"
+msgstr ""
+
+msgid "change"
 msgstr ""
 
 msgid "Paratext project"
@@ -3569,6 +3563,21 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
+msgid "Add a style to the stylesheet."
+msgstr ""
+
+msgid "Delete the entire stylesheet."
+msgstr ""
+
+msgid "You can copy or backup this stylesheet."
+msgstr ""
+
+msgid "The stylesheet is kept in one folder."
+msgstr ""
+
+msgid "The name of the folder is this:"
+msgstr ""
+
 msgid "Font size"
 msgstr ""
 
@@ -3668,19 +3677,13 @@ msgstr ""
 msgid "Documentation"
 msgstr ""
 
-msgid "Add a style to the stylesheet."
+msgid "Reset"
 msgstr ""
 
-msgid "Delete the entire stylesheet."
+msgid "Reset this style"
 msgstr ""
 
-msgid "You can copy or backup this stylesheet."
-msgstr ""
-
-msgid "The stylesheet is kept in one folder."
-msgstr ""
-
-msgid "The name of the folder is this:"
+msgid "Cannot reset this custom style"
 msgstr ""
 
 msgid "Stylesheets"
@@ -3690,6 +3693,18 @@ msgid "Available stylesheets."
 msgstr ""
 
 msgid "Create a new stylesheet."
+msgstr ""
+
+msgid "Create new style"
+msgstr ""
+
+msgid "Stylesheet:"
+msgstr ""
+
+msgid "Name for the new style:"
+msgstr ""
+
+msgid "Existing style to base the new style on:"
 msgstr ""
 
 msgid "Language"
@@ -4252,83 +4267,7 @@ msgstr ""
 msgid "Return to the users page."
 msgstr ""
 
-msgid "Hyphenation"
-msgstr ""
-
-msgid "Hyphenation can be used when preparing a Bible for printing."
-msgstr ""
-
-msgid ""
-"It allows for more efficient usage of paper, and for more regular appearance "
-"of margins at the end of the lines without requiring spacing adjustments."
-msgstr ""
-
-msgid ""
-"The details of hyphenating properly are complex and dependent on the "
-"language, and can interact with other orthographic and typesetting practices."
-msgstr ""
-
-msgid ""
-"Hyphenation may not be so important when preparing a Bible for proofreading. "
-"It is usually regarded important for production quality Bibles."
-msgstr ""
-
-msgid ""
-"When preparing a Bible in LibreOffice, OpenOffice, AbiWord, en so on, the "
-"wordprocessor itself provides hyphenation algorithms for many languages."
-msgstr ""
-
-msgid ""
-"If no suitable hyphenation algorithm can be used, perhaps Bibledit can "
-"assist to a limited degree."
-msgstr ""
-
-msgid ""
-"Bibledit can take the data from a Bible, insert soft hyphens in the words "
-"according to a certain algorithm, and then save this data as a new Bible."
-msgstr ""
-
-msgid ""
-"This new Bible can then be exported to OpenDocument format, and opened in a "
-"wordprocessor."
-msgstr ""
-
-msgid ""
-"The wordprocessor sees these soft hyphens. When a soft hyphen occurs near "
-"the end of the line, it breaks the word there."
-msgstr ""
-
-msgid ""
-"Bibledit has one hyphenating algorithm. When there is a transition in the "
-"text from any character of a first set of characters, to any character of a "
-"second set of characters, then the soft hyphen will be inserted at that "
-"location in the text."
-msgstr ""
-
-msgid "First set of characters"
-msgstr ""
-
-msgid "Second set of characters"
-msgstr ""
-
-msgid "Enter the sets of characters, and press Save."
-msgstr ""
-
-msgid "The Bible where the data will be taken from is:"
-msgstr ""
-
-msgid "The Bible where the hyphenated data will be written to is:"
-msgstr ""
-
-msgid ""
-"Insert the soft hyphens according to the settings and view the progress in "
-"the Journal."
-msgstr ""
-
 msgid "Exports"
-msgstr ""
-
-msgid "Select another Bible"
 msgstr ""
 
 msgid "View the exported data"
@@ -4468,21 +4407,6 @@ msgstr ""
 msgid "Click 🗑 before a username to delete the account."
 msgstr ""
 
-msgid "Click ➕ to give a user access to a Bible."
-msgstr ""
-
-msgid "Click 🗑 before a Bible to remove the access of a user to that Bible."
-msgstr ""
-
-msgid "Two numbers appear after the Bible."
-msgstr ""
-
-msgid "It shows how many of the books in the Bible the user can modify."
-msgstr ""
-
-msgid "Click it to change it."
-msgstr ""
-
 msgid ""
 "If no user has been granted access to any Bible, then all users have write "
 "access to all Bibles."
@@ -4564,6 +4488,21 @@ msgstr ""
 msgid "Toggle the modification privileges for entire Testaments"
 msgstr ""
 
+msgid "You can set access to Bibles for the user."
+msgstr ""
+
+msgid "Number of books to which the user has write access"
+msgstr ""
+
+msgid "Total book count"
+msgstr ""
+
+msgid "Remove the user's access to this Bible"
+msgstr ""
+
+msgid "Give the user access to a Bible"
+msgstr ""
+
 msgid "Resource categories"
 msgstr ""
 
@@ -4612,15 +4551,6 @@ msgstr ""
 msgid "User-defined resources"
 msgstr ""
 
-msgid "Image resource"
-msgstr ""
-
-msgid "Upload an image, or a PDF file, or a compressed archive of them."
-msgstr ""
-
-msgid "Erase this resource."
-msgstr ""
-
 msgid "organize"
 msgstr ""
 
@@ -4644,18 +4574,6 @@ msgid "It compares the two resources."
 msgstr ""
 
 msgid "It displays the differences between the two."
-msgstr ""
-
-msgid "Image"
-msgstr ""
-
-msgid "This image contains verses from"
-msgstr ""
-
-msgid "to"
-msgstr ""
-
-msgid "Delete this image."
 msgstr ""
 
 msgid "USFM Resources"
@@ -4756,6 +4674,15 @@ msgid "Resources to print:"
 msgstr ""
 
 msgid "Print from"
+msgstr ""
+
+msgid "chapter"
+msgstr ""
+
+msgid "verse"
+msgstr ""
+
+msgid "Print to"
 msgstr ""
 
 msgid "Generate the document."
@@ -4893,22 +4820,7 @@ msgid ""
 "The chapter and the verse will be replaced with the appropriate numbers."
 msgstr ""
 
-msgid "Create a new empty image resource"
-msgstr ""
-
-msgid ""
-"Image resources provide a way to display scanned pages of a Bible or book."
-msgstr ""
-
-msgid "Each page can be one or more images."
-msgstr ""
-
-msgid "Each image refers to a range of verses."
-msgstr ""
-
-msgid ""
-"When Bibledit has a certain passage focused, it can display the matching "
-"image."
+msgid "Erase this resource."
 msgstr ""
 
 msgid "Rich Divider"
@@ -7895,6 +7807,9 @@ msgstr ""
 msgid "The OpenDocument files are used as a starting point for typesetting."
 msgstr ""
 
+msgid "Hyphenation"
+msgstr ""
+
 msgid ""
 "Some of the words in the OpenDocument files are long. This results in too "
 "much space between some words."
@@ -7907,33 +7822,6 @@ msgstr ""
 msgid ""
 "LibreOffice and Adobe InDesign and Scribus have hyphenation algorithms for "
 "many languages. That would solve the problem."
-msgstr ""
-
-msgid "But the programs do not have hyphenation algorithms for all languages."
-msgstr ""
-
-msgid "Bibledit has a hyphenater that could assist."
-msgstr ""
-
-msgid "In Bibledit, go to this menu:"
-msgstr ""
-
-msgid "Enter the first set of characters, and the second set, and save it."
-msgstr ""
-
-msgid ""
-"Set the Bible where to take the data from. In this case it is 'Ndebele'."
-msgstr ""
-
-msgid ""
-"Insert the soft hyphens according to the setting. It takes a while to "
-"complete."
-msgstr ""
-
-msgid "The output Bible is called 'Ndebele-hyphenated'."
-msgstr ""
-
-msgid "Use this Bible from now on."
 msgstr ""
 
 msgid "Exporting to OpenDocument files"
@@ -9111,9 +8999,6 @@ msgid "Create and edit stylesheets."
 msgstr ""
 
 msgid "Import consultation notes from Bibledit-Gtk and remove duplicates."
-msgstr ""
-
-msgid "Deal with automatic hyphenation when exporting to OpenDocument."
 msgstr ""
 
 msgid "Make settings for the automatic check and select Bibles to run them on."
@@ -10633,6 +10518,36 @@ msgid ""
 "Aramaic word list."
 msgstr ""
 
+msgid "Quotation start milestone"
+msgstr ""
+
+msgid "Typically used for indicating the speaker of the text."
+msgstr ""
+
+msgid "Quotation start milestone level 1"
+msgstr ""
+
+msgid "Quotation start milestone level 2"
+msgstr ""
+
+msgid "Quotation end milestone"
+msgstr ""
+
+msgid "Quotation end milestone level 1"
+msgstr ""
+
+msgid "Quotation end milestone level 2"
+msgstr ""
+
+msgid "Translator’s section start milestone"
+msgstr ""
+
+msgid "For identifying a chunk of text suitable for translating at one time."
+msgstr ""
+
+msgid "Translator’s section end milestone"
+msgstr ""
+
 msgid "Extended footnote"
 msgstr ""
 
@@ -11397,9 +11312,6 @@ msgstr ""
 msgid "Cannot remove the last administrator"
 msgstr ""
 
-msgid "The default new user is changed."
-msgstr ""
-
 msgid "Please enter a name for the new user"
 msgstr ""
 
@@ -11412,28 +11324,19 @@ msgstr ""
 msgid "Cannot remove the demo admin"
 msgstr ""
 
-msgid "Select a role for"
-msgstr ""
-
 msgid "Please enter an email address for"
 msgstr ""
 
 msgid "Email address was updated"
 msgstr ""
 
-msgid "Would you like to grant the user access to a Bible?"
-msgstr ""
-
-msgid "The user has been granted access to this Bible"
-msgstr ""
-
-msgid "The user no longer has access to this Bible"
-msgstr ""
-
 msgid "The user account was enabled"
 msgstr ""
 
 msgid "The user account was disabled"
+msgstr ""
+
+msgid "Select a role"
 msgstr ""
 
 msgid "all"
@@ -11445,16 +11348,7 @@ msgstr ""
 msgid "Enable"
 msgstr ""
 
-msgid "The two sets of characters were saved"
-msgstr ""
-
-msgid "Which Bible would you like to take the data from?"
-msgstr ""
-
-msgid "No first set of characters given"
-msgstr ""
-
-msgid "No second set of characters given"
+msgid "The selected Bible was saved."
 msgstr ""
 
 msgid "The export has been removed."
@@ -11508,7 +11402,7 @@ msgstr ""
 msgid "Please enter an bottom margin size in millimeters"
 msgstr ""
 
-msgid "The font for securing exports was saved."
+msgid "The font for the exports was saved."
 msgstr ""
 
 msgid "The info documents are being generated."
@@ -11679,39 +11573,6 @@ msgstr ""
 msgid "The resource was deleted"
 msgstr ""
 
-msgid "Select a USFM resource"
-msgstr ""
-
-msgid "Select an original language text"
-msgstr ""
-
-msgid "Select a Bible translation"
-msgstr ""
-
-msgid "Select an image resource"
-msgstr ""
-
-msgid "Select a lexicon resource"
-msgstr ""
-
-msgid "Select a SWORD resource"
-msgstr ""
-
-msgid "Select a divider"
-msgstr ""
-
-msgid "Select a BibleGateway resource"
-msgstr ""
-
-msgid "Select a StudyLight resource"
-msgstr ""
-
-msgid "Select a Comparative resource"
-msgstr ""
-
-msgid "Select a Translated resource"
-msgstr ""
-
 msgid "Converting Bible to USFM Resource"
 msgstr ""
 
@@ -11722,18 +11583,6 @@ msgid "The list was updated"
 msgstr ""
 
 msgid "Number of defined books:"
-msgstr ""
-
-msgid "Please enter a name for the new empty image resource"
-msgstr ""
-
-msgid "This image resource already exists"
-msgstr ""
-
-msgid "Please give a name for the image resource"
-msgstr ""
-
-msgid "The image resource was created"
 msgstr ""
 
 msgid "Bibledit Cloud could not locate this resource"
@@ -11758,15 +11607,6 @@ msgid "installed"
 msgstr ""
 
 msgid "to be updated"
-msgstr ""
-
-msgid "Select a book"
-msgstr ""
-
-msgid "Select a chapter"
-msgstr ""
-
-msgid "Select a verse"
 msgstr ""
 
 msgid "The document is being created..."
@@ -11826,18 +11666,6 @@ msgstr ""
 msgid "Conversion completed"
 msgstr ""
 
-msgid "Select a resource to be used as a base resource"
-msgstr ""
-
-msgid "The base resource is used as a starting point for the comparison."
-msgstr ""
-
-msgid "Select a resource to be used as the updated resource."
-msgstr ""
-
-msgid "The updated resource will be compared with the base resource."
-msgstr ""
-
 msgid "Enter or edit the characters to remove from the resources"
 msgstr ""
 
@@ -11845,59 +11673,6 @@ msgid "Enter or edit the search and replace sets"
 msgstr ""
 
 msgid "Could not save"
-msgstr ""
-
-msgid "Select a resource to be used as the original resource"
-msgstr ""
-
-msgid ""
-"The original resource will be translated from the source language to the "
-"target language."
-msgstr ""
-
-msgid "Select the language of the original resource"
-msgstr ""
-
-msgid "The language the original resource is written in."
-msgstr ""
-
-msgid "Select the language to translate the resource into"
-msgstr ""
-
-msgid "The language the resource will be translated into."
-msgstr ""
-
-msgid "Unknown starting book."
-msgstr ""
-
-msgid "Negative starting chapter."
-msgstr ""
-
-msgid "High starting chapter."
-msgstr ""
-
-msgid "Negative starting verse."
-msgstr ""
-
-msgid "High starting verse."
-msgstr ""
-
-msgid "Unknown ending book."
-msgstr ""
-
-msgid "Negative ending chapter."
-msgstr ""
-
-msgid "High ending chapter."
-msgstr ""
-
-msgid "Negative ending verse."
-msgstr ""
-
-msgid "High ending verse."
-msgstr ""
-
-msgid "The starting passage is beyond the ending passage."
 msgstr ""
 
 msgid "A USFM Resource with this name already exists"
@@ -11931,9 +11706,6 @@ msgid "New task added"
 msgstr ""
 
 msgid "The information was mailed to the subscribers"
-msgstr ""
-
-msgid "Select which Bible to display the Sprint for"
 msgstr ""
 
 msgid "The task was removed"

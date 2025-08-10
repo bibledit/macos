@@ -79,7 +79,7 @@ find . -name "*.bak" -delete
 find . -name "*.o" -delete
 find . -name "*.in" -delete
 find . -name "*.m4" -delete
-find . -name "autom*cache" -exec rm -r "{}" \; > /dev/null 2>&1
+find . -name "autom*cache" -print | xargs rm -rf
 find . -name "bibledit" -delete
 find . -name "compile" -delete
 rm $WEBROOT/config.*
@@ -90,7 +90,7 @@ rm $WEBROOT/install-sh
 rm $WEBROOT/missing
 rm $WEBROOT/reconfigure
 rm $WEBROOT/valgrind
-find . -name ".deps" -exec rm -r "{}" \; > /dev/null 2>&1
+find . -name ".deps" -print | xargs rm -rf
 find . -name ".dirstamp" -delete
 rm $WEBROOT/Makefile*
 rm -f $WEBROOT/server
