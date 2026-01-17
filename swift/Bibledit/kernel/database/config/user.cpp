@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -76,15 +76,15 @@ std::string Database_Config_User::get_value (const char * key, const char * defa
 
 bool Database_Config_User::get_boolean_value (const char * key, bool default_value) const
 {
-  const std::string value = get_value (key, filter::strings::convert_to_string (default_value).c_str());
-  return filter::strings::convert_to_bool (value);
+  const std::string value = get_value (key, filter::string::convert_to_string (default_value).c_str());
+  return filter::string::convert_to_bool (value);
 }
 
 
 int Database_Config_User::get_numeric_value (const char * key, int default_value) const
 {
   const std::string value = get_value (key, std::to_string (default_value).c_str());
-  return filter::strings::convert_to_int (value);
+  return filter::string::convert_to_int (value);
 }
 
 
@@ -111,15 +111,15 @@ std::string Database_Config_User::get_value_for_user (const std::string& user, c
 
 bool Database_Config_User::get_boolean_value_for_user (const std::string& user, const char * key, bool default_value) const
 {
-  const auto value {get_value_for_user (user, key, filter::strings::convert_to_string (default_value).c_str())};
-  return filter::strings::convert_to_bool (value);
+  const auto value {get_value_for_user (user, key, filter::string::convert_to_string (default_value).c_str())};
+  return filter::string::convert_to_bool (value);
 }
 
 
 int Database_Config_User::get_numeric_value_for_user (const std::string& user, const char * key, int default_value) const
 {
   const auto value {get_value_for_user (user, key, std::to_string (default_value).c_str())};
-  return filter::strings::convert_to_int (value);
+  return filter::string::convert_to_int (value);
 }
 
 
@@ -132,7 +132,7 @@ void Database_Config_User::set_value (const char * key, const std::string& value
 
 void Database_Config_User::set_boolean_value (const char * key, bool value) const
 {
-  set_value (key, filter::strings::convert_to_string (value));
+  set_value (key, filter::string::convert_to_string (value));
 }
 
 
@@ -157,7 +157,7 @@ void Database_Config_User::set_value_for_user (const std::string& user, const ch
 
 void Database_Config_User::set_boolean_value_for_user (const std::string& user, const char * key, bool value) const
 {
-  set_value_for_user (user, key, filter::strings::convert_to_string (value));
+  set_value_for_user (user, key, filter::string::convert_to_string (value));
 }
 
 
@@ -174,7 +174,7 @@ std::vector <std::string> Database_Config_User::get_list_for_user (const std::st
   const std::string cachekey = mapkey (user, key);
   if (database_config_user_cache.count (cachekey)) {
     const std::string value = database_config_user_cache [cachekey];
-    return filter::strings::explode (value, '\n');
+    return filter::string::explode (value, '\n');
   }
   // Read setting from disk.
   const std::string filename = file (user, key);
@@ -183,7 +183,7 @@ std::vector <std::string> Database_Config_User::get_list_for_user (const std::st
     // Cache it in memory.
     database_config_user_cache [cachekey] = value;
     // Done.
-    return filter::strings::explode (value, '\n');
+    return filter::string::explode (value, '\n');
   }
   // Empty value.
   return {};
@@ -204,7 +204,7 @@ void Database_Config_User::set_list_for_user (const std::string& user, const cha
   const std::string directory = filter_url_dirname (filename);
   if (!file_or_dir_exists (directory))
     filter_url_mkdir (directory);
-  const std::string value = filter::strings::implode (values, "\n");
+  const std::string value = filter::string::implode (values, "\n");
   filter_url_file_put_contents (filename, value);
   // Put it in the memory cache.
   const std::string cachekey = mapkey (user, key);
@@ -217,7 +217,7 @@ std::vector <int> Database_Config_User::get_numeric_list (const char * key) cons
   const std::vector <std::string> lines = get_list (key);
   std::vector <int> result;
   for (const auto& line : lines) {
-    result.push_back (filter::strings::convert_to_int (line));
+    result.push_back (filter::string::convert_to_int (line));
   }
   return result;
 }
@@ -429,15 +429,14 @@ void Database_Config_User::set_consultation_notes_non_edit_selector (int value) 
 }
 
 
-constexpr const auto consultation_notes_status_selector_key {"consultation-notes-status-selector"};
-// _status is a string; can be empty as well.
-std::string Database_Config_User::get_consultation_notes_status_selector () const
+constexpr const auto consultation_notes_status_selectors_key {"consultation-notes-status-selectors"};
+std::vector<std::string> Database_Config_User::get_consultation_notes_status_selectors () const
 {
-  return get_value (consultation_notes_status_selector_key, "");
+  return get_list(consultation_notes_status_selectors_key);
 }
-void Database_Config_User::set_consultation_notes_status_selector (const std::string& value) const
+void Database_Config_User::set_consultation_notes_status_selectors (std::vector <std::string> values) const
 {
-  set_value (consultation_notes_status_selector_key, value);
+  set_list(consultation_notes_status_selectors_key, values);
 }
 
 
@@ -849,93 +848,36 @@ void Database_Config_User::set_recently_applied_styles (const std::string& value
 }
 
 
-constexpr const auto print_resources_key {"print-resources"};
-std::vector <std::string> Database_Config_User::get_print_resources () const
-{
-  return get_list (print_resources_key);
-}
-std::vector <std::string> Database_Config_User::get_print_resources_for_user (const std::string& user) const
-{
-  return get_list_for_user (user, print_resources_key);
-}
-void Database_Config_User::set_print_resources (std::vector <std::string> values) const
-{
-  set_list (print_resources_key, values);
-}
-
-
-static Passage database_config_user_fixPassage (const std::string& value, const char * fallback)
-{
-  std::vector <std::string> values = filter::strings::explode (value, '.');
-  if (values.size () != 3)
-    values = filter::strings::explode (fallback, '.');
-  const Passage passage = Passage ("", filter::strings::convert_to_int (values[0]), filter::strings::convert_to_int (values[1]), values[2]);
-  return passage;
-}
-
-
-constexpr const auto printPassage_from_key {"print-passage-from"};
-Passage Database_Config_User::get_print_passage_from () const
-{
-  return database_config_user_fixPassage (get_value (printPassage_from_key, ""), "1.1.1");
-}
-Passage Database_Config_User::get_print_passage_from_for_user (const std::string& user) const
-{
-  return database_config_user_fixPassage (get_value_for_user (user, printPassage_from_key, ""), "1.1.1");
-}
-void Database_Config_User::set_print_passage_from (Passage value) const
-{
-  const std::string s = std::to_string (value.m_book) + "." + std::to_string (value.m_chapter) + "." + value.m_verse;
-  set_value (printPassage_from_key, s);
-}
-
-
-constexpr const auto printPassage_to_key {"print-passage-to"};
-Passage Database_Config_User::get_print_passage_to () const
-{
-  return database_config_user_fixPassage (get_value (printPassage_to_key, ""), "1.1.31");
-}
-Passage Database_Config_User::get_print_passage_to_for_user (const std::string& user) const
-{
-  return database_config_user_fixPassage (get_value_for_user (user, printPassage_to_key, ""), "1.1.31");
-}
-void Database_Config_User::set_print_passage_to (const Passage& value) const
-{
-  const std::string s = std::to_string (value.m_book) + "." + std::to_string (value.m_chapter) + "." + value.m_verse;
-  set_value (printPassage_to_key, s);
-}
-
-
 constexpr const auto focused_book_key {"focused-book"};
-int Database_Config_User::get_focused_book () const
+std::vector<int> Database_Config_User::get_focused_books () const
 {
-  return get_numeric_value (focused_book_key, 1);
+  return get_numeric_list (focused_book_key);
 }
-void Database_Config_User::set_focused_book (int book) const
+void Database_Config_User::set_focused_books (const std::vector<int>& books) const
 {
-  set_numeric_value (focused_book_key, book);
+  set_numeric_list (focused_book_key, books);
 }
 
 
 constexpr const auto focused_chapter_key {"focused-chapter"};
-int Database_Config_User::get_focused_chapter () const
+std::vector<int> Database_Config_User::get_focused_chapters () const
 {
-  return get_numeric_value (focused_chapter_key, 1);
+  return get_numeric_list (focused_chapter_key);
 }
-void Database_Config_User::set_focused_chapter (int chapter) const
+void Database_Config_User::set_focused_chapters (const std::vector<int>& chapters) const
 {
-  set_numeric_value (focused_chapter_key, chapter);
+  set_numeric_list (focused_chapter_key, chapters);
 }
 
 
 constexpr const auto focused_verse_key {"focused-verse"};
-int Database_Config_User::get_focused_verse () const
+std::vector<int> Database_Config_User::get_focused_verses () const
 {
-  return get_numeric_value (focused_verse_key, 1);
+  return get_numeric_list (focused_verse_key);
 }
-void Database_Config_User::set_focused_verse (int verse) const
+void Database_Config_User::set_focused_verses (const std::vector<int>& verses) const
 {
-  set_numeric_value (focused_verse_key, verse);
+  set_numeric_list (focused_verse_key, verses);
 }
 
 
@@ -952,14 +894,14 @@ void Database_Config_User::add_updated_setting (int value) const
 {
   std::vector <int> settings = get_updated_settings ();
   settings.push_back (value);
-  settings = filter::strings::array_unique (settings);
+  settings = filter::string::array_unique (settings);
   set_updated_settings (settings);
 }
 void Database_Config_User::remove_updated_setting (int value) const
 {
   std::vector <int> settings = get_updated_settings ();
   const std::vector <int> against {value};
-  settings = filter::strings::array_diff (settings, against);
+  settings = filter::string::array_diff (settings, against);
   set_updated_settings (settings);
 }
 
@@ -977,14 +919,14 @@ void Database_Config_User::add_removed_change (int value) const
 {
   std::vector <int> settings = get_removed_changes ();
   settings.push_back (value);
-  settings = filter::strings::array_unique (settings);
+  settings = filter::string::array_unique (settings);
   set_removed_changes (settings);
 }
 void Database_Config_User::remove_removed_change (int value) const
 {
   std::vector <int> settings = get_removed_changes ();
   std::vector <int> against {value};
-  settings = filter::strings::array_diff (settings, against);
+  settings = filter::string::array_diff (settings, against);
   set_removed_changes (settings);
 }
 

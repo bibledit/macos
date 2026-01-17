@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,30 +17,50 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
 
-$(document).ready (function () {
+document.addEventListener("DOMContentLoaded", function(e) {
   passageConnectToAll ();
 });
 
 
 function passageConnectToAll () {
-  $ ('.starteditor').off ("click").on ("click", passageStartEditor);
+  document.querySelectorAll('.starteditor').forEach((element) => {
+    element.removeEventListener("click", passageStartEditor, false);
+    element.addEventListener("click", passageStartEditor);
+  });
 }
 
 function passageConnectToLast () {
-  $ ('.starteditor:last').off ("click").on ("click", passageStartEditor);
+  const nodes = document.querySelectorAll('.starteditor');
+  if (nodes.length) {
+    const node = nodes[nodes.length - 1];
+    node.removeEventListener("click", passageStartEditor, false);
+    node.addEventListener("click", passageStartEditor);
+  }
 }
 
 function passageStartEditor (event) {
   event.preventDefault ();
-  var a = $(this);
-  var passage = a.attr ("passage");
-  $.ajax ({
-    url: "/edit/edit",
-    type: "GET",
-    data: { passage: passage },
-    cache: false,
-    success: function (response) {
-      a.next ().html (response).fadeIn (100).delay (3000).fadeOut (1000);
-    },
-  });
+  const a = event.target;
+  var passage = a.getAttribute ("passage");
+  const url = "/edit/edit?passage=" + passage;
+  fetch(url, {
+    method: "GET",
+    cache: "no-cache"
+  })
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(response.status);
+    }
+    return response.text();
+  })
+  .then((response) => {
+    var next = a.nextSibling;
+    next.innerHTML = " " + response;
+    setTimeout(() => {
+      next.innerHTML = " ";
+    }, "3000");
+  })
+  .catch((error) => {
+    console.log(error);
+  })
 }

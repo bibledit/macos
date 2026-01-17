@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,9 +17,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
 
-$(document).ready (function () {
-  $ ("#form").submit (function (event) {
-    var text = $("#noteblock").html();
-    $("#data").html (text);
-  });
+document.addEventListener("DOMContentLoaded", function(e) {
+  var form = document.querySelector ("#form");
+  if (form) {
+    form.addEventListener("submit", function (event) {
+      var text = document.querySelector("#noteblock").innerHTML;
+      var data = document.querySelector ("#data");
+      data.innerHTML = "";
+      data.insertAdjacentHTML('beforeend', text);
+    });
+  }
 });

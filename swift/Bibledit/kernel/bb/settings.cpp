@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -88,10 +88,10 @@ std::string bible_settings (Webserver_Request& webserver_request)
   
   // The Bible.
   std::string bible = webserver_request.query["bible"];
-  if (bible.empty()) bible = webserver_request.post ["val1"];
+  if (bible.empty()) bible = webserver_request.post_get("val1");
   bible = access_bible::clamp (webserver_request, bible);
-  view.set_variable ("bible", filter::strings::escape_special_xml_characters (bible));
-  view.set_variable ("urlbible", filter_url_urlencode(filter::strings::escape_special_xml_characters (bible)));
+  view.set_variable ("bible", filter::string::escape_special_xml_characters (bible));
+  view.set_variable ("urlbible", filter_url_urlencode(filter::string::escape_special_xml_characters (bible)));
 
   
   // Whether the user has write access to this Bible.
@@ -106,8 +106,8 @@ std::string bible_settings (Webserver_Request& webserver_request)
 
   
   // The state of the checkbox.
-  const std::string checkbox = webserver_request.post ["checkbox"];
-  bool checked = filter::strings::convert_to_bool (webserver_request.post ["checked"]);
+  const std::string checkbox = webserver_request.post_get("checkbox");
+  bool checked = filter::string::convert_to_bool (webserver_request.post_get("checked"));
 
   
   // Versification
@@ -115,8 +115,8 @@ std::string bible_settings (Webserver_Request& webserver_request)
     constexpr const char* versification {"versification"};
     Database_Versifications database_versifications;
     const std::vector <std::string> systems = database_versifications.getSystems ();
-    if (webserver_request.post.count (versification)) {
-      const std::string system {webserver_request.post.at(versification)};
+    if (webserver_request.post_count (versification)) {
+      const std::string system {webserver_request.post_get(versification)};
       if (write_access)
         database::config::bible::set_versification_system (bible, system);
     }
@@ -143,7 +143,7 @@ std::string bible_settings (Webserver_Request& webserver_request)
     } else {
       std::vector <std::string> feedback{};
       if (write_access)
-        book_create (bible, static_cast<book_id>(filter::strings::convert_to_int (createbook)), -1, feedback);
+        book_create (bible, static_cast<book_id>(filter::string::convert_to_int (createbook)), -1, feedback);
     }
     // User creates a book in this Bible: Set it as the default Bible.
     webserver_request.database_config_user()->set_bible (bible);
@@ -155,7 +155,7 @@ std::string bible_settings (Webserver_Request& webserver_request)
   if (!deletebook.empty()) {
     const std::string confirm = webserver_request.query["confirm"];
     if (confirm == "yes") {
-      if (write_access) bible_logic::delete_book (bible, filter::strings::convert_to_int (deletebook));
+      if (write_access) bible_logic::delete_book (bible, filter::string::convert_to_int (deletebook));
     } 
     else if (confirm == "cancel") {
     } 
@@ -172,8 +172,8 @@ std::string bible_settings (Webserver_Request& webserver_request)
   // Importing text from a resource.
   {
     constexpr const char* selector {"resource"};
-    if (webserver_request.post.count (selector)) {
-      const std::string resource {webserver_request.post.at(selector)};
+    if (webserver_request.post_count (selector)) {
+      const std::string resource {webserver_request.post_get(selector)};
       if (!resource.empty ()) {
         const auto bibles = database::bibles::get_books (bible);
         if (bibles.empty()) {
@@ -224,8 +224,9 @@ std::string bible_settings (Webserver_Request& webserver_request)
     pugi::xml_node a_or_span_node;
     if (manager_level) {
       a_or_span_node = book_document.append_child("a");
-      std::string href = filter_url_build_http_query ("book", "bible", bible);
-      href = filter_url_build_http_query (href, "book", std::to_string (book));
+      const std::string href = filter_url_build_http_query("book", {
+        {"bible", bible}, {"book", std::to_string (book)}
+      });
       a_or_span_node.append_attribute("href") = href.c_str();
     } else {
       a_or_span_node = book_document.append_child("span");
@@ -244,7 +245,7 @@ std::string bible_settings (Webserver_Request& webserver_request)
   if (checkbox == "public") {
     if (write_access) database::config::bible::set_public_feedback_enabled (bible, checked);
   }
-  view.set_variable ("public", filter::strings::get_checkbox_status (database::config::bible::get_public_feedback_enabled (bible)));
+  view.set_variable ("public", filter::string::get_checkbox_status (database::config::bible::get_public_feedback_enabled (bible)));
 
   
  
@@ -256,15 +257,15 @@ std::string bible_settings (Webserver_Request& webserver_request)
       rss_logic_feed_on_off ();
     }
   }
-  view.set_variable ("rss", filter::strings::get_checkbox_status (database::config::bible::get_send_changes_to_rss (bible)));
+  view.set_variable ("rss", filter::string::get_checkbox_status (database::config::bible::get_send_changes_to_rss (bible)));
 #endif
 
   
   // Stylesheet for editing.
   {
     constexpr const char* identification {"stylesheetediting"};
-    if (webserver_request.post.count (identification)) {
-      const std::string value {webserver_request.post.at(identification)};
+    if (webserver_request.post_count(identification)) {
+      const std::string value {webserver_request.post_get(identification)};
       database::config::bible::set_editor_stylesheet (bible, value);
       return std::string();
     }
@@ -282,8 +283,8 @@ std::string bible_settings (Webserver_Request& webserver_request)
   // Stylesheet for export.
   {
     constexpr const char* identification {"stylesheetexport"};
-    if (webserver_request.post.count (identification)) {
-      const std::string value {webserver_request.post.at(identification)};
+    if (webserver_request.post_count (identification)) {
+      const std::string value {webserver_request.post_get(identification)};
       database::config::bible::set_export_stylesheet (bible, value);
       return std::string();
     }
@@ -309,7 +310,7 @@ std::string bible_settings (Webserver_Request& webserver_request)
       }
     }
   }
-  view.set_variable ("checks", filter::strings::get_checkbox_status (database::config::bible::get_daily_checks_enabled (bible)));
+  view.set_variable ("checks", filter::string::get_checkbox_status (database::config::bible::get_daily_checks_enabled (bible)));
 #endif
 
   

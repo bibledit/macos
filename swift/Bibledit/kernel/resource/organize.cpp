@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -53,42 +53,20 @@ bool resource_organize_acl (Webserver_Request& webserver_request)
 
 std::string resource_organize (Webserver_Request& webserver_request)
 {
-  const std::string checkbox = webserver_request.post ["checkbox"];
-  const bool checked = filter::strings::convert_to_bool (webserver_request.post ["checked"]);
+  const std::string checkbox = webserver_request.post_get("checkbox");
+  const bool checked = filter::string::convert_to_bool (webserver_request.post_get("checked"));
 
 
   // For administrator level default resource management purposes.
   const int level = webserver_request.session_logic()->get_level ();
-  const bool is_def = (webserver_request.query["type"] == "def" || webserver_request.post["type"] == "def");
+  const bool is_def = (webserver_request.query["type"] == "def" || webserver_request.post_get("type") == "def");
   const std::vector <std::string> default_active_resources = database::config::general::get_default_active_resources ();
 
   
   // Deal with adding new resources.
   const auto get_added_resource = [&webserver_request] () -> std::string {
-    if (webserver_request.post.count("bible"))
-      return webserver_request.post.at("bible");
-    if (webserver_request.post.count("usfm"))
-      return webserver_request.post.at("usfm");
-    if (webserver_request.post.count("web_orig"))
-      return webserver_request.post.at("web_orig");
-    if (webserver_request.post.count("web_bibles"))
-      return webserver_request.post.at("web_bibles");
-    if (webserver_request.post.count("image"))
-      return webserver_request.post.at("image");
-    if (webserver_request.post.count("lexicon"))
-      return webserver_request.post.at("lexicon");
-    if (webserver_request.post.count("sword"))
-      return webserver_request.post.at("sword");
-    if (webserver_request.post.count("divider"))
-      return webserver_request.post.at("divider");
-    if (webserver_request.post.count("biblegateway"))
-      return webserver_request.post.at("biblegateway");
-    if (webserver_request.post.count("studylight"))
-      return webserver_request.post.at("studylight");
-    if (webserver_request.post.count("comparative"))
-      return webserver_request.post.at("comparative");
-    if (webserver_request.post.count("translated"))
-      return webserver_request.post.at("translated");
+    if (webserver_request.query.count("add"))
+      return webserver_request.query.at("add");
     return std::string();
   };
   const std::string add {get_added_resource()};
@@ -96,7 +74,7 @@ std::string resource_organize (Webserver_Request& webserver_request)
     if (add == resource_logic_rich_divider ()) {
       // Navigate to the page to set up the rich divider.
       if (is_def) 
-        redirect_browser (webserver_request, filter_url_build_http_query (resource_divider_url (), "type", "def"));
+        redirect_browser (webserver_request, filter_url_build_http_query(resource_divider_url(), {{"type", "def"}}));
       else
         redirect_browser (webserver_request, resource_divider_url ());
       return std::string();
@@ -116,7 +94,7 @@ std::string resource_organize (Webserver_Request& webserver_request)
   
   
   if (webserver_request.query.count ("remove")) {
-    int remove = filter::strings::convert_to_int (webserver_request.query["remove"]);
+    int remove = filter::string::convert_to_int (webserver_request.query["remove"]);
     std::vector <std::string> resources = webserver_request.database_config_user()->get_active_resources ();
     if (is_def) resources = default_active_resources;
     if (remove < static_cast<int>(resources.size ())) {
@@ -131,15 +109,15 @@ std::string resource_organize (Webserver_Request& webserver_request)
   }
 
   
-  std::string movefrom = webserver_request.post ["movefrom"];
+  std::string movefrom = webserver_request.post_get("movefrom");
   if (!movefrom.empty ()) {
-    std::string moveto =  webserver_request.post ["moveto"];
+    std::string moveto =  webserver_request.post_get("moveto");
     if (!moveto.empty ()) {
-      size_t from = static_cast<size_t> (filter::strings::convert_to_int (movefrom));
-      size_t to = static_cast<size_t>(filter::strings::convert_to_int (moveto));
+      size_t from = static_cast<size_t> (filter::string::convert_to_int (movefrom));
+      size_t to = static_cast<size_t>(filter::string::convert_to_int (moveto));
       std::vector <std::string> resources = webserver_request.database_config_user()->get_active_resources ();
       if (is_def) resources = default_active_resources;
-      filter::strings::array_move_from_to (resources, from, to);
+      filter::string::array_move_from_to (resources, from, to);
       if (is_def) database::config::general::set_default_active_resources (resources);
       else webserver_request.database_config_user()->set_active_resources (resources);
       if (!is_def)
@@ -174,7 +152,7 @@ std::string resource_organize (Webserver_Request& webserver_request)
     for (size_t i = 0; i < default_active_resources.size (); i++) {
       defactivesblock.append ("<p>&#183; ");
       defactivesblock.append ("<a href=\"?remove=" + std::to_string (i) + "&type=def\">");
-      defactivesblock.append (filter::strings::emoji_wastebasket ());
+      defactivesblock.append (filter::string::emoji_wastebasket ());
       defactivesblock.append ("</a>");
       defactivesblock.append (" ");
       defactivesblock.append (default_active_resources [i]);
@@ -191,7 +169,7 @@ std::string resource_organize (Webserver_Request& webserver_request)
   for (size_t i = 0; i < active_resources.size (); i++) {
     activesblock.append ("<p>&#183; ");
     activesblock.append ("<a href=\"?remove=" + std::to_string (i) + "\">");
-    activesblock.append (filter::strings::emoji_wastebasket ());
+    activesblock.append (filter::string::emoji_wastebasket ());
     activesblock.append ("</a>");
     activesblock.append (" ");
     activesblock.append (active_resources [i]);
@@ -207,8 +185,8 @@ std::string resource_organize (Webserver_Request& webserver_request)
     page += dialog_entry.run ();
     return page;
   }
-  if (webserver_request.post.count ("before")) {
-    int value = filter::strings::convert_to_int (webserver_request.post["entry"]);
+  if (webserver_request.post_count("before")) {
+    int value = filter::string::convert_to_int (webserver_request.post_get("entry"));
     if ((value >= 0) && (value <= 100)) {
       webserver_request.database_config_user ()->set_resource_verses_before (value);
     }
@@ -222,8 +200,8 @@ std::string resource_organize (Webserver_Request& webserver_request)
     page += dialog_entry.run ();
     return page;
   }
-  if (webserver_request.post.count ("after")) {
-    int value = filter::strings::convert_to_int (webserver_request.post["entry"]);
+  if (webserver_request.post_count("after")) {
+    int value = filter::string::convert_to_int (webserver_request.post_get("entry"));
     if ((value >= 0) && (value <= 100)) {
       webserver_request.database_config_user ()->set_resource_verses_after (value);
     }
@@ -235,7 +213,7 @@ std::string resource_organize (Webserver_Request& webserver_request)
     webserver_request.database_config_user ()->set_include_related_passages (checked);
     return std::string();
   }
-  view.set_variable ("related", filter::strings::get_checkbox_status (webserver_request.database_config_user ()->get_include_related_passages ()));
+  view.set_variable ("related", filter::string::get_checkbox_status (webserver_request.database_config_user ()->get_include_related_passages ()));
 
 
   // For users with lower than administrator access levels, they can replace
@@ -262,7 +240,7 @@ std::string resource_organize (Webserver_Request& webserver_request)
     std::vector <std::string> active_resources_2 = webserver_request.database_config_user()->get_active_resources ();
     for (auto & resource : active_resources_2) {
       if (resource_logic_can_cache (resource)) {
-        if (!in_array (resource, installing_resources)) {
+        if (!filter::string::in_array (resource, installing_resources)) {
           installing_resources.push_back (resource);
           database::config::general::set_resources_to_cache (installing_resources);
         }

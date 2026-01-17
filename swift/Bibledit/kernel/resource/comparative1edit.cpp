@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -63,12 +63,12 @@ std::string resource_comparative1edit (Webserver_Request& webserver_request)
   
   
   std::string name = webserver_request.query ["name"];
-  if (name.empty()) name = webserver_request.post ["val1"];
+  if (name.empty()) name = webserver_request.post_get("val1");
   view.set_variable ("name", name);
 
   
-  std::string checkbox = webserver_request.post ["checkbox"];
-  bool checked = filter::strings::convert_to_bool (webserver_request.post ["checked"]);
+  std::string checkbox = webserver_request.post_get("checkbox");
+  bool checked = filter::string::convert_to_bool (webserver_request.post_get("checked"));
 
   
   bool resource_edited = false;
@@ -88,8 +88,8 @@ std::string resource_comparative1edit (Webserver_Request& webserver_request)
   // The comparative resource's base resource.
   {
     constexpr const char* identification {"base"};
-    if (webserver_request.post.count (identification)) {
-      base = webserver_request.post.at(identification);
+    if (webserver_request.post_count(identification)) {
+      base = webserver_request.post_get(identification);
       resource_edited = true;
     }
     dialog::select::Settings settings {
@@ -105,8 +105,8 @@ std::string resource_comparative1edit (Webserver_Request& webserver_request)
   // The comparative resource's updated resource.
   {
     constexpr const char* identification {"update"};
-    if (webserver_request.post.count (identification)) {
-      update = webserver_request.post.at(identification);
+    if (webserver_request.post_count(identification)) {
+      update = webserver_request.post_get(identification);
       resource_edited = true;
     }
     dialog::select::Settings settings {
@@ -127,8 +127,8 @@ std::string resource_comparative1edit (Webserver_Request& webserver_request)
     page += dialog_entry.run ();
     return page;
   }
-  if (webserver_request.post.count ("remove")) {
-    remove = webserver_request.post ["entry"];
+  if (webserver_request.post_count("remove")) {
+    remove = webserver_request.post_get("entry");
     resource_edited = true;
   }
 
@@ -140,8 +140,8 @@ std::string resource_comparative1edit (Webserver_Request& webserver_request)
     page += dialog_entry.run ();
     return page;
   }
-  if (webserver_request.post.count ("replace")) {
-    replace = webserver_request.post ["entry"];
+  if (webserver_request.post_count("replace")) {
+    replace = webserver_request.post_get("entry");
     resource_edited = true;
   }
 
@@ -189,7 +189,7 @@ std::string resource_comparative1edit (Webserver_Request& webserver_request)
     // Store the list of comparative resources for download by the client devices.
     {
       std::string path = resource_logic_comparative_resources_list_path ();
-      filter_url_file_put_contents (path, filter::strings::implode (resources, "\n"));
+      filter_url_file_put_contents (path, filter::string::implode (resources, "\n"));
     }
   }
   
@@ -199,9 +199,9 @@ std::string resource_comparative1edit (Webserver_Request& webserver_request)
   view.set_variable ("title", title);
   view.set_variable ("remove", remove);
   view.set_variable ("replace", replace);
-  view.set_variable ("diacritics", filter::strings::get_checkbox_status (diacritics));
-  view.set_variable ("casefold", filter::strings::get_checkbox_status (casefold));
-  view.set_variable ("cache", filter::strings::get_checkbox_status (cache));
+  view.set_variable ("diacritics", filter::string::get_checkbox_status (diacritics));
+  view.set_variable ("casefold", filter::string::get_checkbox_status (casefold));
+  view.set_variable ("cache", filter::string::get_checkbox_status (cache));
   page += view.render ("resource", "comparative1edit");
   page += assets_page::footer ();
   return page;

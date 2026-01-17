@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -59,8 +59,8 @@ std::string checks_settingspatterns (Webserver_Request& webserver_request)
   const std::string bible = access_bible::clamp (webserver_request, webserver_request.database_config_user()->get_bible ());
   
   
-  if (webserver_request.post.count ("patterns")) {
-    const std::string patterns = webserver_request.post ["patterns"];
+  if (webserver_request.post_count("patterns")) {
+    const std::string patterns = webserver_request.post_get("patterns");
     if (!bible.empty ()) database::config::bible::set_checking_patterns (bible, patterns);
     view.set_variable ("success", translate("The patterns were saved"));
   }

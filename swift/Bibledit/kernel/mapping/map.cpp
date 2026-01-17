@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -61,8 +61,8 @@ std::string mapping_map (Webserver_Request& webserver_request)
   std::string name = webserver_request.query["name"];
   view.set_variable ("name", name);
 
-  if (webserver_request.post.count ("submit")) {
-    std::string data = webserver_request.post["data"];
+  if (webserver_request.post_count("submit")) {
+    std::string data = webserver_request.post_get("data");
     database_mappings.import (name, data);
     success = translate("The verse mapping was saved");
   }

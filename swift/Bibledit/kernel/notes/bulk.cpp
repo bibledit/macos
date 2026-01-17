@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -69,23 +69,23 @@ std::string notes_bulk (Webserver_Request& webserver_request)
   std::string success, error;
 
   
-  std::vector <std::string> bibles = access_bible::bibles (webserver_request);
-  int book = Ipc_Focus::getBook (webserver_request);
-  int chapter = Ipc_Focus::getChapter (webserver_request);
-  int verse = Ipc_Focus::getVerse (webserver_request);
-  int passage_selector = webserver_request.database_config_user()->get_consultation_notes_passage_selector();
+  std::vector <std::string> bibles = {webserver_request.database_config_user()->get_consultation_notes_bible_selector()};
+  if (bibles.empty()) bibles = access_bible::bibles (webserver_request);
+  int book = ipc_focus::get_book (webserver_request);
+  int chapter = ipc_focus::get_chapter (webserver_request);
+  int verse = ipc_focus::get_verse (webserver_request);
+  Database_Notes::PassageSelector passage_selector = static_cast<Database_Notes::PassageSelector>(webserver_request.database_config_user()->get_consultation_notes_passage_selector());
   int edit_selector = webserver_request.database_config_user()->get_consultation_notes_edit_selector();
-  int non_edit_selector = webserver_request.database_config_user()->get_consultation_notes_non_edit_selector();
-  std::string status_selector = webserver_request.database_config_user()->get_consultation_notes_status_selector();
-  std::string bible_selector = webserver_request.database_config_user()->get_consultation_notes_bible_selector();
+  auto non_edit_selector = static_cast<Database_Notes::NonEditSelector>(webserver_request.database_config_user()->get_consultation_notes_non_edit_selector());
+  const std::vector<std::string> status_selectors = webserver_request.database_config_user()->get_consultation_notes_status_selectors();
   std::string assignment_selector = webserver_request.database_config_user()->get_consultation_notes_assignment_selector();
   bool subscription_selector = webserver_request.database_config_user()->get_consultation_notes_subscription_selector();
-  int severity_selector = webserver_request.database_config_user()->get_consultation_notes_severity_selector();
-  int text_selector = webserver_request.database_config_user()->get_consultation_notes_text_selector();
-  std::string search_text = webserver_request.database_config_user()->get_consultation_notes_search_text();
+  auto severity_selector = static_cast<Database_Notes::SeveritySelector>(webserver_request.database_config_user()->get_consultation_notes_severity_selector());
+  const int text_selector = webserver_request.database_config_user()->get_consultation_notes_text_selector();
+  const std::string search_text = text_selector ? webserver_request.database_config_user()->get_consultation_notes_search_text() : "";
   
   
-  int userid = filter::strings::user_identifier (webserver_request);
+  int userid = filter::string::user_identifier (webserver_request);
   
   
   // The admin disables notes selection on Bibles, so the admin sees all notes, even notes referring to non-existing Bibles.
@@ -111,24 +111,24 @@ std::string notes_bulk (Webserver_Request& webserver_request)
   // This is done to remember them as long as this page is active.
   // Thus erroneous bulk operations on notes can be rectified somewhat easier.
   if (!subscribe && !unsubscribe && !assign && !unassign && !status && !severity && !bible && !erase) {
-    std::vector <int> identifiers = database_notes.select_notes (bibles,
-                                              book,
-                                              chapter,
-                                              verse,
-                                              passage_selector,
-                                              edit_selector,
-                                              non_edit_selector,
-                                              status_selector,
-                                              bible_selector,
-                                              assignment_selector,
-                                              subscription_selector,
-                                              severity_selector,
-                                              text_selector,
-                                              search_text,
-                                              -1);
+    Database_Notes::Selector selector {
+      .bibles = bibles,
+      .book = book,
+      .chapter = chapter,
+      .verse = verse,
+      .passage_selector = passage_selector,
+      .edit_selector = static_cast<Database_Notes::EditSelector>(edit_selector),
+      .non_edit_selector = non_edit_selector,
+      .status_selectors = status_selectors,
+      .assignment_selector = assignment_selector,
+      .subscription_selector = subscription_selector,
+      .severity_selector = severity_selector,
+      .search_text = search_text,
+    };
+    std::vector <int> identifiers = database_notes.select_notes (selector);
     std::vector <std::string> sids;
     for (auto id : identifiers) sids.push_back (std::to_string (id));
-    database::temporal::set_value (userid, "identifiers", filter::strings::implode (sids, " "));
+    database::temporal::set_value (userid, "identifiers", filter::string::implode (sids, " "));
   }
 
 
@@ -136,8 +136,8 @@ std::string notes_bulk (Webserver_Request& webserver_request)
   // Get the stored note identifiers from the database.
   std::vector <int> identifiers;
   {
-    std::vector <std::string> sids = filter::strings::explode (database::temporal::get_value (userid, "identifiers"), ' ');
-    for (auto id : sids) identifiers.push_back (filter::strings::convert_to_int (id));
+    std::vector <std::string> sids = filter::string::explode (database::temporal::get_value (userid, "identifiers"), ' ');
+    for (auto id : sids) identifiers.push_back (filter::string::convert_to_int (id));
   }
   
   
@@ -169,7 +169,7 @@ std::string notes_bulk (Webserver_Request& webserver_request)
     std::string assignee = webserver_request.query["assign"];
     const std::string& user = webserver_request.session_logic ()->get_username ();
     std::vector <std::string> assignees = database_noteassignment.assignees (user);
-    if (in_array (assignee, assignees)) {
+    if (filter::string::in_array (assignee, assignees)) {
       for (auto identifier : identifiers) {
         if (!database_notes.is_assigned (identifier, assignee)) {
           notes_logic.assignUser (identifier, assignee);
@@ -218,7 +218,7 @@ std::string notes_bulk (Webserver_Request& webserver_request)
   
   
   if (severity) {
-    int new_severity = filter::strings::convert_to_int (webserver_request.query["severity"]);
+    int new_severity = filter::string::convert_to_int (webserver_request.query["severity"]);
     for (auto identifier : identifiers) {
       if (database_notes.get_raw_severity (identifier) != new_severity) {
         notes_logic.setRawSeverity (identifier, new_severity);

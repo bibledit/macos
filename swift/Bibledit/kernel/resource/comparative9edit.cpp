@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -73,11 +73,11 @@ std::string resource_comparative9edit (Webserver_Request& webserver_request)
     page += dialog_entry.run ();
     return page;
   }
-  if (webserver_request.post.count ("new")) {
+  if (webserver_request.post_count("new")) {
     // The title for the new resource as entered by the user.
     // Clean the title up and ensure it always starts with "Comparative ".
     // This word flags the comparative resource as being one of that category.
-    std::string new_resource = webserver_request.post ["entry"];
+    std::string new_resource = webserver_request.post_get("entry");
     size_t pos = new_resource.find (resource_logic_comparative_resource ());
     if (pos != std::string::npos) {
       new_resource.erase (pos, resource_logic_comparative_resource ().length());
@@ -91,7 +91,7 @@ std::string resource_comparative9edit (Webserver_Request& webserver_request)
         titles.push_back (title);
       }
     }
-    if (in_array (new_resource, titles)) {
+    if (filter::string::in_array (new_resource, titles)) {
       error = translate("This comparative resource already exists");
     } else if (new_resource.empty ()) {
       error = translate("Please give a name for the comparative resource");

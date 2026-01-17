@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,24 +17,23 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
 
-$(document).ready (function () {
+document.addEventListener("DOMContentLoaded", function(e) {
 
-  $("#fgcolor").change(function(){
-    var fgcolor = $("#fgcolor").val();
-    $.ajax ({
-      url: "view",
-      type: "GET",
-      data: { sheet: sheet, style: style, fgcolor: fgcolor }
+  var fgcolor = document.querySelector("#fgcolor");
+  if (fgcolor) {
+    fgcolor.addEventListener("change",function(){
+      const value = fgcolor.value;
+      const url = "view?" + new URLSearchParams([ ["sheet", sheet], ["style", style], ["fgcolor", value] ]).toString();
+      fetch(url, { method: "GET" });
     });
-  });
+  }
 
-  $("#bgcolor").change(function(){
-    var bgcolor = $("#bgcolor").val();
-    $.ajax ({
-      url: "view",
-      type: "GET",
-      data: { sheet: sheet, style: style, bgcolor: bgcolor }
+  var bgcolor = document.querySelector("#bgcolor");
+  if (bgcolor) {
+    bgcolor.addEventListener("change",function(){
+      const value = bgcolor.value;
+      const url = "view?" + new URLSearchParams([ ["sheet", sheet], ["style", style], ["bgcolor", value] ]).toString();
+      fetch(url, { method: "GET" });
     });
-  });
-
+  }
 });

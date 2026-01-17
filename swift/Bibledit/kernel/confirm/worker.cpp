@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -96,7 +96,7 @@ void setup (Webserver_Request& webserver_request,
   node.text ().set (information.c_str());
   node = document.append_child ("p");
   const std::string site_url = config::logic::site_url (webserver_request);
-  std::string confirmation_url = filter_url_build_http_query (site_url + session_confirm_url (), "id", std::to_string(confirmation_id));
+  std::string confirmation_url = filter_url_build_http_query(site_url + session_confirm_url (), {{"id", std::to_string(confirmation_id)}});
   node.text ().set (confirmation_url.c_str());
   std::stringstream output;
   document.print (output, "", pugi::format_raw);

@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ std::string resource_external_versification (std::string name);
 std::string resource_external_mapping (std::string name);
 std::string resource_external_type (std::string name);
 std::string resource_external_cloud_fetch_cache_extract (const std::string & name, int book, int chapter, int verse);
-const char * resource_external_net_bible_name ();
-const char * resource_external_biblehub_interlinear_name ();
+const char* resource_external_net_bible_name();
+const char* resource_external_biblehub_interlinear_name();
+const char* resource_external_elberfelder_bibel_name();
 

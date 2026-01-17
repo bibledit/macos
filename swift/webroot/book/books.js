@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,6 +23,5 @@ var noVerseBooks = [67, 68, 69, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
 
 function isNoVerseBook (book)
 {
-  var key = $.inArray (parseInt (book), noVerseBooks);
-  return (key != -1);
+  return noVerseBooks.includes(parseInt(book));
 }

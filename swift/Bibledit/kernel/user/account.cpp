@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -61,12 +61,12 @@ std::string user_account ([[maybe_unused]] Webserver_Request& webserver_request)
   std::vector <std::string> success_messages;
 
   // Form submission handler.
-  if (webserver_request.post.count ("submit")) {
+  if (webserver_request.post_count("submit")) {
     bool form_is_valid = true;
-    std::string currentpassword = webserver_request.post ["currentpassword"];
-    std::string newpassword     = webserver_request.post ["newpassword"];
-    std::string newpassword2    = webserver_request.post ["newpassword2"];
-    std::string newemail        = webserver_request.post ["newemail"];
+    std::string currentpassword = webserver_request.post_get("currentpassword");
+    std::string newpassword     = webserver_request.post_get("newpassword");
+    std::string newpassword2    = webserver_request.post_get("newpassword2");
+    std::string newemail        = webserver_request.post_get("newemail");
   
     if ((newpassword != "") || (newpassword2 != "")) {
       if (newpassword.length () < 4) {
@@ -119,9 +119,9 @@ std::string user_account ([[maybe_unused]] Webserver_Request& webserver_request)
   
   }
 
-  view.set_variable ("username", filter::strings::escape_special_xml_characters (username));
-  view.set_variable ("email", filter::strings::escape_special_xml_characters (email));
-  std::string success_message = filter::strings::implode (success_messages, "\n");
+  view.set_variable ("username", filter::string::escape_special_xml_characters (username));
+  view.set_variable ("email", filter::string::escape_special_xml_characters (email));
+  std::string success_message = filter::string::implode (success_messages, "\n");
   view.set_variable ("success_messages", success_message);
   if (!actions_taken) view.enable_zone ("no_actions_taken");
 

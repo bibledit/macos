@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,34 +16,47 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
+var touchStartX = 0;
+var resourceAbortController = new AbortController();
 
-$(document).ready (function () {
+document.addEventListener("DOMContentLoaded", function(event) {
   navigationNewPassage ();
+  
   if (swipe_operations) {
-    $ ("body").swipe ( {
-      swipeLeft:function (event, direction, distance, duration, fingerCount, fingerData) {
+    // The minimum distance to swipe is 10% of the screen width.
+    // This is to eliminate small unintended swipes.
+    let minSwipeDistance = parseInt(window.screen.width / 10);
+    
+    document.body.addEventListener('touchstart', event => {
+      touchStartX = event.changedTouches[0].screenX;
+    });
+    
+    document.body.addEventListener('touchend', event => {
+      let touchEndX = event.changedTouches[0].screenX
+      if (touchEndX < touchStartX - minSwipeDistance) {
         resourceSwipeLeft (event);
-      },
-      swipeRight:function (event, direction, distance, duration, fingerCount, fingerData) {
+      }
+      if (touchEndX > touchStartX + minSwipeDistance) {
         resourceSwipeRight (event);
       }
-    });
+    })
   }
-  $ (window).on ("unload", resourceUnload);
+  
+  window.addEventListener ("unload", resourceUnload);
 });
 
 
 var resourceBook;
 var resourceChapter;
 var resourceVerse;
-var resourceAjaxRequests = [];
 var resourceDoing;
 var resourceAborting = false;
+var resourceError = false;
 
 
 function navigationNewPassage ()
 {
-  if (typeof navigationBook != 'undefined') {
+  if (is_outside_workspace()) {
     resourceBook = navigationBook;
     resourceChapter = navigationChapter;
     resourceVerse = navigationVerse;
@@ -56,17 +69,10 @@ function navigationNewPassage ()
   }
   if (resourceBook == undefined) return;
   resourceAborting = true;
-  for (var i = 0; i < resourceAjaxRequests.length; ++i) {
-    try {
-      if (resourceAjaxRequests[i].readystate != 4) {
-        resourceAjaxRequests[i].abort();
-      }
-    } catch (err) {
-    }
-  }
-  resourceAborting = false;
-  resourceAjaxRequests = [];
+  resourceAbortController.abort("New passage: Abort getting resources for previous passage");
+  resourceAbortController = new AbortController();
   resourceDoing = 0;
+  resourceAborting = false;
   resourceGetOne ();
 }
 
@@ -81,45 +87,64 @@ function resourceGetOne ()
     // Done.
     return;
   }
-  var ajaxRequest = $.ajax ({
-    url: "get",
-    type: "GET",
-    data: { resource: resourceDoing, book: resourceBook, chapter: resourceChapter, verse: resourceVerse },
+  const url = "get?" + new URLSearchParams([ ["resource", resourceDoing], ["book", resourceBook], ["chapter", resourceChapter], ["verse", resourceVerse] ]).toString()
+  fetch(url, {
+    method: "GET",
     resourceDoing: resourceDoing,
-    success: function (response) {
-      if (response == "") {
-        $ ("#line" + this.resourceDoing).hide ();
-        $ ("#name" + this.resourceDoing).hide ();
-      } else {
-        $ ("#line" + this.resourceDoing).show ();
-        $ ("#name" + this.resourceDoing).show ();
-        if (response.charAt (0) == "$") {
-          $ ("#name" + this.resourceDoing).hide ();
-          response = response.substring (1);
-        }
-        var current_content = String ($ ("#content" + this.resourceDoing).html ());
-        $ ("#reload").html (response);
-        if (current_content != String ($ ("#reload").html ())) {
-          $ ("#content" + this.resourceDoing).html (response);
+    signal: resourceAbortController.signal
+  })
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(response.status);
+    }
+    return response.text();
+  })
+  .then((response) => {
+    var line = document.querySelector("#line" + this.resourceDoing);
+    var name = document.querySelector("#name" + this.resourceDoing);
+    if (response == "") {
+      if (line) line.hidden = true;
+      if (name) name.hidden = true;
+    } else {
+      if (line) line.hidden = false;
+      if (name) name.hidden = false;
+      if (response.charAt (0) == "$") {
+        if (name) name.hidden = true;
+        response = response.substring (1);
+      }
+      var content = document.querySelector("#content" + this.resourceDoing);
+      var reload = document.querySelector("#reload");
+      if (reload) reload.innerHTML = response;
+      if (content) {
+        if (content.innerHTML != reload.innerHTML) {
+          content.innerHTML = response;
         }
       }
-      navigationSetup ();
-      resourcePosition ();
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      if (!resourceAborting) resourceDoing--;
-    },
-    complete: function (jqXHR) {
-      if (!resourceAborting) setTimeout (resourceGetOne, 10);
     }
+    navigationSetup ();
+    resourcePosition ();
+    runScript(response);
+  })
+  .catch((error) => {
+    console.log(error);
+    resourceError = true;
+    if (!resourceAborting) resourceDoing--;
+  })
+  .finally(() => {
+    if (!resourceAborting) {
+      // Normally fetch next resources in quick sequence.
+      // In case of an error, wait shortly before retrying.
+      const milliseconds = resourceError ? 500 : 10;
+      setTimeout (resourceGetOne, milliseconds);
+    }
+    resourceError = false;
   });
-  resourceAjaxRequests.push (ajaxRequest);
 }
 
 
 function resourceSwipeLeft (event)
 {
-  if (typeof navigateNextVerse != 'undefined') {
+  if (is_outside_workspace()) {
     navigateNextVerse (event);
   } else if (parent.window.navigateNextVerse != 'undefined') {
     parent.window.navigateNextVerse (event);
@@ -129,7 +154,7 @@ function resourceSwipeLeft (event)
 
 function resourceSwipeRight (event)
 {
-  if (typeof navigatePreviousVerse != 'undefined') {
+  if (is_outside_workspace()) {
     navigatePreviousVerse (event);
   } else if (parent.window.navigatePreviousVerse != 'undefined') {
     parent.window.navigatePreviousVerse (event);
@@ -139,13 +164,13 @@ function resourceSwipeRight (event)
 
 function resourceUnload ()
 {
-  var position = $("#workspacewrapper").scrollTop();
-  $.ajax ({
-    url: "unload",
-    type: "POST",
-    async: false,
-    data: { position: position },
-  });
+  var position = document.querySelector("#workspacewrapper").scrollTop;
+  fetch("unload", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams([["position", position]]).toString(),
+    keepalive: true, // Synchronous call.
+  })
 }
 
 
@@ -154,13 +179,17 @@ function resourceUnload ()
 // The reason is explained in https://github.com/bibledit/cloud/issues/660.
 function resourcePosition ()
 {
-  return;
-  if (resourceWindowPosition != 0) {
-    var position = $("#workspacewrapper").scrollTop();
-    if (position != resourceWindowPosition) {
-      $("#workspacewrapper").scrollTop (resourceWindowPosition);
-    } else {
-      resourceWindowPosition = 0;
-    }
-  }
+}
+
+
+// If the response contains Javascript, extract it and evaluate (run) it.
+function runScript (response)
+{
+  const startTag = "<script>";
+  const scriptStartPos = response.indexOf(startTag);
+  if (scriptStartPos < 0) return;
+  const scriptEndPos = response.indexOf("</script>");
+  if (scriptEndPos < 0) return;
+  const script = response.substring(scriptStartPos + startTag.length, scriptEndPos);
+  eval(script);
 }

@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -63,12 +63,12 @@ std::string styles_indexm (Webserver_Request& webserver_request)
   const std::string& username {webserver_request.session_logic ()->get_username ()};
   int userlevel {webserver_request.session_logic ()->get_level ()};
   
-  if (webserver_request.post.count ("new")) {
-    std::string name {webserver_request.post["entry"]};
+  if (webserver_request.post_count("new")) {
+    std::string name {webserver_request.post_get("entry")};
     // Remove spaces at the ends of the name for the new stylesheet.
     // Because predictive keyboards can add a space to the name,
     // and the stylesheet system is not built for whitespace at the start / end of the name of the stylesheet.
-    name = filter::strings::trim (name);
+    name = filter::string::trim (name);
     std::vector <std::string> existing {database::styles::get_sheets ()};
     if (find (existing.begin(), existing.end (), name) != existing.end ()) {
       page += assets_page::error (translate("This stylesheet already exists"));
@@ -93,9 +93,9 @@ std::string styles_indexm (Webserver_Request& webserver_request)
         bool write = database::styles::has_write_access (username, del);
         if (userlevel >= roles::admin) write = true;
         if (write) {
-          database::styles::delete_sheet (del);
-          database::styles::revoke_write_access (std::string(), del);
-          page += assets_page::success (translate("The stylesheet has been deleted"));
+          database::styles::delete_sheet(del);
+          database::styles::revoke_write_access(std::string(), del);
+          page += assets_page::success(translate("The stylesheet has been deleted"));
         }
       } if (confirm.empty()) {
         Dialog_Yes dialog_yes = Dialog_Yes ("indexm", translate("Would you like to delete this stylesheet?"));

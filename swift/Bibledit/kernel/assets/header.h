@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -31,9 +31,7 @@ public:
   ~Assets_Header ();
   Assets_Header(const Assets_Header&) = delete;
   Assets_Header operator=(const Assets_Header&) = delete;
-  void jquery_touch_on ();
-  void touch_css_on ();
-  void notify_it_on ();
+  void notify_on ();
   void set_navigator ();
   void set_stylesheet ();
   void set_editor_stylesheet ();
@@ -41,12 +39,11 @@ public:
   void refresh (int seconds, const std::string& url = "");
   void set_fading_menu (const std::string& html);
   void add_bread_crumb (const std::string& item, const std::string& text);
+  void set_focus_group(const int focus_group);
   std::string run ();
 private:
   Assets_View * m_view {nullptr};
-  bool m_jquery_touch_on {false};
-  bool m_touch_css_on {false};
-  bool m_notify_it_on {false};
+  bool m_notify_on {false};
   std::vector <std::string> m_head_lines {};
   bool m_display_navigator {false};
   std::string m_included_stylesheet {};
@@ -54,5 +51,6 @@ private:
   Webserver_Request& m_webserver_request;
   std::string m_fading_menu {};
   std::vector <std::pair <std::string, std::string> > m_bread_crumbs {};
+  int m_focus_group {0};
 };
 

@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ std::string index_index (Webserver_Request& webserver_request)
   filter_webview_log_user_agent (webserver_request.user_agent);
   
   Assets_Header header = Assets_Header (translate ("Bibledit"), webserver_request);
-  
+
   // Basic or advanced mode setting.
   const std::string mode = webserver_request.query ["mode"];
   if (!mode.empty ()) {

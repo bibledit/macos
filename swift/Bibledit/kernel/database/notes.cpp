@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -252,7 +252,7 @@ void Database_Notes::sync ()
           const std::vector <std::string> bits3 = filter_url_scandir (filter_url_create_path ({main_folder, bit1, bit2}));
           for (const auto& bit3 : bits3) {
             if (bit3.length () == 3) {
-              const int identifier = filter::strings::convert_to_int (bit1 + bit2 + bit3);
+              const int identifier = filter::string::convert_to_int (bit1 + bit2 + bit3);
               good_note_ids.push_back (identifier);
               update_search_fields (identifier);
             }
@@ -260,7 +260,7 @@ void Database_Notes::sync ()
         }
         // New JSON storage mechanism, e.g. file "894093.json".
         if ((bit2.length () == 11) && bit2.find (".json") != std::string::npos) {
-          const int identifier = filter::strings::convert_to_int (bit1 + bit2.substr (0,6));
+          const int identifier = filter::string::convert_to_int (bit1 + bit2.substr (0,6));
           if (get_raw_passage (identifier).empty()) {
             Database_Logs::log ("Damaged consultation note found");
             continue;
@@ -280,7 +280,7 @@ void Database_Notes::sync ()
   sql_notes.set_sql ("SELECT identifier FROM notes;");
   std::vector <std::string> result = sql_notes.query () ["identifier"];
   for (auto & id : result) {
-    database_identifiers.push_back (filter::strings::convert_to_int (id));
+    database_identifiers.push_back (filter::string::convert_to_int (id));
   }
 
   // Any note identifiers in the main index, and not in the filesystem, remove them.
@@ -297,7 +297,7 @@ void Database_Notes::sync ()
   sql_checksums.set_sql ("SELECT identifier FROM checksums;");
   result = sql_checksums.query () ["identifier"];
   for (const auto& id : result) {
-    database_identifiers.push_back (filter::strings::convert_to_int (id));
+    database_identifiers.push_back (filter::string::convert_to_int (id));
   }
 
   // Any note identifiers in the checksums database, and not in the filesystem, remove them.
@@ -351,13 +351,13 @@ void Database_Notes::update_database_internal (int identifier, int modified, std
   const std::vector <std::string> vcontents = result ["contents"];
   for (unsigned int i = 0; i < vmodified.size(); i++) {
     record_in_database = true;
-    if (modified != filter::strings::convert_to_int (vmodified[i])) database_in_sync = false;
+    if (modified != filter::string::convert_to_int (vmodified[i])) database_in_sync = false;
     if (assigned != vassigned[i]) database_in_sync = false;
     if (subscriptions != vsubscriptions[i]) database_in_sync = false;
     if (bible != vbible [i]) database_in_sync = false;
     if (passage != vpassage [i]) database_in_sync = false;
     if (status != vstatus [i]) database_in_sync = false;
-    if (severity != filter::strings::convert_to_int (vseverity [i])) database_in_sync = false;
+    if (severity != filter::string::convert_to_int (vseverity [i])) database_in_sync = false;
     if (summary != vsummary [i]) database_in_sync = false;
     if (contents != vcontents [i]) database_in_sync = false;
   }
@@ -473,7 +473,7 @@ int Database_Notes::get_new_unique_identifier ()
 {
   int identifier = 0;
   do {
-    identifier = filter::strings::rand (Notes_Logic::lowNoteIdentifier, Notes_Logic::highNoteIdentifier);
+    identifier = filter::string::rand (Notes_Logic::lowNoteIdentifier, Notes_Logic::highNoteIdentifier);
   } while (identifier_exists (identifier));
   return identifier;
 }
@@ -486,7 +486,7 @@ std::vector <int> Database_Notes::get_identifiers ()
   std::vector <int> identifiers;
   const std::vector <std::string> result = sql.query () ["identifier"];
   for (const auto& id : result) {
-    identifiers.push_back (filter::strings::convert_to_int (id));
+    identifiers.push_back (filter::string::convert_to_int (id));
   }
   return identifiers;
 }
@@ -511,9 +511,9 @@ std::string Database_Notes::assemble_contents (int identifier, std::string conte
   new_contents.append ("):</b></p>\n");
   // Add the note body.
   if (contents == "<br>") contents.clear();
-  std::vector <std::string> lines = filter::strings::explode (contents, '\n');
+  std::vector <std::string> lines = filter::string::explode (contents, '\n');
   for (auto line : lines) {
-    line = filter::strings::trim (line);
+    line = filter::string::trim (line);
     new_contents.append ("<p>");
     new_contents.append (line);
     new_contents.append ("</p>\n");
@@ -523,33 +523,30 @@ std::string Database_Notes::assemble_contents (int identifier, std::string conte
 
 
 // Store a new consultation note into the database and in JSON.
-// bible: The notes's Bible.
-// book, chapter, verse: The note's passage.
-// summary: The note's summary.
-// contents: The note's contents.
-// raw: Import contents as it is.
 // It returns the identifier of this new note.
-int Database_Notes::store_new_note (const std::string& bible, int book, int chapter, int verse, std::string summary, std::string contents, bool raw)
+int Database_Notes::store_new_note (const NewNote& new_note)
 {
   // Create a new identifier.
-  int identifier = get_new_unique_identifier ();
+  const int identifier = get_new_unique_identifier ();
   
   // Passage.
-  std::string passage = encode_passage (book, chapter, verse);
+  const std::string passage = encode_passage (new_note.book, new_note.chapter, new_note.verse);
   
-  std::string status = "New";
-  int severity = 2;
+  const std::string status = "New";
+  constexpr int severity = static_cast<int>(SeveritySelector::normal);
   
   // If the summary is not given, take the first line of the contents as the summary.
-  if (summary == "") {
-    // The notes editor does not put new lines at each line, but instead <div>s. Handle these also.
-    summary = filter::strings::replace ("<", "\n", contents);
-    std::vector <std::string> bits = filter::strings::explode (summary, '\n');
-    if (!bits.empty ()) summary = bits [0];
+  std::string summary {new_note.summary};
+  if (summary.empty()) {
+    // The notes editor does not put new lines at each line, but instead puts <div> elements. Handle these also.
+    summary = filter::string::replace ("<", "\n", new_note.contents);
+    const std::vector<std::string> bits = filter::string::explode (summary, '\n');
+    if (!bits.empty ()) summary = bits.at(0);
   }
   
   // Assemble contents.
-  if (!raw) contents = assemble_contents (identifier, contents);
+  std::string contents {new_note.contents};
+  if (!new_note.raw) contents = assemble_contents (identifier, contents);
   if ((contents.empty()) && (summary.empty())) return 0;
   
   // Store the JSON representation of the note in the file system.
@@ -557,7 +554,7 @@ int Database_Notes::store_new_note (const std::string& bible, int book, int chap
   std::string folder = filter_url_dirname (path);
   filter_url_mkdir (folder);
   jsonxx::Object note;
-  note << bible_key () << bible;
+  note << bible_key () << new_note.bible;
   note << passage_key () << passage;
   note << status_key () << status;
   note << severity_key () << std::to_string (severity);
@@ -572,7 +569,7 @@ int Database_Notes::store_new_note (const std::string& bible, int book, int chap
     sql.add ("INSERT INTO notes (identifier, modified, assigned, subscriptions, bible, passage, status, severity, summary, contents) VALUES (");
     sql.add (identifier);
     sql.add (", 0, '', '',");
-    sql.add (bible);
+    sql.add (new_note.bible);
     sql.add (",");
     sql.add (passage);
     sql.add (",");
@@ -596,81 +593,68 @@ int Database_Notes::store_new_note (const std::string& bible, int book, int chap
 }
 
 
-// Returns an array of note identifiers selected.
-// bibles: Array of Bible names the user has read access to.
-// book, chapter, verse, passage_selector: These are related and can limit the selection.
-// edit_selector: Optionally constrains selection based on modification time.
-// non_edit_selector: Optionally constrains selection based on modification time.
-// status_selector: Optionally constrains selection based on note status.
-// bible_selector: Optionally constrains the selection, based on the note's Bible.
-// assignment_selector: Optionally constrains the selection based on a note being assigned to somebody.
-// subscription_selector: Optionally limits the selection based on a note's subscription.
-// severity_selector: Optionally limits the selection, based on a note's severity.
-// text_selector: Optionally limits the selection to notes that contains certain text. Used for searching notes.
-// search_text: Works with text_selector, contains the text to search for.
-// limit: If >= 0, it indicates the starting limit for the selection.
-std::vector <int> Database_Notes::select_notes (std::vector <std::string> bibles, int book, int chapter, int verse, int passage_selector, int edit_selector, int non_edit_selector, const std::string& status_selector, std::string bible_selector, std::string assignment_selector, bool subscription_selector, int severity_selector, int text_selector, const std::string& search_text, int limit)
+std::vector<int> Database_Notes::select_notes(const Selector& selector)
 {
   const std::string& username = m_webserver_request.session_logic ()->get_username ();
   std::vector <int> identifiers;
   // SQL SELECT statement.
   std::string query = notes_select_identifier ();
   // SQL optional fulltext search statement sorted on relevance.
-  if (text_selector == 1) {
-    query.append (notes_optional_fulltext_search_relevance_statement (search_text));
+  if (!selector.search_text.empty()) {
+    query.append (notes_optional_fulltext_search_relevance_statement (selector.search_text));
   }
   // SQL FROM ... WHERE statement.
   query.append (notes_from_where_statement ());
   // Consider passage selector.
   std::string passage;
-  switch (passage_selector) {
-    case 0:
+  switch (selector.passage_selector) {
+    case PassageSelector::current_verse:
       // Select notes that refer to the current verse.
       // It means that the book, the chapter, and the verse, should match.
-      passage = encode_passage (book, chapter, verse);
+      passage = encode_passage (selector.book, selector.chapter, selector.verse);
       query.append (" AND passage LIKE '%" + passage + "%' ");
       break;
-    case 1:
+    case PassageSelector::current_chapter:
       // Select notes that refer to the current chapter.
       // It means that the book and the chapter should match.
-      passage = encode_passage (book, chapter, -1);
+      passage = encode_passage (selector.book, selector.chapter, -1);
       query.append (" AND passage LIKE '%" + passage + "%' ");
       break;
-    case 2:
+    case PassageSelector::current_book:
       // Select notes that refer to the current book.
       // It means that the book should match.
-      passage = encode_passage (book, -1, -1);
+      passage = encode_passage (selector.book, -1, -1);
       query.append (" AND passage LIKE '%" + passage + "%' ");
       break;
-    case 3:
+    case PassageSelector::any_passage:
+    default:
       // Select notes that refer to any passage: No constraint to apply here.
       break;
-    default: break;
   }
   // Consider edit selector.
   int time { 0 };
-  switch (edit_selector) {
-    case 0:
+  switch (selector.edit_selector) {
+    case EditSelector::at_any_time:
+    default:
       // Select notes that have been edited at any time. Apply no constraint.
       time = 0;
       break;
-    case 1:
+    case EditSelector::during_last_30_days:
       // Select notes that have been edited during the last 30 days.
       time = filter::date::seconds_since_epoch () - 30 * 24 * 3600;
       break;
-    case 2:
+    case EditSelector::during_last_7_days:
       // Select notes that have been edited during the last 7 days.
       time = filter::date::seconds_since_epoch () - 7 * 24 * 3600;
       break;
-    case 3:
+    case EditSelector::since_yesterday:
       // Select notes that have been edited since yesterday.
       time = filter::date::seconds_since_epoch () - 1 * 24 * 3600 - filter::date::numerical_hour (filter::date::seconds_since_epoch ()) * 3600;
       break;
-    case 4:
+    case EditSelector::today:
       // Select notes that have been edited today.
       time = filter::date::seconds_since_epoch () - filter::date::numerical_hour (filter::date::seconds_since_epoch ()) * 3600;
       break;
-    default: break;
   }
   if (time != 0) {
     query.append (" AND modified >= ");
@@ -679,58 +663,58 @@ std::vector <int> Database_Notes::select_notes (std::vector <std::string> bibles
   }
   // Consider non-edit selector.
   int nonedit { 0 };
-  switch (non_edit_selector) {
-    case 0:
+  switch (selector.non_edit_selector) {
+    case Database_Notes::NonEditSelector::any_time:
+    default:
       // Select notes that have not been edited at any time. Apply no constraint.
       nonedit = 0;
       break;
-    case 1:
+    case Database_Notes::NonEditSelector::a_day:
       // Select notes that have not been edited for a day.
       nonedit = filter::date::seconds_since_epoch () - 1 * 24 * 3600;
       break;
-    case 2:
+    case Database_Notes::NonEditSelector::two_days:
       // Select notes that have not been edited for two days.
       nonedit = filter::date::seconds_since_epoch () - 2 * 24 * 3600;
       break;
-    case 3:
+    case Database_Notes::NonEditSelector::a_week:
       // Select notes that have not been edited for a week.
       nonedit = filter::date::seconds_since_epoch () - 7 * 24 * 3600;
       break;
-    case 4:
+    case Database_Notes::NonEditSelector::a_month:
       // Select notes that have not been edited for a month.
       nonedit = filter::date::seconds_since_epoch () - 30 * 24 * 3600;
       break;
-    case 5:
+    case Database_Notes::NonEditSelector::a_year:
       // Select notes that have not been edited for a year.
       nonedit = filter::date::seconds_since_epoch () - 365 * 24 * 3600;
       break;
-    default: break;
   }
   if (nonedit != 0) {
     query.append (" AND modified <= ");
     query.append (std::to_string (nonedit));
     query.append (" ");
   }
-  // Consider status constraint.
-  if (status_selector != "") {
-    query.append (" AND status = '");
-    query.append (database::sqlite::no_sql_injection (status_selector));
-    query.append ("' ");
+  // Consider the status selectors.
+  if (!selector.status_selectors.empty()) {
+    query.append (" AND (status = '' ");
+    for (const auto& status : selector.status_selectors) {
+      query.append (" OR status = '");
+      query.append (status);
+      query.append ("' ");
+    }
+    query.append (" ) ");
   }
-  // Consider two different Bible constraints:
+  
+  // Consider the Bible constraints:
   // 1. The vector of bibles: "bibles".
-  //    This contains all the Bibles a user has access to, so only notes that refer to any Bible in this lot are going to be selected.
-  // 2. The string "bible_selector".
-  //    If this is left empty, then it selects notes that refer to Bibles in the vector above.
-  //    If this contains a Bible, then it selects notes that refer to this Bible.
-  // In addition to the above two selectors, it always selects note that refer to any Bible.
-  if (!bible_selector.empty()) {
-    bibles.clear ();
-    bibles.push_back (bible_selector);
-  }
-  if (!bibles.empty ()) {
+  //    This contains all the Bibles a user has access to,
+  //    so only notes that refer to any Bible in this lot are going to be selected.
+  //    Or it contains the Bible to be searched for notes.
+  // In addition to the above s electors, it always selects notes that refer to any Bible.
+  if (!selector.bibles.empty ()) {
     query.append (" AND (bible = '' ");
-    for (auto bible : bibles) {
+    for (auto bible : selector.bibles) {
       bible = database::sqlite::no_sql_injection (bible);
       query.append (" OR bible = '");
       query.append (bible);
@@ -739,48 +723,49 @@ std::vector <int> Database_Notes::select_notes (std::vector <std::string> bibles
     query.append (" ) ");
   }
   // Consider note assignment constraints.
-  if (assignment_selector != "") {
+  if (!selector.assignment_selector.empty()) {
+    std::string assignment_selector {selector.assignment_selector};
     assignment_selector = database::sqlite::no_sql_injection (assignment_selector);
     query.append (" AND assigned LIKE '% ");
     query.append (assignment_selector);
     query.append (" %' ");
   }
   // Consider note subscription constraints.
-  if (subscription_selector) {
+  if (selector.subscription_selector) {
     query.append (" AND subscriptions LIKE '% ");
     query.append (username);
     query.append (" %' ");
   }
   // Consider the note severity.
-  if (severity_selector != -1) {
+  if (selector.severity_selector != Database_Notes::SeveritySelector::any) {
     query.append (" AND severity = ");
-    query.append (std::to_string (severity_selector));
+    query.append (std::to_string (static_cast<int>(selector.severity_selector)));
     query.append (" ");
   }
   // Consider text contained in notes.
-  if (text_selector == 1) {
-    query.append (notes_optional_fulltext_search_statement (search_text));
+  if (!selector.search_text.empty()) {
+    query.append (notes_optional_fulltext_search_statement(selector.search_text));
   }
-  if (text_selector == 1) {
+  if (!selector.search_text.empty()) {
     // If searching in fulltext mode, notes get ordered on relevance of search hits.
-    query.append (notes_order_by_relevance_statement ());
+    query.append (notes_order_by_relevance_statement());
   } else {
     // Notes get ordered by the passage they refer to. It is a rough method and better ordering is needed.
     query.append (" ORDER BY ABS (passage) ");
   }
   // Limit the selection if a limit is given.
-  if (limit >= 0) {
+  if (selector.limit) {
     query.append (" LIMIT ");
-    query.append (std::to_string (limit));
+    query.append (std::to_string (selector.limit.value()));
     query.append (", 50 ");
   }
   query.append (";");
-
+  
   SqliteDatabase sql (database_notes);
   sql.set_sql (query);
   const std::vector <std::string> result = sql.query () ["identifier"];
   for (const auto& id : result) {
-    identifiers.push_back (filter::strings::convert_to_int (id));
+    identifiers.push_back (filter::string::convert_to_int (id));
   }
   return identifiers;
 }
@@ -910,9 +895,9 @@ std::vector <std::string> Database_Notes::get_subscribers (int identifier)
 {
   const std::string contents = get_raw_subscriptions (identifier);
   if (contents.empty()) return {};
-  std::vector <std::string> subscribers = filter::strings::explode (contents, '\n');
+  std::vector <std::string> subscribers = filter::string::explode (contents, '\n');
   for (auto& subscriber : subscribers) {
-    subscriber = filter::strings::trim (subscriber);
+    subscriber = filter::string::trim (subscriber);
   }
   return subscribers;
 }
@@ -947,7 +932,7 @@ void Database_Notes::set_subscribers (int identifier, std::vector <std::string> 
     subscriber.insert (0, " ");
     subscriber.append (" ");
   }
-  std::string subscriberstring = filter::strings::implode (subscribers, "\n");
+  std::string subscriberstring = filter::string::implode (subscribers, "\n");
   
   // Store them to file and in the database.
   set_raw_subscriptions (identifier, subscriberstring);
@@ -1028,13 +1013,13 @@ std::vector <std::string> Database_Notes::get_all_assignees (const std::vector <
   const std::vector <std::string> result = sql.query () ["assigned"];
   for (const auto& item : result) {
     if (item.empty ()) continue;
-    std::vector <std::string> names = filter::strings::explode (item, '\n');
+    std::vector <std::string> names = filter::string::explode (item, '\n');
     for (const auto& name : names) unique_assignees.insert (name);
   }
   
   std::vector <std::string> assignees (unique_assignees.begin(), unique_assignees.end());
   for (auto& assignee : assignees) {
-    assignee = filter::strings::trim (assignee);
+    assignee = filter::string::trim (assignee);
   }
   return assignees;
 }
@@ -1052,10 +1037,10 @@ std::vector <std::string> Database_Notes::get_assignees (int identifier)
 std::vector <std::string> Database_Notes::get_assignees_internal (std::string assignees)
 {
   if (assignees.empty ()) return {};
-  std::vector <std::string> assignees_vector = filter::strings::explode (assignees, '\n');
+  std::vector <std::string> assignees_vector = filter::string::explode (assignees, '\n');
   // Remove the padding space at both sides of the assignee.
   for (auto & assignee : assignees_vector) {
-    assignee = filter::strings::trim (assignee);
+    assignee = filter::string::trim (assignee);
   }
   return assignees_vector;
 }
@@ -1071,7 +1056,7 @@ void Database_Notes::set_assignees (int identifier, std::vector <std::string> as
     assignee.insert (0, " ");
     assignee.append (" ");
   }
-  std::string assignees_string = filter::strings::implode (assignees, "\n");
+  std::string assignees_string = filter::string::implode (assignees, "\n");
   set_raw_assigned (identifier, assignees_string);
   note_modified_actions (identifier);
 }
@@ -1177,11 +1162,11 @@ std::string Database_Notes::encode_passage (int book, int chapter, int verse)
 // Takes the passage as a string, and returns an object with book, chapter, and verse.
 Passage Database_Notes::decode_passage (std::string passage)
 {
-  passage = filter::strings::trim (passage);
+  passage = filter::string::trim (passage);
   Passage decodedpassage = Passage ();
-  std::vector <std::string> lines = filter::strings::explode (passage, '.');
-  if (lines.size() > 0) decodedpassage.m_book = filter::strings::convert_to_int (lines[0]);
-  if (lines.size() > 1) decodedpassage.m_chapter = filter::strings::convert_to_int (lines[1]);
+  std::vector <std::string> lines = filter::string::explode (passage, '.');
+  if (lines.size() > 0) decodedpassage.m_book = filter::string::convert_to_int (lines[0]);
+  if (lines.size() > 1) decodedpassage.m_chapter = filter::string::convert_to_int (lines[1]);
   if (lines.size() > 2) decodedpassage.m_verse = lines[2];
   return decodedpassage;
 }
@@ -1207,7 +1192,7 @@ std::vector <Passage> Database_Notes::get_passages (int identifier)
 {
   std::string contents = get_raw_passage (identifier);
   if (contents.empty()) return {};
-  std::vector <std::string> lines = filter::strings::explode (contents, '\n');
+  std::vector <std::string> lines = filter::string::explode (contents, '\n');
   std::vector <Passage> passages;
   for (auto & line : lines) {
     if (line.empty()) continue;
@@ -1227,7 +1212,7 @@ void Database_Notes::set_passages (int identifier, const std::vector <Passage>& 
   std::string line;
   for (auto & passage : passages) {
     if (!line.empty ()) line.append ("\n");
-    line.append (encode_passage (passage.m_book, passage.m_chapter, filter::strings::convert_to_int (passage.m_verse)));
+    line.append (encode_passage (passage.m_book, passage.m_chapter, filter::string::convert_to_int (passage.m_verse)));
   }
   // Store it.
   set_raw_passage (identifier, line);
@@ -1350,7 +1335,7 @@ int Database_Notes::get_raw_severity (int identifier)
 {
   const std::string severity = get_field (identifier, severity_key ());
   if (severity.empty ()) return 2;
-  return filter::strings::convert_to_int (severity);
+  return filter::string::convert_to_int (severity);
 }
 
 
@@ -1406,7 +1391,7 @@ int Database_Notes::get_modified (int identifier)
 {
   std::string modified = get_field (identifier, modified_key ());
   if (modified.empty ()) return 0;
-  return filter::strings::convert_to_int (modified);
+  return filter::string::convert_to_int (modified);
 }
 
 
@@ -1431,13 +1416,13 @@ void Database_Notes::set_modified (int identifier, int time)
 bool Database_Notes::get_public (int identifier)
 {
   const std::string value = get_field (identifier, public_key ());
-  return filter::strings::convert_to_bool (value);
+  return filter::string::convert_to_bool (value);
 }
 
 
 void Database_Notes::set_public (int identifier, bool value)
 {
-  set_field (identifier, public_key (), filter::strings::convert_to_string (value));
+  set_field (identifier, public_key (), filter::string::convert_to_string (value));
 }
 
 
@@ -1455,7 +1440,7 @@ void Database_Notes::update_search_fields (int identifier)
   // It enables us to search with wildcards before and after the search query.
   std::string noteSummary = get_summary (identifier);
   std::string noteContents = get_contents (identifier);
-  std::string cleanText = noteSummary + "\n" + filter::strings::html2text (noteContents);
+  std::string cleanText = noteSummary + "\n" + filter::string::html2text (noteContents);
   // Bail out if the search field is already up to date.
   if (cleanText == get_search_field (identifier)) return;
   // Update the field.
@@ -1492,7 +1477,7 @@ std::vector <int> Database_Notes::search_notes (std::string search, const std::v
 {
   std::vector <int> identifiers;
 
-  search = filter::strings::trim (search);
+  search = filter::string::trim (search);
   if (search == "") return identifiers;
 
   // SQL SELECT statement.
@@ -1530,7 +1515,7 @@ std::vector <int> Database_Notes::search_notes (std::string search, const std::v
   sql.set_sql (query);
   const std::vector <std::string> result = sql.query () ["identifier"];
   for (const auto & id : result) {
-    identifiers.push_back (filter::strings::convert_to_int (id));
+    identifiers.push_back (filter::string::convert_to_int (id));
   }
 
   return identifiers;
@@ -1563,7 +1548,7 @@ void Database_Notes::touch_marked_for_deletion ()
   for (auto & identifier : identifiers) {
     if (is_marked_for_deletion (identifier)) {
       std::string expiry = get_field (identifier, expiry_key ());
-      int days = filter::strings::convert_to_int (expiry);
+      int days = filter::string::convert_to_int (expiry);
       days--;
       set_field (identifier, expiry_key (), std::to_string (days));
     }
@@ -1578,7 +1563,7 @@ std::vector <int> Database_Notes::get_due_for_deletion ()
   for (auto & identifier : identifiers) {
     if (is_marked_for_deletion (identifier)) {
       std::string sdays = get_field (identifier, expiry_key ());
-      int idays = filter::strings::convert_to_int (sdays);
+      int idays = filter::string::convert_to_int (sdays);
       if ((sdays == "0") || (idays < 0)) {
         deletes.push_back (identifier);
       }
@@ -1719,7 +1704,7 @@ std::vector <int> Database_Notes::get_notes_in_range_for_bibles (int lowId, int 
   sql.set_sql (query);
   const std::vector <std::string> result = sql.query () ["identifier"];
   for (const auto& row : result) {
-    identifiers.push_back (filter::strings::convert_to_int (row));
+    identifiers.push_back (filter::string::convert_to_int (row));
   }
   
   return identifiers;
@@ -1759,7 +1744,7 @@ std::string Database_Notes::notes_select_identifier ()
 std::string Database_Notes::notes_optional_fulltext_search_relevance_statement (std::string search)
 {
   if (search == "") return std::string();
-  search = filter::strings::replace (",", "", search);
+  search = filter::string::replace (",", "", search);
   search = database::sqlite::no_sql_injection (search);
   std::string query = "";
   return query;
@@ -1775,7 +1760,7 @@ std::string Database_Notes::notes_from_where_statement ()
 std::string Database_Notes::notes_optional_fulltext_search_statement (std::string search)
 {
   if (search == "") return std::string();
-  search = filter::strings::replace (",", "", search);
+  search = filter::string::replace (",", "", search);
   search = database::sqlite::no_sql_injection (search);
   std::string query = " AND cleantext LIKE '%" + search + "%' ";
   return query;

@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -97,23 +97,23 @@ std::string sprint_index ([[maybe_unused]] Webserver_Request& webserver_request)
   int year = webserver_request.database_config_user()->get_sprint_year ();
   
 
-  if (webserver_request.post.count ("id")) {
-    std::string id = webserver_request.post ["id"];
-    std::string checked = webserver_request.post ["checked"];
+  if (webserver_request.post_count("id")) {
+    std::string id = webserver_request.post_get("id");
+    std::string checked = webserver_request.post_get("checked");
     if (id.length () >= 9) {
       // Remove "task".
       id.erase (0, 4);
       // Convert the fragment to an integer.
-      int identifier = filter::strings::convert_to_int (id);
+      int identifier = filter::string::convert_to_int (id);
       // Find the fragment "box".
       size_t pos = id.find ("box");
       if (pos != std::string::npos) {
         // Remove the fragment "box".
         id.erase (0, pos + 3);
         // Convert the box to an integer.
-        int box = filter::strings::convert_to_int (id);
+        int box = filter::string::convert_to_int (id);
         std::string categorytext = database::config::bible::get_sprint_task_completion_categories (bible);
-        std::vector <std::string> categories = filter::strings::explode (categorytext, '\n');
+        std::vector <std::string> categories = filter::string::explode (categorytext, '\n');
         size_t category_count = categories.size ();
         float category_percentage = 100.0f / static_cast<float>(category_count);
         int percentage {0};
@@ -127,8 +127,8 @@ std::string sprint_index ([[maybe_unused]] Webserver_Request& webserver_request)
   }
   
   
-  if (webserver_request.post.count ("add")) {
-    std::string title = webserver_request.post ["add"];
+  if (webserver_request.post_count("add")) {
+    std::string title = webserver_request.post_get("add");
     database_sprint.storeTask (bible, year, month, title);
     view.set_variable ("success", translate("New task added"));
     // Focus the entry for adding tasks only in case a new task was added.
@@ -147,8 +147,8 @@ std::string sprint_index ([[maybe_unused]] Webserver_Request& webserver_request)
   bible = access_bible::clamp (webserver_request, webserver_request.database_config_user()->get_bible ());
   {
     constexpr const char* identification {"bible"};
-    if (webserver_request.post.count (identification)) {
-      bible = webserver_request.post.at(identification);
+    if (webserver_request.post_count(identification)) {
+      bible = webserver_request.post_get(identification);
       webserver_request.database_config_user()->set_bible (bible);
     }
     dialog::select::Settings settings {
@@ -161,7 +161,7 @@ std::string sprint_index ([[maybe_unused]] Webserver_Request& webserver_request)
   }
 
  
-  int id = filter::strings::convert_to_int (webserver_request.query ["id"]);
+  int id = filter::string::convert_to_int (webserver_request.query ["id"]);
   
   
   if (webserver_request.query.count ("remove")) {
@@ -188,16 +188,16 @@ std::string sprint_index ([[maybe_unused]] Webserver_Request& webserver_request)
   }
 
   
-  if (webserver_request.post.count ("categories")) {
-    std::string categories = webserver_request.post ["categories"];
+  if (webserver_request.post_count("categories")) {
+    std::string categories = webserver_request.post_get("categories");
     std::vector <std::string> categories2;
-    categories = filter::strings::trim (categories);
-    std::vector <std::string> vcategories = filter::strings::explode (categories, '\n');
+    categories = filter::string::trim (categories);
+    std::vector <std::string> vcategories = filter::string::explode (categories, '\n');
     for (auto category : vcategories) {
-      category = filter::strings::trim (category);
+      category = filter::string::trim (category);
       if (category != "") categories2.push_back (category);
     }
-    categories = filter::strings::implode (categories2, "\n");
+    categories = filter::string::implode (categories2, "\n");
     database::config::bible::set_sprint_task_completion_categories (bible, categories);
   }
   
@@ -207,7 +207,7 @@ std::string sprint_index ([[maybe_unused]] Webserver_Request& webserver_request)
   
   std::string categorytext = database::config::bible::get_sprint_task_completion_categories (bible);
   view.set_variable ("categorytext", categorytext);
-  std::vector <std::string> vcategories = filter::strings::explode (categorytext, '\n');
+  std::vector <std::string> vcategories = filter::string::explode (categorytext, '\n');
   std::string categories;
   for (auto category : vcategories) {
     categories.append ("<td>" + category + "</td>\n");
@@ -218,10 +218,10 @@ std::string sprint_index ([[maybe_unused]] Webserver_Request& webserver_request)
   std::string tasks;
   std::vector <int> v_tasks = database_sprint.getTasks (bible, year, month);
   for (auto & task_id : v_tasks) {
-    std::string title = filter::strings::escape_special_xml_characters (database_sprint.getTitle (task_id));
+    std::string title = filter::string::escape_special_xml_characters (database_sprint.getTitle (task_id));
     int percentage = database_sprint.getComplete (task_id);
     tasks.append ("<tr id=\"a" + std::to_string (task_id) + "\">\n");
-    tasks.append ("<td><a href=\"?id=" + std::to_string (task_id) + "&remove=\">" + filter::strings::emoji_wastebasket () + "</a></td>\n");
+    tasks.append ("<td><a href=\"?id=" + std::to_string (task_id) + "&remove=\">" + filter::string::emoji_wastebasket () + "</a></td>\n");
     tasks.append ("<td></td>\n");
     tasks.append ("<td><a href=\"?id=" + std::to_string (task_id) + "&moveback=\"> « </a></td>\n");
     tasks.append ("<td>" + title + "</td>\n");

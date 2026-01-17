@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ std::string resource_divider (Webserver_Request& webserver_request)
   Assets_View view;
 
 
-  const int userid = filter::strings::user_identifier (webserver_request);
+  const int userid = filter::string::user_identifier (webserver_request);
   const std::string key = "rich divider";
 
 
@@ -86,7 +86,7 @@ std::string resource_divider (Webserver_Request& webserver_request)
   if (webserver_request.query.count ("background")) clean_divider = false;
   if (webserver_request.query.count ("foreground2")) clean_divider = false;
   if (webserver_request.query.count ("background2")) clean_divider = false;
-  if (webserver_request.post.count ("entry")) clean_divider = false;
+  if (webserver_request.post_count("entry")) clean_divider = false;
   if (webserver_request.query.count ("add")) clean_divider = false;
   if (clean_divider) database::temporal::set_value (userid, key, resource_logic_rich_divider());
  
@@ -115,8 +115,8 @@ std::string resource_divider (Webserver_Request& webserver_request)
     page += dialog_entry.run ();
     return page;
   }
-  if (webserver_request.post.count ("title")) {
-    title = webserver_request.post["entry"];
+  if (webserver_request.post_count("title")) {
+    title = webserver_request.post_get("entry");
     divider_edited = true;
   }
 
@@ -128,8 +128,8 @@ std::string resource_divider (Webserver_Request& webserver_request)
     page += dialog_entry.run ();
     return page;
   }
-  if (webserver_request.post.count ("link")) {
-    link = webserver_request.post["entry"];
+  if (webserver_request.post_count("link")) {
+    link = webserver_request.post_get("entry");
     divider_edited = true;
   }
  

@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -41,15 +41,15 @@ Dialog_Yes::~Dialog_Yes ()
 // Adds a query to the URL for going to the page on clicking Cancel or Yes.
 void Dialog_Yes::add_query (std::string parameter, std::string value)
 {
-  base_url = filter_url_build_http_query (base_url, parameter, value);
+  base_url = filter_url_build_http_query(base_url, {{parameter, value}});
 }
 
 
 std::string Dialog_Yes::run ()
 {
-  std::string yes = filter_url_build_http_query (base_url, "confirm", "yes");
-  std::string cancel = filter_url_build_http_query (base_url, "confirm", "cancel");
+  const std::string yes = filter_url_build_http_query(base_url, {{"confirm", "yes"}});
   assets_view.set_variable ("yes", yes);
+  const std::string cancel = filter_url_build_http_query(base_url, {{"confirm", "cancel"}});
   assets_view.set_variable ("cancel", cancel);
   std::string page = assets_view.render ("dialog", "yes");
   page += assets_page::footer ();

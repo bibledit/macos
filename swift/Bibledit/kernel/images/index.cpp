@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -58,16 +58,16 @@ std::string images_index (Webserver_Request& webserver_request)
 
   
   // File upload.
-  if (webserver_request.post.count ("upload")) {
+  if (webserver_request.post_count("upload")) {
     const std::string& folder = filter_url_tempfile ();
     filter_url_mkdir (folder);
-    const std::string& file = filter_url_create_path ({folder, webserver_request.post ["filename"]});
-    const std::string& data = webserver_request.post ["data"];
+    const std::string file = filter_url_create_path ({folder, webserver_request.post_get("filename")});
+    const std::string data = webserver_request.post_get("data");
     if (!data.empty ()) {
       filter_url_file_put_contents (file, data);
       const bool background_import = filter_archive_is_archive (file);
       std::string extension = filter_url_get_extension (file);
-      extension = filter::strings::unicode_string_casefold (extension);
+      extension = filter::string::unicode_string_casefold (extension);
       if (background_import) {
         tasks_logic_queue (task::import_bible_images, { file });
         success = translate("The file was uploaded and is being processed.");

@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -56,8 +56,8 @@ public:
   void set_consultation_notes_edit_selector (int value) const;
   int get_consultation_notes_non_edit_selector () const;
   void set_consultation_notes_non_edit_selector (int value) const;
-  std::string get_consultation_notes_status_selector () const;
-  void set_consultation_notes_status_selector (const std::string& value) const;
+  std::vector <std::string> get_consultation_notes_status_selectors () const;
+  void set_consultation_notes_status_selectors (std::vector <std::string> values) const;
   std::string get_consultation_notes_bible_selector () const;
   void set_consultation_notes_bible_selector (const std::string& value) const;
   std::string get_consultation_notes_assignment_selector () const;
@@ -132,21 +132,12 @@ public:
   void set_postpone_new_notes_mails (bool value) const;
   std::string get_recently_applied_styles () const;
   void set_recently_applied_styles (const std::string& values) const;
-  std::vector <std::string> get_print_resources () const;
-  std::vector <std::string> get_print_resources_for_user (const std::string& user) const;
-  void set_print_resources (std::vector <std::string> values) const;
-  Passage get_print_passage_from () const;
-  Passage get_print_passage_from_for_user (const std::string& user) const;
-  void set_print_passage_from (Passage value) const;
-  Passage get_print_passage_to () const;
-  Passage get_print_passage_to_for_user (const std::string& user) const;
-  void set_print_passage_to (const Passage& value) const;
-  int get_focused_book () const;
-  void set_focused_book (int book) const;
-  int get_focused_chapter () const;
-  void set_focused_chapter (int chapter) const;
-  int get_focused_verse () const;
-  void set_focused_verse (int verse) const;
+  std::vector<int> get_focused_books () const;
+  void set_focused_books (const std::vector<int>& books) const;
+  std::vector<int> get_focused_chapters () const;
+  void set_focused_chapters (const std::vector<int>& chapters) const;
+  std::vector<int> get_focused_verses () const;
+  void set_focused_verses (const std::vector<int>& verses) const;
   std::vector <int> get_updated_settings () const;
   void set_updated_settings (const std::vector <int>& values) const;
   void add_updated_setting (int value) const;

@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -221,7 +221,7 @@ static void webserver_process_request (const int connfd, const std::string& clie
         if (connection_healthy) {
           
           http_parse_post (postdata, request);
-          
+
           // Assemble response.
           bootstrap_index (request);
           http_assemble_response (request);
@@ -342,7 +342,7 @@ void http_server ()
   memset (&serveraddr, 0, sizeof (serveraddr));
   serveraddr.sin_family = AF_INET;
   serveraddr.sin_addr.s_addr = htonl (INADDR_LOOPBACK);
-  serveraddr.sin_port = htons (filter::strings::convert_to_int (config::logic::http_network_port ()));
+  serveraddr.sin_port = htons (filter::string::convert_to_int (config::logic::http_network_port ()));
 #endif
 #ifdef HAVE_CLOUD
   // When configured as a server it listens on any IPv6 address.
@@ -351,7 +351,7 @@ void http_server ()
   serveraddr.sin6_flowinfo = 0;
   serveraddr.sin6_family = AF_INET6;
   serveraddr.sin6_addr = in6addr_any;
-  serveraddr.sin6_port = htons (static_cast<uint16_t>(filter::strings::convert_to_int (config::logic::http_network_port ())));
+  serveraddr.sin6_port = htons (static_cast<uint16_t>(filter::string::convert_to_int (config::logic::http_network_port ())));
 #endif
   result = ::bind (listenfd, reinterpret_cast<sockaddr *>(&serveraddr), sizeof (serveraddr));
   if (result != 0) {
@@ -499,7 +499,7 @@ void http_server ()
   memset(&serveraddr, 0, sizeof(serveraddr));
   serveraddr.sin_family = AF_INET;
   serveraddr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
-  serveraddr.sin_port = htons(filter::strings::convert_to_int(config::logic::http_network_port()));
+  serveraddr.sin_port = htons(filter::string::convert_to_int(config::logic::http_network_port()));
   result = ::bind(listen_socket, (SA *)&serveraddr, sizeof(serveraddr));
   if (result == SOCKET_ERROR) {
 	  std::string error = "Error binding server to socket";
@@ -880,7 +880,6 @@ void https_server ()
   mbedtls_ctr_drbg_context ctr_drbg;
   mbedtls_ctr_drbg_init (&ctr_drbg);
 
-#if MBEDTLS_VERSION_MAJOR == 3
   const psa_status_t psa_status = psa_crypto_init();
 #pragma GCC diagnostic push
 #pragma clang diagnostic ignored "-Wold-style-cast"
@@ -889,18 +888,12 @@ void https_server ()
     Database_Logs::log("Failure to run PSA crypto initialization: Not running the secure server");
     return;
   }
-#endif
 
   // Load the private RSA server key.
   mbedtls_pk_context pkey;
   mbedtls_pk_init (&pkey);
   int ret =
-#if MBEDTLS_VERSION_MAJOR == 2
-  mbedtls_pk_parse_keyfile (&pkey, server_key_path.c_str (), nullptr);
-#endif
-#if MBEDTLS_VERSION_MAJOR == 3
   mbedtls_pk_parse_keyfile (&pkey, server_key_path.c_str (), nullptr, mbedtls_ctr_drbg_random, &ctr_drbg);
-#endif
   if (ret != 0) {
     filter_url_display_mbed_tls_error (ret, nullptr, true, std::string());
     Database_Logs::log("Invalid " + server_key_path + " so not running secure server");
@@ -1001,9 +994,7 @@ void https_server ()
   mbedtls_ssl_cache_free (&cache);
   mbedtls_ctr_drbg_free (&ctr_drbg);
   mbedtls_entropy_free (&entropy);
-#if MBEDTLS_VERSION_MAJOR == 3
   mbedtls_psa_crypto_free();
-#endif
   
 #endif // ifdef RUN_SECURE_SERVER
 }

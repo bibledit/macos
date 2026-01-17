@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -47,21 +47,9 @@ Assets_Header::~Assets_Header ()
 }
 
 
-void Assets_Header::jquery_touch_on ()
+void Assets_Header::notify_on ()
 {
-  m_jquery_touch_on = true;
-}
-
-
-void Assets_Header::touch_css_on ()
-{
-  m_touch_css_on = true;
-}
-
-
-void Assets_Header::notify_it_on ()
-{
-  m_notify_it_on = true;
+  m_notify_on = true;
 }
 
 
@@ -127,6 +115,12 @@ void Assets_Header::add_bread_crumb (const std::string& item, const std::string&
 }
 
 
+void Assets_Header::set_focus_group(const int focus_group)
+{
+  m_focus_group = focus_group;
+}
+
+
 // Runs the header.
 std::string Assets_Header::run ()
 {
@@ -136,24 +130,8 @@ std::string Assets_Header::run ()
   // to refresh the browser's cache after a software upgrade.
   m_view->set_variable("VERSION", config::logic::version ());
 
-  if (m_jquery_touch_on) {
-    m_view->enable_zone ("include_jquery_touch");
-  }
-
-  if (m_webserver_request.session_logic ()->get_touch_enabled ()) {
-    touch_css_on();
-  }
-  if (!m_webserver_request.session_logic ()->get_logged_in ()) {
-    touch_css_on();
-  }
-  if (m_touch_css_on) {
-    m_view->enable_zone ("include_touch_css");
-  } else {
-    m_view->enable_zone ("include_mouse_css");
-  }
-  
-  if (m_notify_it_on) {
-    m_view->enable_zone ("include_notif_it");
+  if (m_notify_on) {
+    m_view->enable_zone ("include_notify_js");
   }
   
   std::string headlines {};
@@ -199,7 +177,7 @@ std::string Assets_Header::run ()
       if (m_webserver_request.database_config_user ()->get_main_menu_always_visible ()) {
         main_menu_always_on = true;
         // Add the main menu status as a Javascript variable.
-        m_view->set_variable ("mainmenualwayson", filter::strings::convert_to_string (main_menu_always_on));
+        m_view->set_variable ("mainmenualwayson", filter::string::convert_to_string (main_menu_always_on));
 			}
     if ((item == "main") || main_menu_always_on) {
       if (basic_mode) {
@@ -281,7 +259,7 @@ std::string Assets_Header::run ()
     embedded_css.push_back (".greek { font-size: " + std::to_string (fontsize) + "%!important; }");
   }
   if (!embedded_css.empty ()) {
-    m_view->set_variable ("embedded_css", filter::strings::implode (embedded_css, "\n"));
+    m_view->set_variable ("embedded_css", filter::string::implode (embedded_css, "\n"));
   }
 
   int current_theme_index = m_webserver_request.database_config_user ()->get_current_theme ();
@@ -316,6 +294,8 @@ std::string Assets_Header::run ()
     }
   }
 
+  m_view->set_variable ("focus_group", std::to_string(m_focus_group));
+  
   page += m_view->render("assets", "xhtml_start");
   page += m_view->render("assets", "header");
   page += m_view->render("assets", "workspacewrapper_start");

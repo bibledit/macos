@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ std::string public_index (Webserver_Request& webserver_request)
   // Take the Bible for this user, and ensure that it is one of the Bibles that have public feedback enabled.
   std::string bible = webserver_request.database_config_user()->get_bible ();
   const std::vector <std::string> public_bibles = public_logic_bibles ();
-  if (!in_array (bible, public_bibles)) {
+  if (!filter::string::in_array (bible, public_bibles)) {
     bible.clear ();
     if (!public_bibles.empty ()) {
       bible = public_bibles.front();
@@ -77,8 +77,8 @@ std::string public_index (Webserver_Request& webserver_request)
   // Switch Bible before displaying the passage navigator because the navigator contains the active Bible.
   {
     constexpr const char* identification {"bible"};
-    if (webserver_request.post.count (identification)) {
-      bible = webserver_request.post.at(identification);
+    if (webserver_request.post_count(identification)) {
+      bible = webserver_request.post_get(identification);
       webserver_request.database_config_user()->set_bible (bible);
     }
     dialog::select::Settings settings {

@@ -61,7 +61,7 @@ static std::string remove_comment_from_code (std::string code)
 {
   // Code with a comment may look like this:
   /* Code */
-  filter::strings::replace_between (code, "/*", "*/", std::string());
+  filter::string::replace_between (code, "/*", "*/", std::string());
   return code;
 }
 
@@ -73,27 +73,25 @@ std::string ajax(const Settings& settings)
   create_select (document, settings);
 
   // The Javascript to POST the selected value if it changes.
+  // The script should be a module because that defers execution till the document has been loaded.
   std::string javascript = filter_url_file_get_contents(filter_url_create_root_path({"dialog/selectajax.js"}));
   javascript = remove_comment_from_code (std::move(javascript));
-  javascript = filter::strings::replace("identification", settings.identification, std::move(javascript));
-  javascript = filter::strings::replace("URL", settings.url, std::move(javascript));
-
-  // Update the Javascript with the parameters to append to the POST request.
-  std::stringstream ss{};
-  for (const std::pair<std::string, std::string>& parameter : settings.parameters) {
-    if (!ss.str().empty())
-      ss << ", ";
-    ss << parameter.first << ": " << std::quoted(parameter.second);
-  }
-  javascript = filter::strings::replace("parameters", std::move(ss).str(), std::move(javascript));
+  javascript = filter::string::replace("identification", settings.identification, std::move(javascript));
   
   pugi::xml_node script_node = document.append_child("script");
+  script_node.append_attribute("type") = "module";
   script_node.text().set(javascript.c_str());
   
   // Convert it to html including Javascript.
   std::stringstream html_ss {};
   document.print (html_ss, "", pugi::format_raw);
-  return html_ss.str();
+  
+  // Update the html with the parameters to append to the POST request.
+  std::string html = html_ss.str();
+  const std::string url = filter_url_build_http_query(settings.url, settings.parameters);
+  html = filter::string::replace("URL", url, std::move(html));
+
+  return html;
 }
 
 
@@ -123,11 +121,13 @@ std::string form(const Settings& settings, const Form& form)
   }
   
   // If automatic submit, add a script that does the job.
+  // The script should be a module because that defers execution till the document has been loaded.
   if (form.auto_submit) {
     std::string javascript = filter_url_file_get_contents(filter_url_create_root_path({"dialog/selectform.js"}));
     javascript = remove_comment_from_code (std::move(javascript));
-    javascript = filter::strings::replace("identification", settings.identification, std::move(javascript));
+    javascript = filter::string::replace("identification", settings.identification, std::move(javascript));
     pugi::xml_node script_node = document.append_child("script");
+    script_node.append_attribute("type") = "module";
     script_node.text().set(javascript.c_str());
   }
 

@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -43,6 +43,26 @@ Webserver_Request::~Webserver_Request ()
     delete database_users_instance;
   if (database_ipc_instance)
     delete database_ipc_instance;
+}
+
+
+int Webserver_Request::post_count(const std::string& key) const
+{
+  int count {0};
+  for (const auto& element : post) {
+    if (element.first == key)
+      count++;
+  }
+  return count;
+}
+
+
+std::string Webserver_Request::post_get(const std::string& key) const
+{
+  for (const auto& element : post)
+    if (element.first == key)
+      return element.second;
+  return std::string();
 }
 
 

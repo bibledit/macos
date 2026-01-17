@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -59,39 +59,39 @@ std::string editusfm_save (Webserver_Request& webserver_request)
     return translate("Nothing to save");
   };
 
-  if (!webserver_request.post.count ("bible"))
+  if (!webserver_request.post_count("bible"))
     return nothing_to_save();
-  const std::string bible = webserver_request.post["bible"];
+  const std::string bible = webserver_request.post_get("bible");
 
-  if (!webserver_request.post.count ("book"))
+  if (!webserver_request.post_count("book"))
     return nothing_to_save();
-  const int book = filter::strings::convert_to_int (webserver_request.post["book"]);
+  const int book = filter::string::convert_to_int (webserver_request.post_get("book"));
 
-  if (!webserver_request.post.count ("chapter"))
+  if (!webserver_request.post_count("chapter"))
     return nothing_to_save();
-  const int chapter = filter::strings::convert_to_int (webserver_request.post["chapter"]);
+  const int chapter = filter::string::convert_to_int (webserver_request.post_get("chapter"));
 
-  if (!webserver_request.post.count ("usfm"))
+  if (!webserver_request.post_count("usfm"))
     return nothing_to_save();
-  std::string usfm = webserver_request.post["usfm"];
+  std::string usfm = webserver_request.post_get("usfm");
   
-  if (const std::string checksum = webserver_request.post["checksum"];
+  if (const std::string checksum = webserver_request.post_get("checksum");
       checksum_logic::get (usfm) != checksum) {
     webserver_request.response_code = 409;
     return translate("Checksum error");
   }
   
   usfm = filter_url_tag_to_plus (std::move(usfm));
-  usfm = filter::strings::trim (std::move(usfm));
+  usfm = filter::string::trim (std::move(usfm));
   // Collapse multiple spaces in the USFM into one space.
   // https://github.com/bibledit/cloud/issues/711
-  usfm = filter::strings::collapse_whitespace(std::move(usfm));
+  usfm = filter::string::collapse_whitespace(std::move(usfm));
   if (usfm.empty ()) {
     Database_Logs::log ("There was no text. Nothing was saved. The original text of the chapter was reloaded.");
     return translate("Nothing to save");
   }
 
-  if (!filter::strings::unicode_string_is_valid (usfm)) {
+  if (!filter::string::unicode_string_is_valid (usfm)) {
     Database_Logs::log ("The text was not valid Unicode UTF-8. The chapter could not saved and has been reverted to the last good version.");
     return translate("Needs Unicode");
   }
@@ -121,7 +121,7 @@ std::string editusfm_save (Webserver_Request& webserver_request)
   if (chapter_number != chapter)
     return translate ("Chapter number mismatch");
   
-  const std::string unique_id = webserver_request.post ["id"];
+  const std::string unique_id = webserver_request.post_get("id");
 
   // The USFM loaded into the editor.
   const std::string ancestor_usfm = get_loaded_usfm (webserver_request, bible, book, chapter, unique_id);

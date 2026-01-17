@@ -12,42 +12,71 @@
 <p>translate("Then follow the steps below to install Bibledit Cloud.")</p>
 
 <script>
-  $(document).ready(function(){
-    $("#debian").click(function(){
-      hide_all();
-      $(".debian").show();
+  document.addEventListener("DOMContentLoaded", function(e) {
+    document.querySelectorAll("#debian").forEach((element) => {
+      element.addEventListener("click", function(){
+        hide_all();
+        show_os(".debian");
+      });
     });
-    $("#ubuntu").click(function(){
-      hide_all();
-      $(".ubuntu").show();
+    document.querySelectorAll("#ubuntu").forEach((element) => {
+      element.addEventListener("click", function(){
+        hide_all();
+        show_os(".ubuntu");
+      });
     });
-    $("#centos").click(function(){
-      hide_all();
-      $(".centos").show();
+    document.querySelectorAll("#centos").forEach((element) => {
+      element.addEventListener("click", function(){
+        hide_all();
+        show_os(".centos");
+      });
     });
-    $("#redhat").click(function(){
-      hide_all();
-      $(".redhat").show();
+    document.querySelectorAll("#redhat").forEach((element) => {
+      element.addEventListener("click", function(){
+        hide_all();
+        show_os(".redhat");
+      });
     });
-    $("#alma").click(function(){
-      hide_all();
-      $(".alma").show();
+    document.querySelectorAll("#alma").forEach((element) => {
+      element.addEventListener("click", function(){
+        hide_all();
+        show_os(".alma");
+      });
     });
-    $("#opensuse").click(function(){
-      hide_all();
-      $(".opensuse").show();
+    document.querySelectorAll("#opensuse").forEach((element) => {
+      element.addEventListener("click", function(){
+        hide_all();
+        show_os(".opensuse");
+      });
     });
     hide_all();
-    $(".debian").show();
+    show_os(".debian");
   });
   function hide_all () {
-    $(".debian").hide();
-    $(".ubuntu").hide();
-    $(".centos").hide();
-    $(".redhat").hide();
-    $(".alma").hide();
-    $(".opensuse").hide();
+    document.querySelectorAll(".debian").forEach((element) => {
+      element.hidden = true;
+    });
+    document.querySelectorAll(".ubuntu").forEach((element) => {
+      element.hidden = true;
+    });
+    document.querySelectorAll(".centos").forEach((element) => {
+      element.hidden = true;
+    });
+    document.querySelectorAll(".redhat").forEach((element) => {
+      element.hidden = true;
+    });
+    document.querySelectorAll(".alma").forEach((element) => {
+      element.hidden = true;
+    });
+    document.querySelectorAll(".opensuse").forEach((element) => {
+      element.hidden = true;
+    });
   };
+  function show_os (selector) {
+    document.querySelectorAll(selector).forEach((element) => {
+      element.hidden = false;
+    });
+  }
 </script>
 
 <br>

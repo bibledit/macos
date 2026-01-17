@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -46,15 +46,14 @@ std::string session_password (Webserver_Request& webserver_request)
   std::string page{};
 
   Assets_Header header = Assets_Header (translate ("Password"), webserver_request);
-  header.touch_css_on ();
   page += header.run ();
 
   Assets_View view{};
 
   // Form submission handler.
-  if (!webserver_request.post["submit"].empty()) {
+  if (!webserver_request.post_get("submit").empty()) {
     bool form_is_valid = true;
-    const std::string user = webserver_request.post["user"];
+    const std::string user = webserver_request.post_get("user");
     if (user.length () < 4) {
       view.set_variable ("error_message", translate("Username or email address is too short"));
       form_is_valid = false;
@@ -76,7 +75,7 @@ std::string session_password (Webserver_Request& webserver_request)
     }
     if (form_is_valid) {
       // Generate and store a new password.
-      std::string generated_password = md5 (std::to_string (filter::strings::rand (0, 1'000'000)));
+      std::string generated_password = md5 (std::to_string (filter::string::rand (0, 1'000'000)));
       generated_password = generated_password.substr (0, 15);
       const std::string username = database_users.getEmailToUser (email);
       database_users.set_password (username, generated_password);

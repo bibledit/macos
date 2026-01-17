@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -54,8 +54,8 @@ std::string versification_index (Webserver_Request& webserver_request)
 
   Database_Versifications database_versifications = Database_Versifications();
 
-  if (webserver_request.post.count ("new")) {
-    std::string name = webserver_request.post["entry"];
+  if (webserver_request.post_count("new")) {
+    std::string name = webserver_request.post_get("entry");
     database_versifications.createSystem (name);
   }
   if (webserver_request.query.count ("new")) {

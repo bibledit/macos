@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -110,10 +110,10 @@ std::string setup_index (Webserver_Request& webserver_request)
 
   // Admins do not yet exist: Allow to enter an admin.
   if (admins.empty ()) {
-    if (!webserver_request.post ["Submit"].empty ()) {
-      const std::string admin_username = webserver_request.post ["admin_username"];
-      const std::string admin_password = webserver_request.post ["admin_password"];
-      const std::string admin_email = webserver_request.post ["admin_email"];
+    if (!webserver_request.post_get("Submit").empty ()) {
+      const std::string admin_username = webserver_request.post_get("admin_username");
+      const std::string admin_password = webserver_request.post_get("admin_password");
+      const std::string admin_email = webserver_request.post_get("admin_email");
       std::vector <std::string> errors{};
       if (admin_username.length() < 5) errors.push_back ("Choose a longer username.");
       if (admin_password.length() < 7) errors.push_back ("Choose a longer password.");
@@ -129,7 +129,7 @@ std::string setup_index (Webserver_Request& webserver_request)
         redirect_browser (webserver_request, index_index_url ());
       } else {
         view.enable_zone ("errors");
-        view.set_variable ("error", filter::strings::implode (errors, " "));
+        view.set_variable ("error", filter::string::implode (errors, " "));
       }
     }
   }

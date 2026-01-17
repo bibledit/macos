@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA088F982EFB273D00911D54 /* new.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA088F972EFB273D00911D54 /* new.cpp */; };
+		CA088F9A2EFB277300911D54 /* view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA088F992EFB277300911D54 /* view.cpp */; };
+		CA088F9C2EFB27A100911D54 /* bibles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA088F9B2EFB27A100911D54 /* bibles.cpp */; };
+		CA088F9E2EFB27DB00911D54 /* quill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA088F9D2EFB27DA00911D54 /* quill.cpp */; };
+		CA088FA02EFB27FE00911D54 /* issues.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA088F9F2EFB27FE00911D54 /* issues.cpp */; };
+		CA088FA22EFB281D00911D54 /* select.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA088FA12EFB281D00911D54 /* select.cpp */; };
 		CA133CEC2DC91FDC00F2584E /* load.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4AE52B6052D900913572 /* load.cpp */; };
 		CA133CED2DC91FEF00F2584E /* save.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4ADF2B6052D900913572 /* save.cpp */; };
-		CA133CEE2DC9205200F2584E /* view2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4D222B6052DA00913572 /* view2.cpp */; };
 		CA133CEF2DC9206700F2584E /* index.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4AE82B6052D900913572 /* index.cpp */; };
 		CA133CF02DC9207900F2584E /* verse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4AE72B6052D900913572 /* verse.cpp */; };
 		CA133CF12DC9208A00F2584E /* update.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4AE42B6052D900913572 /* update.cpp */; };
@@ -158,7 +163,6 @@
 		CAEE4F232B6052DB00913572 /* users.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4A042B6052D900913572 /* users.cpp */; };
 		CAEE4F242B6052DB00913572 /* abbottsmith.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4A052B6052D900913572 /* abbottsmith.cpp */; };
 		CAEE4F252B6052DB00913572 /* state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4A092B6052D900913572 /* state.cpp */; };
-		CAEE4F262B6052DB00913572 /* imageresources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4A0B2B6052D900913572 /* imageresources.cpp */; };
 		CAEE4F272B6052DB00913572 /* localization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4A0C2B6052D900913572 /* localization.cpp */; };
 		CAEE4F282B6052DB00913572 /* jobs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4A102B6052D900913572 /* jobs.cpp */; };
 		CAEE4F292B6052DB00913572 /* hebrewlexicon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4A112B6052D900913572 /* hebrewlexicon.cpp */; };
@@ -346,9 +350,7 @@
 		CAEE50912B6052DD00913572 /* upload.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4CEF2B6052DA00913572 /* upload.cpp */; };
 		CAEE50922B6052DD00913572 /* entry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4CF02B6052DA00913572 /* entry.cpp */; };
 		CAEE50932B6052DD00913572 /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4CF32B6052DA00913572 /* color.cpp */; };
-		CAEE50942B6052DD00913572 /* list2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4CF52B6052DA00913572 /* list2.cpp */; };
 		CAEE50952B6052DD00913572 /* books.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4CF72B6052DA00913572 /* books.cpp */; };
-		CAEE50962B6052DD00913572 /* list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4CF82B6052DA00913572 /* list.cpp */; };
 		CAEE50972B6052DD00913572 /* yes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4CF92B6052DA00913572 /* yes.cpp */; };
 		CAEE50982B6052DD00913572 /* edit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4CFE2B6052DA00913572 /* edit.cpp */; };
 		CAEE50992B6052DD00913572 /* save.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4D012B6052DA00913572 /* save.cpp */; };
@@ -439,11 +441,8 @@
 		CAEE50F92B6052DE00913572 /* listing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4DE32B6052DA00913572 /* listing.cpp */; };
 		CAEE50FA2B6052DE00913572 /* index.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4DE52B6052DA00913572 /* index.cpp */; };
 		CAEE50FB2B6052DE00913572 /* write.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4DE82B6052DA00913572 /* write.cpp */; };
-		CAEE50FC2B6052DE00913572 /* accounts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4DEC2B6052DA00913572 /* accounts.cpp */; };
 		CAEE50FD2B6052DE00913572 /* users.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4DED2B6052DA00913572 /* users.cpp */; };
 		CAEE50FE2B6052DE00913572 /* privileges.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4DF02B6052DA00913572 /* privileges.cpp */; };
-		CAEE50FF2B6052DE00913572 /* hyphenation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4DF22B6052DA00913572 /* hyphenation.cpp */; };
-		CAEE51002B6052DE00913572 /* hyphenate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4DF32B6052DA00913572 /* hyphenate.cpp */; };
 		CAEE51012B6052DE00913572 /* exports.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4DF52B6052DA00913572 /* exports.cpp */; };
 		CAEE51022B6052DE00913572 /* index.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4DF62B6052DA00913572 /* index.cpp */; };
 		CAEE51032B6052DE00913572 /* notes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4DF82B6052DA00913572 /* notes.cpp */; };
@@ -499,27 +498,22 @@
 		CAEE51392B6052DF00913572 /* select.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E732B6052DB00913572 /* select.cpp */; };
 		CAEE513A2B6052DF00913572 /* convert2resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E742B6052DB00913572 /* convert2resource.cpp */; };
 		CAEE513B2B6052DF00913572 /* studylight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E762B6052DB00913572 /* studylight.cpp */; };
-		CAEE513C2B6052DF00913572 /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E772B6052DB00913572 /* image.cpp */; };
 		CAEE513D2B6052DF00913572 /* user1edit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E782B6052DB00913572 /* user1edit.cpp */; };
-		CAEE513E2B6052DF00913572 /* images.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E792B6052DB00913572 /* images.cpp */; };
 		CAEE513F2B6052DF00913572 /* unload.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E7B2B6052DB00913572 /* unload.cpp */; };
 		CAEE51402B6052DF00913572 /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E7D2B6052DB00913572 /* logic.cpp */; };
 		CAEE51412B6052DF00913572 /* organize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E7E2B6052DB00913572 /* organize.cpp */; };
 		CAEE51422B6052DF00913572 /* user1view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E802B6052DB00913572 /* user1view.cpp */; };
 		CAEE51432B6052DF00913572 /* sword.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E812B6052DB00913572 /* sword.cpp */; };
-		CAEE51442B6052DF00913572 /* print.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E822B6052DB00913572 /* print.cpp */; };
 		CAEE51452B6052DF00913572 /* manage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E832B6052DB00913572 /* manage.cpp */; };
 		CAEE51462B6052DF00913572 /* user9view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E872B6052DB00913572 /* user9view.cpp */; };
 		CAEE51472B6052DF00913572 /* divider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E8D2B6052DB00913572 /* divider.cpp */; };
 		CAEE51482B6052DF00913572 /* cache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E8E2B6052DB00913572 /* cache.cpp */; };
 		CAEE51492B6052DF00913572 /* translated9edit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E8F2B6052DB00913572 /* translated9edit.cpp */; };
 		CAEE514A2B6052DF00913572 /* comparative9edit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E902B6052DB00913572 /* comparative9edit.cpp */; };
-		CAEE514B2B6052DF00913572 /* imagefetch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E912B6052DB00913572 /* imagefetch.cpp */; };
 		CAEE514C2B6052DF00913572 /* bbgateway.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E922B6052DB00913572 /* bbgateway.cpp */; };
 		CAEE514D2B6052DF00913572 /* convert2bible.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E962B6052DB00913572 /* convert2bible.cpp */; };
 		CAEE514E2B6052DF00913572 /* comparative1edit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E982B6052DB00913572 /* comparative1edit.cpp */; };
 		CAEE514F2B6052DF00913572 /* translated1edit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E992B6052DB00913572 /* translated1edit.cpp */; };
-		CAEE51502B6052DF00913572 /* img.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E9D2B6052DB00913572 /* img.cpp */; };
 		CAEE51512B6052DF00913572 /* bb2resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4E9E2B6052DB00913572 /* bb2resource.cpp */; };
 		CAEE51522B6052DF00913572 /* external.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EA02B6052DB00913572 /* external.cpp */; };
 		CAEE51532B6052DF00913572 /* get.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EA52B6052DB00913572 /* get.cpp */; };
@@ -529,7 +523,6 @@
 		CAEE51592B6052DF00913572 /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EB22B6052DB00913572 /* logic.cpp */; };
 		CAEE515A2B6052DF00913572 /* burndown.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EB62B6052DB00913572 /* burndown.cpp */; };
 		CAEE515B2B6052DF00913572 /* index.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EB82B6052DB00913572 /* index.cpp */; };
-		CAEE515C2B6052DF00913572 /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EBA2B6052DB00913572 /* logic.cpp */; };
 		CAEE515D2B6052DF00913572 /* page.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EBD2B6052DB00913572 /* page.cpp */; };
 		CAEE515E2B6052DF00913572 /* header.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EC12B6052DB00913572 /* header.cpp */; };
 		CAEE515F2B6052DF00913572 /* view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EC32B6052DB00913572 /* view.cpp */; };
@@ -538,8 +531,6 @@
 		CAEE51632B6052DF00913572 /* search.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4ECA2B6052DB00913572 /* search.cpp */; };
 		CAEE51642B6052DF00913572 /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4ECE2B6052DB00913572 /* logic.cpp */; };
 		CAEE51652B6052DF00913572 /* index.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4ED02B6052DB00913572 /* index.cpp */; };
-		CAEE51662B6052DF00913572 /* ParseMultipartFormData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4ED52B6052DB00913572 /* ParseMultipartFormData.cpp */; };
-		CAEE51672B6052DF00913572 /* ParseWebData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4ED62B6052DB00913572 /* ParseWebData.cpp */; };
 		CAEE51692B6052DF00913572 /* send.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EDB2B6052DB00913572 /* send.cpp */; };
 		CAEE516A2B6052DF00913572 /* receive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EDD2B6052DB00913572 /* receive.cpp */; };
 		CAEE516B2B6052DF00913572 /* index.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAEE4EDE2B6052DB00913572 /* index.cpp */; };
@@ -564,6 +555,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CA088F972EFB273D00911D54 /* new.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = new.cpp; path = Bibledit/kernel/styles/new.cpp; sourceTree = "<group>"; };
+		CA088F992EFB277300911D54 /* view.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = view.cpp; path = Bibledit/kernel/styles/view.cpp; sourceTree = "<group>"; };
+		CA088F9B2EFB27A100911D54 /* bibles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bibles.cpp; path = Bibledit/kernel/manage/bibles.cpp; sourceTree = "<group>"; };
+		CA088F9D2EFB27DA00911D54 /* quill.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = quill.cpp; path = Bibledit/kernel/filter/quill.cpp; sourceTree = "<group>"; };
+		CA088F9F2EFB27FE00911D54 /* issues.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = issues.cpp; path = Bibledit/kernel/checks/issues.cpp; sourceTree = "<group>"; };
+		CA088FA12EFB281D00911D54 /* select.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = select.cpp; path = Bibledit/kernel/dialog/select.cpp; sourceTree = "<group>"; };
 		CA133CF32DC9213B00F2584E /* number.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = number.cpp; sourceTree = "<group>"; };
 		CA4C5D5D2B5D53B700EE9057 /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = SOURCE_ROOT; };
 		CA4C5D5E2B5D53B700EE9057 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
@@ -1791,6 +1788,12 @@
 		CA88EE2F2ADC4590001AE436 = {
 			isa = PBXGroup;
 			children = (
+				CA088FA12EFB281D00911D54 /* select.cpp */,
+				CA088F9F2EFB27FE00911D54 /* issues.cpp */,
+				CA088F9D2EFB27DA00911D54 /* quill.cpp */,
+				CA088F9B2EFB27A100911D54 /* bibles.cpp */,
+				CA088F992EFB277300911D54 /* view.cpp */,
+				CA088F972EFB273D00911D54 /* new.cpp */,
 				CA88EE3A2ADC4590001AE436 /* Bibledit */,
 				CA88EE392ADC4590001AE436 /* Products */,
 				CA591B112ADC670400BA841F /* Frameworks */,
@@ -3842,12 +3845,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA088FA22EFB281D00911D54 /* select.cpp in Sources */,
+				CA088FA02EFB27FE00911D54 /* issues.cpp in Sources */,
+				CA088F9E2EFB27DB00911D54 /* quill.cpp in Sources */,
+				CA088F9C2EFB27A100911D54 /* bibles.cpp in Sources */,
+				CA088F9A2EFB277300911D54 /* view.cpp in Sources */,
+				CA088F982EFB273D00911D54 /* new.cpp in Sources */,
 				CA133CF52DC9217600F2584E /* temporal.cpp in Sources */,
 				CA133CF22DC920A000F2584E /* logic.cpp in Sources */,
 				CA133CF12DC9208A00F2584E /* update.cpp in Sources */,
 				CA133CF02DC9207900F2584E /* verse.cpp in Sources */,
 				CA133CEF2DC9206700F2584E /* index.cpp in Sources */,
-				CA133CEE2DC9205200F2584E /* view2.cpp in Sources */,
 				CA133CED2DC91FEF00F2584E /* save.cpp in Sources */,
 				CA133CEC2DC91FDC00F2584E /* load.cpp in Sources */,
 				CAEE50462B6052DD00913572 /* logic.cpp in Sources */,
@@ -3865,7 +3873,6 @@
 				CAEE50752B6052DD00913572 /* handler.cpp in Sources */,
 				CAEE50AE2B6052DE00913572 /* http.cpp in Sources */,
 				CAEE508E2B6052DD00913572 /* index.cpp in Sources */,
-				CAEE4F262B6052DB00913572 /* imageresources.cpp in Sources */,
 				CAEE51622B6052DF00913572 /* tmp.cpp in Sources */,
 				CAEE50692B6052DD00913572 /* header.cxx in Sources */,
 				CAEE4F1E2B6052DB00913572 /* mappings.cpp in Sources */,
@@ -3877,7 +3884,6 @@
 				CAEE4F102B6052DB00913572 /* map.cpp in Sources */,
 				CAEE504C2B6052DD00913572 /* index.cpp in Sources */,
 				CA5EE4162C8B7D92001FA968 /* psa_crypto_rsa.c in Sources */,
-				CAEE51662B6052DF00913572 /* ParseMultipartFormData.cpp in Sources */,
 				CAEE515D2B6052DF00913572 /* page.cpp in Sources */,
 				CA5EE4132C8B7D92001FA968 /* pk.c in Sources */,
 				CAEE50712B6052DD00913572 /* message.cxx in Sources */,
@@ -3918,7 +3924,6 @@
 				CAEE51542B6052DF00913572 /* index.cpp in Sources */,
 				CAEE50762B6052DD00913572 /* sqlite3.c in Sources */,
 				CA5EE4142C8B7D92001FA968 /* ssl_msg.c in Sources */,
-				CAEE50942B6052DD00913572 /* list2.cpp in Sources */,
 				CA5EE4202C8B7D92001FA968 /* bignum_mod_raw.c in Sources */,
 				CAEE4F502B6052DB00913572 /* notes.cpp in Sources */,
 				CAEE514C2B6052DF00913572 /* bbgateway.cpp in Sources */,
@@ -4034,7 +4039,6 @@
 				CA5EE40D2C8B7D91001FA968 /* pk_ecc.c in Sources */,
 				CAEE512B2B6052DE00913572 /* mail.cpp in Sources */,
 				CAEE51552B6052DF00913572 /* download.cpp in Sources */,
-				CAEE51442B6052DF00913572 /* print.cpp in Sources */,
 				CA5EE3EA2C8B7D91001FA968 /* hkdf.c in Sources */,
 				CAEE504F2B6052DD00913572 /* bibledit.cpp in Sources */,
 				CAEE50FD2B6052DE00913572 /* users.cpp in Sources */,
@@ -4073,7 +4077,6 @@
 				CAEE4F202B6052DB00913572 /* confirm.cpp in Sources */,
 				CA5EE3E72C8B7D91001FA968 /* rsa.c in Sources */,
 				CAEE4F4A2B6052DB00913572 /* run.cpp in Sources */,
-				CAEE51002B6052DE00913572 /* hyphenate.cpp in Sources */,
 				CA5EE3D22C8B7D91001FA968 /* ssl_tls13_generic.c in Sources */,
 				CAEE50DA2B6052DE00913572 /* poll.cpp in Sources */,
 				CAEE50E72B6052DE00913572 /* actions.cpp in Sources */,
@@ -4124,7 +4127,6 @@
 				CAEE50D42B6052DE00913572 /* unassign-n.cpp in Sources */,
 				CA5EE4352C8B7D92001FA968 /* cipher_wrap.c in Sources */,
 				CAEE51212B6052DE00913572 /* note.cpp in Sources */,
-				CAEE51502B6052DF00913572 /* img.cpp in Sources */,
 				CA5EE3E02C8B7D91001FA968 /* x509_crl.c in Sources */,
 				CAEE4F5A2B6052DB00913572 /* manage.cpp in Sources */,
 				CAEE509D2B6052DD00913572 /* preview.cpp in Sources */,
@@ -4133,7 +4135,6 @@
 				CAEE4F7B2B6052DC00913572 /* changes.cpp in Sources */,
 				CAEE514D2B6052DF00913572 /* convert2bible.cpp in Sources */,
 				CAEE50662B6052DD00913572 /* contentid.cxx in Sources */,
-				CAEE513E2B6052DF00913572 /* images.cpp in Sources */,
 				CAEE4F962B6052DC00913572 /* logic.cpp in Sources */,
 				CAEE50532B6052DD00913572 /* notifications.cpp in Sources */,
 				CAEE50922B6052DD00913572 /* entry.cpp in Sources */,
@@ -4162,7 +4163,6 @@
 				CAEE51182B6052DE00913572 /* html.cpp in Sources */,
 				CAEE50E02B6052DE00913572 /* bb-1.cpp in Sources */,
 				CAEE50CE2B6052DE00913572 /* language.c in Sources */,
-				CAEE515C2B6052DF00913572 /* logic.cpp in Sources */,
 				CAEE516E2B6052DF00913572 /* id.cpp in Sources */,
 				CAEE50AD2B6052DE00913572 /* webserver.cpp in Sources */,
 				CAEE4F892B6052DC00913572 /* organize.cpp in Sources */,
@@ -4239,10 +4239,8 @@
 				CAEE50D92B6052DE00913572 /* verses.cpp in Sources */,
 				CAEE4F6C2B6052DB00913572 /* pairs.cpp in Sources */,
 				CAEE4F0D2B6052DB00913572 /* statistics.cpp in Sources */,
-				CAEE50FC2B6052DE00913572 /* accounts.cpp in Sources */,
 				CA5EE3FA2C8B7D91001FA968 /* pkwrite.c in Sources */,
 				CAEE4F7D2B6052DC00913572 /* logic.cpp in Sources */,
-				CAEE50FF2B6052DE00913572 /* hyphenation.cpp in Sources */,
 				CAEE51592B6052DF00913572 /* logic.cpp in Sources */,
 				CAEE50C12B6052DE00913572 /* attrdict.c in Sources */,
 				CAEE51292B6052DE00913572 /* bibles.cpp in Sources */,
@@ -4270,7 +4268,6 @@
 				CA5EE4032C8B7D91001FA968 /* oid.c in Sources */,
 				CA5EE4122C8B7D92001FA968 /* ssl_cache.c in Sources */,
 				CAEE517E2B6052DF00913572 /* login.cpp in Sources */,
-				CAEE513C2B6052DF00913572 /* image.cpp in Sources */,
 				CAEE4F752B6052DB00913572 /* headers.cpp in Sources */,
 				CAEE516A2B6052DF00913572 /* receive.cpp in Sources */,
 				CAEE4F1C2B6052DB00913572 /* user.cpp in Sources */,
@@ -4286,14 +4283,12 @@
 				CAEE50D82B6052DE00913572 /* click.cpp in Sources */,
 				CA5EE4012C8B7D91001FA968 /* mps_reader.c in Sources */,
 				CAEE50652B6052DD00913572 /* base64.cxx in Sources */,
-				CAEE514B2B6052DF00913572 /* imagefetch.cpp in Sources */,
 				CA5EE3EC2C8B7D91001FA968 /* ecjpake.c in Sources */,
 				CAEE4F1A2B6052DB00913572 /* bible.cpp in Sources */,
 				CAEE4F692B6052DB00913572 /* index.cpp in Sources */,
 				CAEE51222B6052DE00913572 /* changes.cpp in Sources */,
 				CAEE4F7E2B6052DC00913572 /* statistics.cpp in Sources */,
 				CAEE514F2B6052DF00913572 /* translated1edit.cpp in Sources */,
-				CAEE51672B6052DF00913572 /* ParseWebData.cpp in Sources */,
 				CA5EE3D32C8B7D91001FA968 /* aes.c in Sources */,
 				CAEE50B42B6052DE00913572 /* create.cpp in Sources */,
 				CAEE51102B6052DE00913572 /* passage.cpp in Sources */,
@@ -4355,7 +4350,6 @@
 				CAEE4F0A2B6052DB00913572 /* logic.cpp in Sources */,
 				CA5EE41D2C8B7D92001FA968 /* psa_crypto_client.c in Sources */,
 				CAEE4F3C2B6052DB00913572 /* maintenance.cpp in Sources */,
-				CAEE50962B6052DD00913572 /* list.cpp in Sources */,
 				CAEE51172B6052DE00913572 /* string.cpp in Sources */,
 				CA5EE3E52C8B7D91001FA968 /* debug.c in Sources */,
 				CAEE50EB2B6052DE00913572 /* index.cpp in Sources */,
@@ -4540,7 +4534,7 @@
 				CODE_SIGN_ENTITLEMENTS = Bibledit/Bibledit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 56;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = L37WFUB5MH;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -4555,7 +4549,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 5.1.025;
+				MARKETING_VERSION = 5.1.036;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bibledit.osx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -4572,7 +4566,7 @@
 				CODE_SIGN_ENTITLEMENTS = Bibledit/Bibledit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 56;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = L37WFUB5MH;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -4587,7 +4581,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 5.1.025;
+				MARKETING_VERSION = 5.1.036;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bibledit.osx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

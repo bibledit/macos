@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -54,7 +54,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #include <personalize/index.h>
 #include <resource/index.h>
 #include <resource/manage.h>
-#include <resource/print.h>
 #include <resource/sword.h>
 #include <resource/cache.h>
 #include <resource/user9edit.h>
@@ -104,18 +103,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 std::string menu_logic_href (std::string href)
 {
-  href = filter::strings::replace ("?", "__q__", href);
-  href = filter::strings::replace ("&", "__a__", href);
-  href = filter::strings::replace ("=", "__i__", href);
+  href = filter::string::replace ("?", "__q__", href);
+  href = filter::string::replace ("&", "__a__", href);
+  href = filter::string::replace ("=", "__i__", href);
   return href;
 }
 
 
 std::string menu_logic_click (std::string item)
 {
-  item = filter::strings::replace ("__q__", "?", item);
-  item = filter::strings::replace ("__a__", "&", item);
-  item = filter::strings::replace ("__i__", "=", item);
+  item = filter::string::replace ("__q__", "?", item);
+  item = filter::string::replace ("__a__", "&", item);
+  item = filter::string::replace ("__i__", "=", item);
   database::config::general::set_last_menu_click (item);
   return item;
 }
@@ -262,10 +261,10 @@ std::string menu_logic_main_categories (Webserver_Request& webserver_request, st
   }
 
   // Create one string of tool tips for this menu item, separated by a vertical bar.
-  tooltip = filter::strings::implode (tooltipbits, " | ");
+  tooltip = filter::string::implode (tooltipbits, " | ");
   
   // Create one string of html that is going to form the menu.
-  return filter::strings::implode (html, "\n");
+  return filter::string::implode (html, "\n");
 }
 
 
@@ -349,7 +348,7 @@ std::string menu_logic_basic_categories (Webserver_Request& webserver_request)
   }
 #endif
 
-  return filter::strings::implode (html, "\n");
+  return filter::string::implode (html, "\n");
 }
 
 
@@ -378,8 +377,8 @@ std::string menu_logic_workspace_category (Webserver_Request& webserver_request,
     }
   }
 
-  if (tooltip) tooltip->assign (filter::strings::implode (labels, " | "));
-  return filter::strings::implode (html, "\n");
+  if (tooltip) tooltip->assign (filter::string::implode (labels, " | "));
+  return filter::string::implode (html, "\n");
 }
 
 
@@ -453,8 +452,8 @@ std::string menu_logic_translate_category (Webserver_Request& webserver_request,
     html.insert (html.begin (), menu_logic_translate_text () + ": ");
   }
 
-  if (tooltip) tooltip->assign (filter::strings::implode (labels, " | "));
-  return filter::strings::implode (html, "\n");
+  if (tooltip) tooltip->assign (filter::string::implode (labels, " | "));
+  return filter::string::implode (html, "\n");
 }
 
 
@@ -521,8 +520,8 @@ std::string menu_logic_search_category (Webserver_Request& webserver_request, st
     html.insert (html.begin (), menu_logic_search_text () + ": ");
   }
   
-  if (tooltip) tooltip->assign (filter::strings::implode (labels, " | "));
-  return filter::strings::implode (html, "\n");
+  if (tooltip) tooltip->assign (filter::string::implode (labels, " | "));
+  return filter::string::implode (html, "\n");
 }
 
 
@@ -531,7 +530,6 @@ std::string menu_logic_tools_category (Webserver_Request& webserver_request, std
   // The labels that may end up in the menu.
   const std::string checks = translate ("Checks");
   const std::string consistency = translate ("Consistency");
-  const std::string print = translate ("Print");
   const std::string changes = menu_logic_changes_text ();
   const std::string planning = translate ("Planning");
   const std::string send_receive = translate ("Send/receive");
@@ -541,7 +539,6 @@ std::string menu_logic_tools_category (Webserver_Request& webserver_request, std
   std::vector <std::string> labels = {
     checks,
     consistency,
-    print,
     changes,
     planning,
     send_receive,
@@ -573,15 +570,6 @@ std::string menu_logic_tools_category (Webserver_Request& webserver_request, std
       }
     }
 
-    if (label == print) {
-#ifndef HAVE_CLIENT
-      if (resource_print_acl (webserver_request)) {
-        html.push_back (menu_logic_create_item (resource_print_url (), label, true, "", ""));
-        tiplabels.push_back (label);
-      }
-#endif
-    }
-    
     if (label == changes) {
       // Downloading revisions only on server, not on client.
 #ifndef HAVE_CLIENT
@@ -635,8 +623,8 @@ std::string menu_logic_tools_category (Webserver_Request& webserver_request, std
     html.insert (html.begin (), menu_logic_tools_text () + ": ");
   }
   
-  if (tooltip) tooltip->assign (filter::strings::implode (tiplabels, " | "));
-  return filter::strings::implode (html, "\n");
+  if (tooltip) tooltip->assign (filter::string::implode (tiplabels, " | "));
+  return filter::string::implode (html, "\n");
 }
 
 
@@ -864,7 +852,7 @@ std::string menu_logic_settings_category (Webserver_Request& webserver_request, 
     
     if (label == basic_mode) {
       if (webserver_request.session_logic ()->get_level () > roles::guest) {
-        html.push_back (menu_logic_create_item (index_index_url () + filter::strings::convert_to_string ("?mode=basic"), label, true, "", ""));
+        html.push_back (menu_logic_create_item (index_index_url () + filter::string::convert_to_string ("?mode=basic"), label, true, "", ""));
         tiplabels.push_back (label);
       }
     }
@@ -890,8 +878,8 @@ std::string menu_logic_settings_category (Webserver_Request& webserver_request, 
     html.insert (html.begin (), menu_logic_settings_text () + " (" + user + "): ");
   }
   
-  if (tooltip) tooltip->assign (filter::strings::implode (tiplabels, " | "));
-  return filter::strings::implode (html, "\n");
+  if (tooltip) tooltip->assign (filter::string::implode (tiplabels, " | "));
+  return filter::string::implode (html, "\n");
 }
 
 
@@ -951,7 +939,7 @@ std::string menu_logic_settings_resources_category ([[maybe_unused]] Webserver_R
     html.insert (html.begin (), menu_logic_resources_text () + ": ");
   }
   
-  return filter::strings::implode (html, "\n");
+  return filter::string::implode (html, "\n");
 }
 
 
@@ -967,7 +955,7 @@ std::string menu_logic_help_category (Webserver_Request& webserver_request)
     html.insert (html.begin (), menu_logic_help_text () + ": ");
   }
   
-  return filter::strings::implode (html, "\n");
+  return filter::string::implode (html, "\n");
 }
 
 
@@ -1006,16 +994,11 @@ std::string menu_logic_menu_text (std::string menu_item)
 // Returns the URL that belongs to $menu_item.
 std::string menu_logic_menu_url (std::string menu_item)
 {
-  if (
-      (menu_item == menu_logic_translate_menu ())
-      ||
-      (menu_item == menu_logic_search_menu ())
-      ||
-      (menu_item == menu_logic_tools_menu ())
-      ||
-      (menu_item == menu_logic_settings_menu ())
-    ) {
-    return filter_url_build_http_query (index_index_url (), "item", menu_item);
+  if ((menu_item == menu_logic_translate_menu ())
+      || (menu_item == menu_logic_search_menu ())
+      || (menu_item == menu_logic_tools_menu ())
+      || (menu_item == menu_logic_settings_menu ())) {
+      return filter_url_build_http_query(index_index_url (), {{"item", menu_item}});
   }
 
   return menu_item;

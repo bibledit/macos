@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -81,8 +81,8 @@ std::string system_index (Webserver_Request& webserver_request)
   std::string language = database::config::general::get_site_language ();
   {
     constexpr const char* identification {"languageselection"};
-    if (webserver_request.post.count (identification)) {
-      language = webserver_request.post.at(identification);
+    if (webserver_request.post_count(identification)) {
+      language = webserver_request.post_get(identification);
       database::config::general::set_site_language (language);
     }
     const std::map <std::string, std::string> localizations = locale_logic_localizations ();
@@ -109,16 +109,16 @@ std::string system_index (Webserver_Request& webserver_request)
 
 
   // Get values for setting checkboxes.
-  const std::string checkbox = webserver_request.post ["checkbox"];
-  [[maybe_unused]] const bool checked = filter::strings::convert_to_bool (webserver_request.post ["checked"]);
+  const std::string checkbox = webserver_request.post_get("checkbox");
+  [[maybe_unused]] const bool checked = filter::string::convert_to_bool (webserver_request.post_get("checked"));
 
 
   // Entry of time zone offset in hours.
-  if (webserver_request.post.count ("timezone")) {
-    std::string input = webserver_request.post ["timezone"];
-    input = filter::strings::replace ("UTC", std::string(), input);
-    int input_timezone = filter::strings::convert_to_int (input);
-    input_timezone = clip (input_timezone, MINIMUM_TIMEZONE, MAXIMUM_TIMEZONE);
+  if (webserver_request.post_count("timezone")) {
+    std::string input = webserver_request.post_get("timezone");
+    input = filter::string::replace ("UTC", std::string(), input);
+    int input_timezone = filter::string::convert_to_int (input);
+    input_timezone = std::clamp (input_timezone, MINIMUM_TIMEZONE, MAXIMUM_TIMEZONE);
     database::config::general::set_timezone (input_timezone);
   }
   // Set the time zone offset in the GUI.
@@ -140,7 +140,7 @@ std::string system_index (Webserver_Request& webserver_request)
     database::config::general::set_uuthor_in_rss_feed (checked);
     return std::string();
   }
-  view.set_variable ("rssauthor", filter::strings::get_checkbox_status (database::config::general::get_author_in_rss_feed ()));
+  view.set_variable ("rssauthor", filter::string::get_checkbox_status (database::config::general::get_author_in_rss_feed ()));
   // The location of the RSS feed.
   view.set_variable ("rssfeed", rss_feed_url ());
   // The Bibles that send their changes to the RSS feed.
@@ -183,9 +183,9 @@ std::string system_index (Webserver_Request& webserver_request)
 #ifdef HAVE_CLIENT
   const std::string importbibles = "importbibles";
   if (webserver_request.query.count (importbibles)) {
-    if (webserver_request.post.count ("upload")) {
-      const std::string datafile = filter_url_tempfile () + webserver_request.post ["filename"];
-      const std::string data = webserver_request.post ["data"];
+    if (webserver_request.post_count("upload")) {
+      const std::string datafile = filter_url_tempfile () + webserver_request.post_get("filename");
+      const std::string data = webserver_request.post_get("data");
       if (!data.empty ()) {
         filter_url_file_put_contents (datafile, data);
         success = translate("Import has started.");
@@ -207,9 +207,9 @@ std::string system_index (Webserver_Request& webserver_request)
 #ifdef HAVE_CLIENT
   const std::string importnotes = "importnotes";
   if (webserver_request.query.count (importnotes)) {
-    if (webserver_request.post.count ("upload")) {
-      const std::string datafile = filter_url_tempfile () + webserver_request.post ["filename"];
-      const std::string data = webserver_request.post ["data"];
+    if (webserver_request.post_count("upload")) {
+      const std::string datafile = filter_url_tempfile () + webserver_request.post_get("filename");
+      const std::string data = webserver_request.post_get("data");
       if (!data.empty ()) {
         filter_url_file_put_contents (datafile, data);
         success = translate("Import has started.");
@@ -231,9 +231,9 @@ std::string system_index (Webserver_Request& webserver_request)
 #ifdef HAVE_CLIENT
   const std::string importresources = "importresources";
   if (webserver_request.query.count (importresources)) {
-    if (webserver_request.post.count ("upload")) {
-      const std::string datafile = filter_url_tempfile () + webserver_request.post ["filename"];
-      const std::string data = webserver_request.post ["data"];
+    if (webserver_request.post_count("upload")) {
+      const std::string datafile = filter_url_tempfile () + webserver_request.post_get("filename");
+      const std::string data = webserver_request.post_get("data");
       if (!data.empty ()) {
         filter_url_file_put_contents (datafile, data);
         success = translate("Import has started.");
@@ -289,10 +289,10 @@ std::string system_index (Webserver_Request& webserver_request)
   
   
   // Upload a font.
-  if (webserver_request.post.count ("uploadfont")) {
-    const std::string filename = webserver_request.post ["filename"];
+  if (webserver_request.post_count("uploadfont")) {
+    const std::string filename = webserver_request.post_get("filename");
     const std::string path = filter_url_create_root_path ({"fonts", filename});
-    const std::string fontdata = webserver_request.post ["fontdata"];
+    const std::string fontdata = webserver_request.post_get("fontdata");
     filter_url_file_put_contents (path, fontdata);
     success = translate("The font has been uploaded.");
   }
@@ -304,7 +304,7 @@ std::string system_index (Webserver_Request& webserver_request)
   for (const auto& font : fonts) {
     fontsblock << "<p>";
 #ifndef HAVE_CLIENT
-    fontsblock << "<a href=" << std::quoted ("?deletefont=" + font) << " title=" << std::quoted(translate("Delete font")) << ">" << filter::strings::emoji_wastebasket () << "</a>";
+    fontsblock << "<a href=" << std::quoted ("?deletefont=" + font) << " title=" << std::quoted(translate("Delete font")) << ">" << filter::string::emoji_wastebasket () << "</a>";
 #endif
     fontsblock << font;
     fontsblock << "</p>";
@@ -326,7 +326,7 @@ std::string system_index (Webserver_Request& webserver_request)
     database::config::general::set_keep_resources_cache_for_long (checked);
     return std::string();
   }
-  view.set_variable ("keepcache", filter::strings::get_checkbox_status (database::config::general::get_keep_resources_cache_for_long ()));
+  view.set_variable ("keepcache", filter::string::get_checkbox_status (database::config::general::get_keep_resources_cache_for_long ()));
 #endif
 
 
@@ -351,7 +351,7 @@ std::string system_index (Webserver_Request& webserver_request)
     database::config::general::set_keep_osis_content_in_sword_resources (checked);
     return std::string();
   }
-  view.set_variable ("keeposis", filter::strings::get_checkbox_status (database::config::general::get_keep_osis_content_in_sword_resources ()));
+  view.set_variable ("keeposis", filter::string::get_checkbox_status (database::config::general::get_keep_osis_content_in_sword_resources ()));
 #endif
 
   

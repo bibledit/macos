@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -65,10 +65,10 @@ std::string bible_import (Webserver_Request& webserver_request)
   
   // The name of the Bible.
   const std::string bible = access_bible::clamp (webserver_request, webserver_request.query["bible"]);
-  view.set_variable ("bible", filter::strings::escape_special_xml_characters (bible));
+  view.set_variable ("bible", filter::string::escape_special_xml_characters (bible));
   
-  const int book = Ipc_Focus::getBook (webserver_request);
-  const int chapter = Ipc_Focus::getChapter (webserver_request);
+  const int book = ipc_focus::get_book (webserver_request);
+  const int chapter = ipc_focus::get_chapter (webserver_request);
 
   // Whether the user has write access to this Bible.
   if (bool write_access = access_bible::write (webserver_request, bible); write_access) {
@@ -76,13 +76,13 @@ std::string bible_import (Webserver_Request& webserver_request)
   }
 
   // USFM data submission.
-  if (webserver_request.post.count ("submit")) {
+  if (webserver_request.post_count("submit")) {
     // Submission may take long if there's a lot of data or the network is slow.
-    std::string data = webserver_request.post ["data"];
+    std::string data = webserver_request.post_get("data");
     data = filter_url_tag_to_plus (data);
-    data = filter::strings::trim (data);
+    data = filter::string::trim (data);
     if (!data.empty()) {
-      if (filter::strings::unicode_string_is_valid (data)) {
+      if (filter::string::unicode_string_is_valid (data)) {
         const std::string datafile = filter_url_tempfile ();
         filter_url_file_put_contents (datafile, data);
         success_message = translate("Import has started.");
@@ -99,19 +99,26 @@ std::string bible_import (Webserver_Request& webserver_request)
   }
 
   // Handle (multiple) file upload.
-  if (webserver_request.post.count ("upload")) {
+  if (webserver_request.post_count("upload")) {
     bool success {false};
-    const auto upload = [&success, &bible, &book, &chapter](const std::string data) {
-      if (!data.empty ()) {
-        const std::string datafile = filter_url_tempfile ();
-        filter_url_file_put_contents (datafile, data);
-        tasks_logic_queue (task::import_bible, { datafile, bible, std::to_string (book), std::to_string (chapter) });
-        success = true;
-      }
+    std::string filename{};
+    std::string data{};
+    const auto upload = [&success, &bible, &book, &chapter, &filename, &data]() {
+      const std::string datafile = filter_url_tempfile() + filename;
+      filter_url_file_put_contents (datafile, data);
+      tasks_logic_queue (task::import_bible, { datafile, bible, std::to_string (book), std::to_string (chapter) });
+      success = true;
     };
-    upload(std::move(webserver_request.post["data"]));
-    for (std::string data : webserver_request.post_multiple["data"]) {
-      upload(std::move(data));
+    for (const auto& [key, value] : webserver_request.post) {
+      if (key == "data")
+        data = value;
+      if (key == "filename")
+        filename = value;
+      if (!filename.empty() and !data.empty()) {
+        upload();
+        filename.clear();
+        data.clear();
+      }
     }
     if (success) {
       success_message = translate("Import has started.");

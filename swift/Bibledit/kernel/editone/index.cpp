@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -64,9 +64,9 @@ std::string editone_index (Webserver_Request& webserver_request)
   const bool touch = webserver_request.session_logic ()->get_touch_enabled ();
   
   if (webserver_request.query.count ("switchbook") && webserver_request.query.count ("switchchapter")) {
-    const int switchbook = filter::strings::convert_to_int (webserver_request.query ["switchbook"]);
-    const int switchchapter = filter::strings::convert_to_int (webserver_request.query ["switchchapter"]);
-    Ipc_Focus::set (webserver_request, switchbook, switchchapter, 1);
+    const int switchbook = filter::string::convert_to_int (webserver_request.query ["switchbook"]);
+    const int switchchapter = filter::string::convert_to_int (webserver_request.query ["switchchapter"]);
+    ipc_focus::set_passage (webserver_request, switchbook, switchchapter, 1);
     navigation_passage::record_history (webserver_request, switchbook, switchchapter, 1);
   }
 
@@ -75,10 +75,9 @@ std::string editone_index (Webserver_Request& webserver_request)
   Assets_Header header = Assets_Header (translate("Edit verse"), webserver_request);
   header.set_navigator ();
   header.set_editor_stylesheet ();
-  if (touch) 
-    header.jquery_touch_on ();
-  header.notify_it_on ();
+  header.notify_on ();
   header.add_bread_crumb (menu_logic_translate_menu (), menu_logic_translate_text ());
+  header.set_focus_group(ipc_focus::get_focus_group(webserver_request));
   page = header.run ();
   
   Assets_View view;
@@ -92,8 +91,8 @@ std::string editone_index (Webserver_Request& webserver_request)
     bible = access_bible::clamp (webserver_request, webserver_request.query ["bible"]);
   {
     constexpr const char* identification {"bibleselect"};
-    if (webserver_request.post.count (identification)) {
-      bible = webserver_request.post.at(identification);
+    if (webserver_request.post_count(identification)) {
+      bible = webserver_request.post_get(identification);
       webserver_request.database_config_user ()->set_bible (bible);
     }
     dialog::select::Settings settings {
@@ -150,7 +149,7 @@ std::string editone_index (Webserver_Request& webserver_request)
     view.enable_zone ("stylesbutton");
   }
   
-  view.set_variable ("spellcheck", filter::strings::convert_to_true_false(webserver_request.database_config_user ()->get_enable_spell_check()));
+  view.set_variable ("spellcheck", filter::string::convert_to_true_false(webserver_request.database_config_user ()->get_enable_spell_check()));
 
   page.append (view.render ("editone", "index"));
   

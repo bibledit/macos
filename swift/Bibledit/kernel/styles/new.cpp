@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ std::string styles_new (Webserver_Request& webserver_request)
   
   // The name of the stylesheet.
   const std::string name = webserver_request.query["name"];
-  view.set_variable ("name", filter::strings::escape_special_xml_characters (name));
+  view.set_variable ("name", filter::string::escape_special_xml_characters (name));
   
   // Whether this user has write access to the stylesheet.
   const std::string& username = webserver_request.session_logic ()->get_username ();
@@ -73,9 +73,9 @@ std::string styles_new (Webserver_Request& webserver_request)
   constexpr const std::string_view allowed {"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789-"};
   
   // Handle new style submission.
-  if (webserver_request.post.count ("style")) {
-    const std::string new_style = webserver_request.post["style"];
-    const std::string base_style = webserver_request.post["base"];
+  if (webserver_request.post_count("style")) {
+    const std::string new_style = webserver_request.post_get("style");
+    const std::string base_style = webserver_request.post_get("base");
     const std::vector<std::string> markers = database::styles::get_markers(name);
     if (new_style.empty()) {
       page.append(assets_page::error (translate("Enter a name for the new style")));
@@ -87,7 +87,7 @@ std::string styles_new (Webserver_Request& webserver_request)
     else if (base_style.empty()) {
       page.append(assets_page::error (translate("Select an existing style to base the new style on")));
     }
-    else if (in_array(new_style, markers)) {
+    else if (filter::string::in_array(new_style, markers)) {
       page.append(assets_page::error (translate("The style already exists in the stylesheet")));
     }
     else if (!write) {
@@ -99,9 +99,11 @@ std::string styles_new (Webserver_Request& webserver_request)
       // Recreate all stylesheets.
       styles_sheets_create_all ();
       // Redirect to the page editing this style.
-      std::string location = filter_url_build_http_query (styles_view_url(), "sheet", name);
-      location = filter_url_build_http_query (std::move(location), "style", new_style);
-      redirect_browser (webserver_request, std::move(location));
+      const std::string location = filter_url_build_http_query(styles_view_url(), {
+        {"sheet", name},
+        {"style", new_style},
+      });
+      redirect_browser (webserver_request, location);
     }
   }
   

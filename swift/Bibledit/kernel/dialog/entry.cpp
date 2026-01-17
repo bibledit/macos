@@ -1,5 +1,5 @@
 /*
-Copyright (©) 2003-2025 Teus Benschop.
+Copyright (©) 2003-2026 Teus Benschop.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ Dialog_Entry::~Dialog_Entry ()
 
 void Dialog_Entry::add_query (std::string parameter, std::string value)
 {
-  base_url = filter_url_build_http_query (base_url, parameter, value);
+  base_url = filter_url_build_http_query(base_url, {{parameter, value}});
 }
 
 

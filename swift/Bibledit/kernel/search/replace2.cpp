@@ -1,5 +1,5 @@
 /*
- Copyright (©) 2003-2025 Teus Benschop.
+ Copyright (©) 2003-2026 Teus Benschop.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -61,8 +61,8 @@ std::string search_replace2 (Webserver_Request& webserver_request)
   Assets_View view;
   {
     constexpr const char* identification {"bibleselect"};
-    if (webserver_request.post.count (identification)) {
-      bible = webserver_request.post.at(identification);
+    if (webserver_request.post_count(identification)) {
+      bible = webserver_request.post_get(identification);
       webserver_request.database_config_user ()->set_bible (bible);
     }
     dialog::select::Settings settings {
