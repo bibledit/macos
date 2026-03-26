@@ -61,3 +61,7 @@ lib/server
 
 lib/config.h
 
+/swift/Bibledit/kernel/mbedtls.old
+/swift/Bibledit/kernel/psa.old
+/swift/webroot/mbedtls.old
+/swift/webroot/psa.old
