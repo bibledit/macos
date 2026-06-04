@@ -40,6 +40,8 @@
 #include <config/globals.h>
 #include <workspace/logic.h>
 
+#include <database/bibles.h>
+
 
 std::string edit_index_url ()
 {
@@ -58,9 +60,6 @@ bool edit_index_acl (Webserver_Request& webserver_request)
 
 std::string edit_index (Webserver_Request& webserver_request)
 {
-  const bool touch = webserver_request.session_logic ()->get_touch_enabled ();
-
-  
   if (webserver_request.query.count ("switchbook") && webserver_request.query.count ("switchchapter")) {
     const int switchbook = filter::string::convert_to_int (webserver_request.query ["switchbook"]);
     const int switchchapter = filter::string::convert_to_int (webserver_request.query ["switchchapter"]);

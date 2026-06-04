@@ -39,7 +39,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #include <filter/url.h>
 #include <filter/md5.h>
 #include <filter/date.h>
-#include <database/config/general.h>
 #include <database/logs.h>
 #ifdef HAVE_UTF8PROC
 #include <utf8proc.h>
@@ -54,6 +53,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #pragma clang diagnostic ignored "-Wsign-conversion"
 #pragma clang diagnostic ignored "-Wold-style-cast"
 #pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
+#pragma clang diagnostic ignored "-Wunnecessary-virtual-specifier"
 #include <unicode/ustdio.h>
 #include <unicode/normlzr.h>
 #include <unicode/utypes.h>
@@ -81,7 +81,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #pragma clang diagnostic pop
 #endif
 #include <stdio.h>
-#include <errno.h>
+#include <webserver/request.h>
 
 
 namespace filter::string {
@@ -270,36 +270,6 @@ std::u16string convert_to_u16string (const std::string& s)
 #pragma clang diagnostic pop
   // utf16.length()
   return utf16;
-}
-
-
-// A C++ equivalent for PHP's filter::string::array_unique function.
-std::vector <std::string> array_unique (const std::vector <std::string>& values)
-{
-  std::vector <std::string> result;
-  std::set <std::string> unique;
-  for (unsigned int i = 0; i < values.size (); i++) {
-    if (unique.find (values[i]) == unique.end ()) {
-      unique.insert (values[i]);
-      result.push_back ((values[i]));
-    }
-  }
-  return result;
-}
-
-
-// A C++ equivalent for PHP's filter::string::array_unique function.
-std::vector <int> array_unique (const std::vector <int>& values)
-{
-  std::vector <int> result;
-  std::set <int> unique;
-  for (unsigned int i = 0; i < values.size (); i++) {
-    if (unique.find (values[i]) == unique.end ()) {
-      unique.insert (values[i]);
-      result.push_back ((values[i]));
-    }
-  }
-  return result;
 }
 
 
@@ -1037,303 +1007,6 @@ std::string get_reload ()
 }
 
 
-void quick_swap(std::string& a, std::string & b)
-{
-  std::string t {a};
-  a = b;
-  b = t;
-}
-
-
-void quick_swap(unsigned int &a, unsigned int &b)
-{
-  unsigned int t {a};
-  a = b;
-  b = t;
-}
-
-
-void quick_swap(long unsigned int &a, long unsigned int &b)
-{
-  long unsigned int t {a};
-  a = b;
-  b = t;
-}
-
-
-void quick_swap(int &a, int &b)
-{
-  int t {a};
-  a = b;
-  b = t;
-}
-
-
-void quick_swap(bool & a, bool & b)
-{
-  bool t {a};
-  a = b;
-  b = t;
-}
-
-
-// This function is unusual in the sense that it does not sort one container,
-// as the majority of sort functions do, but it accepts two containers.
-// It sorts on the first, and reorders the second container at the same time,
-// following the reordering done in the first container.
-void quick_sort (std::vector <unsigned int>& one, std::vector <std::string>& two, unsigned int beg, unsigned int end)
-{
-  if (end > beg + 1) {
-    unsigned int piv = one[beg];
-    unsigned int l = beg + 1;
-    unsigned int r = end;
-    while (l < r) {
-      if (one[l] <= piv) {
-        l++;
-      } else {
-        --r;
-        quick_swap(one[l], one[r]);
-        quick_swap(two[l], two[r]);
-      }
-    }
-    --l;
-    quick_swap(one[l], one[beg]);
-    quick_swap(two[l], two[beg]);
-    quick_sort(one, two, beg, l);
-    quick_sort(one, two, r, end);
-  }
-}
-
-
-void quick_sort(std::vector<std::string>& one, std::vector<unsigned int>& two, unsigned int beg, unsigned int end)
-{
-  if (end > beg + 1) {
-    std::string piv = one[beg];
-    unsigned int l = beg + 1;
-    unsigned int r = end;
-    while (l < r) {
-      if (one[l] <= piv) {
-        l++;
-      } else {
-        --r;
-        quick_swap(one[l], one[r]);
-        quick_swap(two[l], two[r]);
-      }
-    }
-    --l;
-    quick_swap(one[l], one[beg]);
-    quick_swap(two[l], two[beg]);
-    quick_sort(one, two, beg, l);
-    quick_sort(one, two, r, end);
-  }
-}
-
-
-void quick_sort(std::vector<unsigned int>& one, std::vector<unsigned int>& two, unsigned int beg, unsigned int end)
-{
-  if (end > beg + 1) {
-    unsigned int piv = one[beg];
-    unsigned int l = beg + 1;
-    unsigned int r = end;
-    while (l < r) {
-      if (one[l] <= piv) {
-        l++;
-      } else {
-        --r;
-        quick_swap(one[l], one[r]);
-        quick_swap(two[l], two[r]);
-      }
-    }
-    --l;
-    quick_swap(one[l], one[beg]);
-    quick_swap(two[l], two[beg]);
-    quick_sort(one, two, beg, l);
-    quick_sort(one, two, r, end);
-  }
-}
-
-
-void quick_sort (std::vector<unsigned int>& one, std::vector<bool>& two, unsigned int beg, unsigned int end)
-{
-  if (end > beg + 1) {
-    unsigned int piv = one[beg];
-    unsigned int l = beg + 1;
-    unsigned int r = end;
-    while (l < r) {
-      if (one[l] <= piv) {
-        l++;
-      } else {
-        --r;
-        quick_swap(one[l], one[r]);
-        bool two_l = two[l];
-        bool two_r = two[r];
-        quick_swap(two_l, two_r);
-        two[l] = two_l;
-        two[r] = two_r;
-      }
-    }
-    --l;
-    quick_swap(one[l], one[beg]);
-    bool two_l = two[l];
-    bool two_beg = two[beg];
-    quick_swap(two_l, two_beg);
-    two[l] = two_l;
-    two[beg] = two_beg;
-    quick_sort(one, two, beg, l);
-    quick_sort(one, two, r, end);
-  }
-}
-
-
-void quick_sort(std::vector<int>& one, std::vector<unsigned int>& two, unsigned int beg, unsigned int end)
-{
-  if (end > beg + 1) {
-    int piv = one[beg];
-    unsigned int l = beg + 1;
-    unsigned int r = end;
-    while (l < r) {
-      if (one[l] <= piv) {
-        l++;
-      } else {
-        --r;
-        quick_swap(one[l], one[r]);
-        quick_swap(two[l], two[r]);
-      }
-    }
-    --l;
-    quick_swap(one[l], one[beg]);
-    quick_swap(two[l], two[beg]);
-    filter::string::quick_sort(one, two, beg, l);
-    filter::string::quick_sort(one, two, r, end);
-  }
-}
-
-void quick_sort(std::vector<std::string>& one, std::vector<std::string>& two, unsigned int beg, unsigned int end)
-{
-  if (end > beg + 1) {
-    std::string piv = one[beg];
-    unsigned int l = beg + 1;
-    unsigned int r = end;
-    while (l < r) {
-      if (one[l] <= piv) {
-        l++;
-      } else {
-        --r;
-        quick_swap(one[l], one[r]);
-        quick_swap(two[l], two[r]);
-      }
-    }
-    --l;
-    quick_swap(one[l], one[beg]);
-    quick_swap(two[l], two[beg]);
-    quick_sort(one, two, beg, l);
-    quick_sort(one, two, r, end);
-  }
-}
-
-
-void quick_sort(std::vector<std::string>& one, std::vector<bool>& two, unsigned int beg, unsigned int end)
-{
-  if (end > beg + 1) {
-    std::string piv = one[beg];
-    unsigned int l = beg + 1;
-    unsigned int r = end;
-    while (l < r) {
-      if (one[l] <= piv) {
-        l++;
-      } else {
-        --r;
-        quick_swap(one[l], one[r]);
-        bool two_l = two[l];
-        bool two_r = two[r];
-        quick_swap(two_l, two_r);
-        two[l] = two_l;
-        two[r] = two_r;
-      }
-    }
-    --l;
-    quick_swap(one[l], one[beg]);
-    bool two_l = two[l];
-    bool two_beg = two[beg];
-    quick_swap(two_l, two_beg);
-    two[l] = two_l;
-    two[beg] = two_beg;
-    quick_sort(one, two, beg, l);
-    quick_sort(one, two, r, end);
-  }
-}
-
-
-void quick_sort (std::vector<std::string>& one, unsigned int beg, unsigned int end)
-{
-  if (end > beg + 1) {
-    std::string piv = one[beg];
-    unsigned int l = beg + 1;
-    unsigned int r = end;
-    while (l < r) {
-      if (one[l] <= piv) {
-        l++;
-      } else {
-        --r;
-        quick_swap(one[l], one[r]);
-      }
-    }
-    --l;
-    quick_swap(one[l], one[beg]);
-    quick_sort(one, beg, l);
-    quick_sort(one, r, end);
-  }
-}
-
-
-void quick_sort (std::vector<long unsigned int>& one, std::vector <long unsigned int>& two, unsigned int beg, unsigned int end)
-{
-  if (end > beg + 1) {
-    long unsigned int piv = one[beg];
-    unsigned int l = beg + 1;
-    unsigned int r = end;
-    while (l < r) {
-      if (one[l] <= piv) {
-        l++;
-      } else {
-        --r;
-        quick_swap(one[l], one[r]);
-        quick_swap(two[l], two[r]);
-      }
-    }
-    --l;
-    quick_swap(one[l], one[beg]);
-    quick_swap(two[l], two[beg]);
-    quick_sort(one, two, beg, l);
-    quick_sort(one, two, r, end);
-  }
-}
-
-
-void quick_sort (std::vector<int>& one, std::vector<int>& two, unsigned int beg, unsigned int end)
-{
-  if (end > beg + 1) {
-    int piv = one[beg];
-    unsigned int l = beg + 1;
-    unsigned int r = end;
-    while (l < r) {
-      if (one[l] <= piv) {
-        l++;
-      } else {
-        --r;
-        quick_swap(one[l], one[r]);
-        quick_swap(two[l], two[r]);
-      }
-    }
-    --l;
-    quick_swap(one[l], one[beg]);
-    quick_swap(two[l], two[beg]);
-    quick_sort(one, two, beg, l);
-    quick_sort(one, two, r, end);
-  }
-}
-
-
 std::string number_in_string (const std::string& str)
 {
   constexpr const char* numbers {"0123456789"};
@@ -1772,7 +1445,6 @@ std::string html_get_element (std::string html, std::string element)
 const std::string nonbreaking_inline_tags {"|a|abbr|acronym|b|bdo|big|cite|code|dfn|em|font|i|img|kbd|nobr|s|small|span|strike|strong|sub|sup|tt|"};
 const std::string empty_tags {"|area|base|basefont|bgsound|br|command|col|embed|event-source|frame|hr|image|img|input|keygen|link|menuitem|meta|param|source|spacer|track|wbr|"};
 const std::string preserve_whitespace_tags {"|pre|textarea|script|style|"};
-const std::string special_handling_tags {"|html|body|"};
 const std::string no_entity_substitution_tags {"|script|style|"};
 const std::string treat_like_inline_tags {"|p|"};
 

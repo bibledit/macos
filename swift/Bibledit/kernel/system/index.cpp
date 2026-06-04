@@ -47,6 +47,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #include <manage/index.h>
 #include <client/logic.h>
 
+#include <database/bibles.h>
+
 
 std::string system_index_url ()
 {
@@ -136,7 +138,7 @@ std::string system_index (Webserver_Request& webserver_request)
 #ifdef HAVE_CLOUD
   // Whether to include the author with every change in the RSS feed.
   if (checkbox == "rssauthor") {
-    database::config::general::set_uuthor_in_rss_feed (checked);
+    database::config::general::set_author_in_rss_feed (checked);
     return std::string();
   }
   view.set_variable ("rssauthor", filter::string::get_checkbox_status (database::config::general::get_author_in_rss_feed ()));

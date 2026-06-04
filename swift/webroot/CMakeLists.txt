@@ -1,0 +1,962 @@
+# Copyright (©) 2003-2026 Teus Benschop.
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+
+# Set the minimum CMake version required.
+cmake_minimum_required(VERSION 3.31)
+
+
+# Print info.
+message(STATUS "Processing ${CMAKE_CURRENT_SOURCE_DIR}")
+
+
+# Start a project by setting the project name and version.
+project(bibledit VERSION 5.1.046)
+
+
+set(bibledit_VERSION "${bibledit_VERSION_MAJOR}.${bibledit_VERSION_MINOR}.${bibledit_VERSION_PATCH}")
+
+
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    set(COMPILERGCC ON)
+endif()
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    set(COMPILERCLANG ON)
+endif()
+
+
+option(HAVE_WINDOWS "Compile for Windows" OFF)
+if (HAVE_WINDOWS)
+    set(WIN32 ON)
+endif ()
+option(HAVE_ANDROID "Compile for Android" OFF)
+option(HAVE_MACOS "Compile for macOS" OFF)
+option(HAVE_LINUX "Compile for Linux" OFF)
+option(HAVE_IOS "Compile for iOS" OFF)
+
+
+# Handle the install prefix.
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set_property(CACHE CMAKE_INSTALL_PREFIX PROPERTY VALUE "/usr")
+endif()
+option(CMAKE_INSTALL_PREFIX "Install prefix" "/usr")
+# Set it during install: $ cmake --install . --prefix "/path"
+# Set it during configure: $ cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+
+
+# Whether to have an internal MbedTLS library.
+option(INTERNAL_MBEDTLS "Have internal MbedTLS" ON)
+
+
+# Compiler to emit info for the debugger.
+add_compile_options(-g)
+
+
+# Enable compiler warnings.
+add_compile_options(-Wall -Wextra -Wpedantic -Wno-unknown-pragmas -Wno-pragmas)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wshadow>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Warray-bounds>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wcast-align>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wcast-qual>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wconversion>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wctor-dtor-privacy>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wdelete-non-virtual-dtor>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Weffc++>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wextra-semi>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wfloat-equal>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wformat=2>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wmissing-include-dirs>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wmissing-noreturn>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wnull-dereference>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wold-style-cast>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Woverloaded-virtual>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wredundant-decls>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wsign-promo>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wsuggest-override>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wswitch-default>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wswitch-enum>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wundef>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wuninitialized>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wunused-but-set-parameter>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wunused-macros>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wunused-parameter>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wvla>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wzero-as-null-pointer-constant>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wmismatched-tags>)
+if (COMPILERGCC)
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wcatch-value=2>)
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wconditionally-supported>)
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wduplicated-branches>)
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wduplicated-cond>)
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wformat-overflow=2>)
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wlogical-op>)
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wnoexcept>)
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wno-non-template-friend>)
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wrestrict>)
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wstrict-null-sentinel>)
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wuseless-cast>)
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wcomma-subscript>)
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wredundant-tags>)
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wvolatile>)
+endif()
+if (COMPILERCLANG)
+endif()
+
+# Compilers on some systems may treat warnings as errors.
+# Pass a flag to the compiler to treat a warning not as an error.
+add_compile_options(-fno-var-tracking -Wno-error)
+
+
+add_link_options(-Wall -lpthread -L. -g -rdynamic -ldl)
+
+
+# Finding executables.
+find_program(GZIP gzip REQUIRED)
+find_program(GUNZIP gunzip REQUIRED)
+find_program(TAR tar REQUIRED)
+find_program(ZIP zip REQUIRED)
+find_program(UNZIP unzip REQUIRED)
+find_program(INSTALLMGR installmgr)
+find_program(DIATHEKE diatheke)
+
+
+# The C++ standard to use, and it is mandatory.
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED true)
+
+
+# Build the "bibledit" library, the kernel of the system.
+add_library(bibledit STATIC
+        library/bibledit.cpp
+        library/locks.c
+        webserver/webserver.cpp
+        webserver/http.cpp
+        webserver/request.cpp
+        bootstrap/bootstrap.cpp
+        filter/url.cpp
+        filter/string.cpp
+        filter/roles.cpp
+        filter/md5.cpp
+        filter/usfm.cpp
+        filter/archive.cpp
+        filter/text.cpp
+        filter/passage.cpp
+        filter/quill.cpp
+        filter/css.cpp
+        filter/git.cpp
+        filter/html.cpp
+        filter/diff.cpp
+        filter/shell.cpp
+        filter/merge.cpp
+        filter/date.cpp
+        filter/memory.cpp
+        filter/webview.cpp
+        filter/mail.cpp
+        filter/note.cpp
+        filter/number.cpp
+        flate/flate.cpp
+        assets/view.cpp
+        assets/page.cpp
+        assets/header.cpp
+        assets/external.cpp
+        index/index.cpp
+        index/listing.cpp
+        config/globals.cpp
+        menu/logic.cpp
+        menu/index.cpp
+        locale/translate.cpp
+        locale/logic.cpp
+        database/config/general.cpp
+        database/config/bible.cpp
+        database/config/user.cpp
+        database/users.cpp
+        database/logs.cpp
+        database/sqlite.cpp
+        database/styles.cpp
+        database/bibles.cpp
+        database/books.cpp
+        database/bibleactions.cpp
+        database/check.cpp
+        database/localization.cpp
+        database/confirm.cpp
+        database/ipc.cpp
+        database/jobs.cpp
+        database/kjv.cpp
+        database/logic.cpp
+        database/oshb.cpp
+        database/sblgnt.cpp
+        database/sprint.cpp
+        database/mail.cpp
+        database/navigation.cpp
+        database/usfmresources.cpp
+        database/mappings.cpp
+        database/noteactions.cpp
+        database/versifications.cpp
+        database/modifications.cpp
+        database/notes.cpp
+        database/temporal.cpp
+        database/maintenance.cpp
+        database/state.cpp
+        database/noteassignment.cpp
+        database/strong.cpp
+        database/morphgnt.cpp
+        database/etcbc4.cpp
+        database/hebrewlexicon.cpp
+        database/cache.cpp
+        database/login.cpp
+        database/privileges.cpp
+        database/git.cpp
+        database/userresources.cpp
+        database/statistics.cpp
+        database/sample.cpp
+        session/logic.cpp
+        session/login.cpp
+        session/logout.cpp
+        session/password.cpp
+        session/signup.cpp
+        session/switch.cpp
+        setup/index.cpp
+        setup/logic.cpp
+        journal/index.cpp
+        journal/logic.cpp
+        styles/logic.cpp
+        styles/indexm.cpp
+        styles/new.cpp
+        styles/sheetm.cpp
+        styles/view.cpp
+        styles/css.cpp
+        styles/sheets.cpp
+        text/text.cpp
+        esword/text.cpp
+        olb/text.cpp
+        html/text.cpp
+        html/header.cpp
+        odf/text.cpp
+        timer/index.cpp
+        tasks/logic.cpp
+        tasks/run.cpp
+        config/logic.cpp
+        bb/logic.cpp
+        bb/manage.cpp
+        bb/settings.cpp
+        bb/book.cpp
+        bb/chapter.cpp
+        bb/import_run.cpp
+        bb/import.cpp
+        bb/order.cpp
+        bb/css.cpp
+        notes/logic.cpp
+        notes/actions.cpp
+        notes/note.cpp
+        notes/status-1.cpp
+        notes/assign-1.cpp
+        notes/notes.cpp
+        notes/status-n.cpp
+        notes/assign-n.cpp
+        notes/click.cpp
+        notes/poll.cpp
+        notes/summary.cpp
+        notes/bb-1.cpp
+        notes/comment.cpp
+        notes/select.cpp
+        notes/unassign-n.cpp
+        notes/bb-n.cpp
+        notes/create.cpp
+        notes/severity-1.cpp
+        notes/verses.cpp
+        notes/bulk.cpp
+        notes/edit.cpp
+        notes/index.cpp
+        notes/severity-n.cpp
+        trash/handler.cpp
+        help/index.cpp
+        confirm/worker.cpp
+        email/index.cpp
+        email/send.cpp
+        email/receive.cpp
+        user/notifications.cpp
+        user/account.cpp
+        user/logic.cpp
+        manage/index.cpp
+        manage/users.cpp
+        manage/exports.cpp
+        manage/write.cpp
+        manage/privileges.cpp
+        manage/bibles.cpp
+        system/index.cpp
+        system/logic.cpp
+        collaboration/index.cpp
+        collaboration/link.cpp
+        collaboration/settings.cpp
+        search/rebibles.cpp
+        search/renotes.cpp
+        access/user.cpp
+        access/bible.cpp
+        access/logic.cpp
+        dialog/entry.cpp
+        dialog/select.cpp
+        dialog/yes.cpp
+        dialog/color.cpp
+        dialog/books.cpp
+        dialog/upload.cpp
+        fonts/logic.cpp
+        versification/index.cpp
+        versification/system.cpp
+        versification/logic.cpp
+        book/create.cpp
+        compare/index.cpp
+        compare/compare.cpp
+        jobs/index.cpp
+        editone/index.cpp
+        editone/load.cpp
+        editone/save.cpp
+        editone/verse.cpp
+        editone/logic.cpp
+        editone/update.cpp
+        navigation/passage.cpp
+        navigation/update.cpp
+        navigation/poll.cpp
+        navigation/paratext.cpp
+        ipc/focus.cpp
+        ipc/notes.cpp
+        checksum/logic.cpp
+        editusfm/focus.cpp
+        editusfm/index.cpp
+        editusfm/load.cpp
+        editusfm/offset.cpp
+        editusfm/save.cpp
+        editor/styles.cpp
+        editor/html2usfm.cpp
+        editor/usfm2html.cpp
+        editor/select.cpp
+        editor/html2format.cpp
+        editor/id.cpp
+        editor/style.cpp
+        edit/edit.cpp
+        edit/id.cpp
+        edit/index.cpp
+        edit/load.cpp
+        edit/save.cpp
+        edit/styles.cpp
+        edit/logic.cpp
+        edit/preview.cpp
+        edit/position.cpp
+        edit/navigate.cpp
+        edit/update.cpp
+        search/all.cpp
+        search/index.cpp
+        search/replace.cpp
+        search/getids.cpp
+        search/replacepre.cpp
+        search/replacego.cpp
+        search/search2.cpp
+        search/replace2.cpp
+        search/replacepre2.cpp
+        search/getids2.cpp
+        search/replacego2.cpp
+        search/similar.cpp
+        search/strongs.cpp
+        search/strong.cpp
+        search/originals.cpp
+        tmp/tmp.cpp
+        workspace/index.cpp
+        workspace/logic.cpp
+        workspace/settings.cpp
+        workspace/organize.cpp
+        sendreceive/logic.cpp
+        sendreceive/index.cpp
+        sendreceive/sendreceive.cpp
+        sendreceive/settings.cpp
+        sendreceive/bibles.cpp
+        sendreceive/notes.cpp
+        sendreceive/changes.cpp
+        sendreceive/files.cpp
+        sendreceive/resources.cpp
+        demo/logic.cpp
+        client/index.cpp
+        client/logic.cpp
+        sync/logic.cpp
+        sync/setup.cpp
+        sync/settings.cpp
+        sync/bibles.cpp
+        sync/usfmresources.cpp
+        sync/notes.cpp
+        sync/changes.cpp
+        sync/files.cpp
+        sync/resources.cpp
+        sync/mail.cpp
+        resource/index.cpp
+        resource/organize.cpp
+        resource/logic.cpp
+        resource/get.cpp
+        resource/external.cpp
+        resource/bb2resource.cpp
+        resource/convert2resource.cpp
+        resource/convert2bible.cpp
+        resource/manage.cpp
+        resource/download.cpp
+        resource/sword.cpp
+        resource/select.cpp
+        resource/cache.cpp
+        resource/user9edit.cpp
+        resource/user1edit.cpp
+        resource/user9view.cpp
+        resource/user1view.cpp
+        resource/bbgateway.cpp
+        resource/studylight.cpp
+        resource/unload.cpp
+        jsonxx/jsonxx.cpp
+        mapping/index.cpp
+        mapping/map.cpp
+        statistics/statistics.cpp
+        changes/change.cpp
+        changes/changes.cpp
+        changes/logic.cpp
+        changes/manage.cpp
+        changes/modifications.cpp
+        changes/statistics.cpp
+        sprint/burndown.cpp
+        sprint/index.cpp
+        checks/run.cpp
+        checks/headers.cpp
+        checks/index.cpp
+        checks/issues.cpp
+        checks/logic.cpp
+        checks/sentences.cpp
+        checks/settings.cpp
+        checks/settingspatterns.cpp
+        checks/settingssentences.cpp
+        checks/space.cpp
+        checks/suppress.cpp
+        checks/usfm.cpp
+        checks/verses.cpp
+        checks/versification.cpp
+        checks/pairs.cpp
+        checks/settingspairs.cpp
+        checks/french.cpp
+        consistency/index.cpp
+        consistency/input.cpp
+        consistency/logic.cpp
+        consistency/poll.cpp
+        export/esword.cpp
+        export/html.cpp
+        export/index.cpp
+        export/info.cpp
+        export/logic.cpp
+        export/odt.cpp
+        export/onlinebible.cpp
+        export/textusfm.cpp
+        export/usfm.cpp
+        export/web.cpp
+        webbb/search.cpp
+        developer/index.cpp
+        developer/logic.cpp
+        paratext/logic.cpp
+        paratext/index.cpp
+        personalize/index.cpp
+        lexicon/logic.cpp
+        lexicon/definition.cpp
+        sources/etcbc4.cpp
+        sources/kjv.cpp
+        sources/morphhb.cpp
+        sources/morphgnt.cpp
+        sources/hebrewlexicon.cpp
+        sources/oshb.cpp
+        sword/logic.cpp
+        pugixml/pugixml.cpp
+        pugixml/utils.cpp
+        public/index.cpp
+        public/logic.cpp
+        public/login.cpp
+        public/chapter.cpp
+        public/notes.cpp
+        public/new.cpp
+        public/create.cpp
+        public/note.cpp
+        public/comment.cpp
+        utf8proc/utf8proc.c
+        search/logic.cpp
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/aes.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/aesce.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/aesni.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/aria.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/asn1parse.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/asn1write.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/base64.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/bignum.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/bignum_core.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/bignum_mod.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/bignum_mod_raw.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/block_cipher.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/camellia.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ccm.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/chacha20.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/chachapoly.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/cipher.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/cipher_wrap.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/cmac.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/constant_time.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ctr_drbg.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/debug.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/des.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/dhm.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ecdh.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ecdsa.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ecjpake.>c
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ecp.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ecp_curves.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ecp_curves_new.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/entropy.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/entropy_poll.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/error.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/gcm.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/hkdf.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/hmac_drbg.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/lmots.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/lms.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/md.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/md5.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/memory_buffer_alloc.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/mps_reader.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/mps_trace.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/net_sockets.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/nist_kw.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/oid.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/padlock.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/pem.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/pk.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/pk_ecc.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/pk_wrap.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/pkcs12.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/pkcs5.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/pkcs7.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/pkparse.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/pkwrite.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/platform.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/platform_util.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/poly1305.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/psa_crypto.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/psa_crypto_aead.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/psa_crypto_cipher.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/psa_crypto_client.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/psa_crypto_driver_wrappers_no_static.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/psa_crypto_ecp.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/psa_crypto_ffdh.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/psa_crypto_hash.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/psa_crypto_mac.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/psa_crypto_pake.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/psa_crypto_rsa.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/psa_crypto_se.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/psa_crypto_slot_management.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/psa_crypto_storage.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/psa_its_file.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/psa_util.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ripemd160.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/rsa.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/rsa_alt_helpers.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/sha1.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/sha256.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/sha3.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/sha512.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ssl_cache.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ssl_ciphersuites.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ssl_client.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ssl_cookie.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ssl_debug_helpers_generated.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ssl_msg.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ssl_ticket.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ssl_tls.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ssl_tls12_client.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ssl_tls12_server.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ssl_tls13_client.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ssl_tls13_generic.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ssl_tls13_keys.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/ssl_tls13_server.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/threading.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/timing.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/version.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/version_features.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/x509.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/x509_create.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/x509_crl.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/x509_crt.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/x509_csr.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/x509write.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/x509write_crt.c>
+        $<$<BOOL:INTERNAL_MBEDTLS>:mbedtls/x509write_csr.c>
+        related/logic.cpp
+        sqlite/sqlite3.c
+        ldap/logic.cpp
+        rss/logic.cpp
+        rss/feed.cpp
+        microtar/microtar.c
+        miniz/miniz.c
+        read/index.cpp
+        read/load.cpp
+        read/verse.cpp
+        resource/divider.cpp
+        session/confirm.cpp
+        sources/abbott-smith.cpp
+        database/abbottsmith.cpp
+        resource/comparative9edit.cpp
+        resource/comparative1edit.cpp
+        resource/translated9edit.cpp
+        resource/translated1edit.cpp
+        developer/delay.cpp
+        images/index.cpp
+        images/view.cpp
+        images/fetch.cpp
+        images/logic.cpp
+        database/bibleimages.cpp
+        filter/image.cpp
+        mimetic098/header.cxx
+        mimetic098/contentid.cxx
+        mimetic098/contenttransferencoding.cxx
+        mimetic098/contentdisposition.cxx
+        mimetic098/contentdescription.cxx
+        mimetic098/mimeversion.cxx
+        mimetic098/contenttype.cxx
+        mimetic098/version.cxx
+        mimetic098/fieldparam.cxx
+        mimetic098/mimeentity.cxx
+        mimetic098/strutils.cxx
+        mimetic098/body.cxx
+        mimetic098/utils.cxx
+        mimetic098/rfc822/field.cxx
+        mimetic098/rfc822/header.cxx
+        mimetic098/rfc822/message.cxx
+        mimetic098/rfc822/addresslist.cxx
+        mimetic098/rfc822/fieldvalue.cxx
+        mimetic098/rfc822/mailbox.cxx
+        mimetic098/rfc822/messageid.cxx
+        mimetic098/rfc822/datetime.cxx
+        mimetic098/rfc822/group.cxx
+        mimetic098/rfc822/mailboxlist.cxx
+        mimetic098/rfc822/address.cxx
+        mimetic098/os/utils.cxx
+        mimetic098/os/file_iterator.cxx
+        mimetic098/os/mmfile.cxx
+        mimetic098/codec/base64.cxx
+        system/googletranslate.cpp
+        filter/google.cpp
+        tidy/access.c
+        tidy/alloc.c
+        tidy/attrdict.c
+        tidy/attrs.c
+        tidy/buffio.c
+        tidy/charsets.c
+        tidy/clean.c
+        tidy/config.c
+        tidy/entities.c
+        tidy/fileio.c
+        tidy/gdoc.c
+        tidy/istack.c
+        tidy/language.c
+        tidy/lexer.c
+        tidy/mappedio.c
+        tidy/message.c
+        tidy/messageobj.c
+        tidy/parser.c
+        tidy/pprint.c
+        tidy/sprtf.c
+        tidy/streamio.c
+        tidy/tagask.c
+        tidy/tags.c
+        tidy/tidylib.c
+        tidy/tmbstr.c
+        tidy/utf8.c
+        gumbo/attribute.c
+        gumbo/char_ref.c
+        gumbo/error.c
+        gumbo/parser.c
+        gumbo/string_buffer.c
+        gumbo/string_piece.c
+        gumbo/tag.c
+        gumbo/tokenizer.c
+        gumbo/utf8.c
+        gumbo/util.c
+        gumbo/vector.c
+)
+
+
+# The Bibledit executable.
+add_executable(server
+        executable/bibledit.cpp
+)
+target_link_libraries(server bibledit)
+
+
+# Building the unit tests is optional, default is on.
+# Set it off: $ cmake .. -DBUILD_UNITTESTS=OFF
+option(BUILD_UNITTESTS "Build and use the unit tests" ON)
+
+
+# The unit test executable
+if (BUILD_UNITTESTS)
+    add_executable(unittest
+            unittests/unittest.cpp
+            unittests/utilities.cpp
+            unittests/sqlite.cpp
+            unittests/session.cpp
+            unittests/folders.cpp
+            unittests/flate.cpp
+            unittests/checksum.cpp
+            unittests/bibles.cpp
+            unittests/usfm-html.cpp
+            unittests/workspaces.cpp
+            unittests/client.cpp
+            unittests/versification.cpp
+            unittests/usfm.cpp
+            unittests/verses.cpp
+            unittests/paratext.cpp
+            unittests/search.cpp
+            unittests/json.cpp
+            unittests/related.cpp
+            unittests/editone.cpp
+            unittests/http.cpp
+            unittests/memory.cpp
+            unittests/tasks.cpp
+            unittests/rss.cpp
+            unittests/roles.cpp
+            unittests/md5.cpp
+            unittests/string.cpp
+            unittests/users.cpp
+            unittests/date.cpp
+            unittests/export.cpp
+            unittests/html.cpp
+            unittests/archive.cpp
+            unittests/odf.cpp
+            unittests/text.cpp
+            unittests/url.cpp
+            unittests/passage.cpp
+            unittests/styles.cpp
+            unittests/diff.cpp
+            unittests/git.cpp
+            unittests/ipc.cpp
+            unittests/shell.cpp
+            unittests/ldap.cpp
+            unittests/dev.cpp
+            unittests/sample.cpp
+            unittests/config.cpp
+            unittests/log.cpp
+            unittests/books.cpp
+            unittests/checks.cpp
+            unittests/localization.cpp
+            unittests/confirm.cpp
+            unittests/jobs.cpp
+            unittests/kjv.cpp
+            unittests/oshb.cpp
+            unittests/sblgnt.cpp
+            unittests/sprint.cpp
+            unittests/mail.cpp
+            unittests/navigation.cpp
+            unittests/resources.cpp
+            unittests/notes.cpp
+            unittests/modifications.cpp
+            unittests/volatile.cpp
+            unittests/state.cpp
+            unittests/strong.cpp
+            unittests/morphgnt.cpp
+            unittests/etcbc4.cpp
+            unittests/lexicon.cpp
+            unittests/cache.cpp
+            unittests/login.cpp
+            unittests/privileges.cpp
+            unittests/statistics.cpp
+            unittests/webview.cpp
+            unittests/javascript.cpp
+            unittests/merge.cpp
+            unittests/html2format.cpp
+            unittests/bibleimages.cpp
+            unittests/image.cpp
+            unittests/scraper.cpp
+            unittests/consistency.cpp
+    )
+    target_link_libraries(unittest bibledit)
+endif ()
+
+# The generator executable.
+add_executable(generate
+        executable/generate.cpp
+        sources/styles.cpp
+)
+target_link_libraries(generate bibledit)
+
+
+# The include directories for all items
+include_directories(bibledit PUBLIC
+        .
+)
+
+
+# Where to look for the built libraries.
+link_directories(build)
+
+
+# Finding and using libraries.
+find_package(PkgConfig REQUIRED)
+include(CheckIncludeFile)
+
+pkg_check_modules(LIBCURL REQUIRED libcurl>=7.20.0)
+target_include_directories(bibledit PUBLIC ${LIBCURL_INCLUDE_DIRS})
+target_compile_options(bibledit PUBLIC ${LIBCURL_CFLAGS_OTHER})
+target_link_directories(bibledit PUBLIC ${LIBCURL_LIBRARY_DIRS})
+target_link_libraries(server ${LIBCURL_LIBRARIES})
+if (BUILD_UNITTESTS)
+    target_link_libraries(unittest ${LIBCURL_LIBRARIES})
+endif ()
+target_link_libraries(generate ${LIBCURL_LIBRARIES})
+check_include_file(curl/curl.h, INCLUDE_CURL_H)
+
+pkg_check_modules(OPENSSL REQUIRED openssl>=0.9.0)
+target_include_directories(bibledit PUBLIC ${OPENSSL_INCLUDE_DIRS})
+target_compile_options(bibledit PUBLIC ${OPENSSL_CFLAGS_OTHER})
+target_link_directories(bibledit PUBLIC ${OPENSSL_LIBRARY_DIRS})
+target_link_libraries(server ${OPENSSL_LIBRARIES})
+if (BUILD_UNITTESTS)
+    target_link_libraries(unittest ${OPENSSL_LIBRARIES})
+endif ()
+target_link_libraries(generate ${OPENSSL_LIBRARIES})
+
+pkg_check_modules(LIBXML2 REQUIRED libxml-2.0>=2.9.0)
+target_include_directories(bibledit PUBLIC ${LIBXML2_INCLUDE_DIRS})
+target_compile_options(bibledit PUBLIC ${LIBXML2_CFLAGS_OTHER})
+target_link_directories(bibledit PUBLIC ${LIBXML2_LIBRARY_DIRS})
+target_link_libraries(server ${LIBXML2_LIBRARIES})
+if (BUILD_UNITTESTS)
+    target_link_libraries(unittest ${LIBXML2_LIBRARIES})
+endif ()
+target_link_libraries(generate ${LIBXML2_LIBRARIES})
+
+pkg_check_modules(ICU icu-i18n>=60.0)
+if (ICU_FOUND)
+    set(HAVE_ICU ON)
+    target_include_directories(bibledit PUBLIC ${ICU_INCLUDE_DIRS})
+    target_compile_options(bibledit PUBLIC ${ICU_CFLAGS_OTHER})
+    target_link_directories(bibledit PUBLIC ${ICU_LIBRARY_DIRS})
+    # The pkg-config does not give all libraries needed: Add one manually.
+    target_link_libraries(server ${ICU_LIBRARIES} icuuc)
+    if (BUILD_UNITTESTS)
+        target_link_libraries(unittest ${ICU_LIBRARIES} icuuc)
+    endif ()
+    target_link_libraries(generate ${ICU_LIBRARIES} icuuc)
+endif ()
+
+if (NOT INTERNAL_MBEDTLS)
+    pkg_check_modules(MBEDTLS mbedtls)
+    if (MBEDTLS_FOUND)
+        set(HAVE_LIBMBEDTLS ON)
+        target_include_directories(bibledit PUBLIC ${MBEDTLS_INCLUDE_DIRS})
+        target_compile_options(bibledit PUBLIC ${MBEDTLS_CFLAGS_OTHER})
+        target_link_directories(bibledit PUBLIC ${MBEDTLS_LIBRARY_DIRS})
+        target_link_libraries(server ${MBEDTLS_LIBRARIES})
+        if (BUILD_UNITTESTS)
+            target_link_libraries(unittest ${MBEDTLS_LIBRARIES})
+        endif ()
+        target_link_libraries(generate ${MBEDTLS_LIBRARIES})
+    endif ()
+endif ()
+
+pkg_check_modules(UTF8PROC mbedtls)
+if (UTF8PROC_FOUND)
+    set(HAVE_UTF8PROC ON)
+    target_include_directories(bibledit PUBLIC ${UTF8PROC_INCLUDE_DIRS})
+    target_compile_options(bibledit PUBLIC ${UTF8PROC_CFLAGS_OTHER})
+    target_link_directories(bibledit PUBLIC ${UTF8PROC_LIBRARY_DIRS})
+    target_link_libraries(server ${UTF8PROC_LIBRARIES})
+    if (BUILD_UNITTESTS)
+        target_link_libraries(unittest ${UTF8PROC_LIBRARIES})
+    endif ()
+    target_link_libraries(generate ${UTF8PROC_LIBRARIES})
+endif ()
+
+pkg_check_modules(TIDY REQUIRED tidy>=5.4.0)
+target_include_directories(bibledit PUBLIC ${TIDY_INCLUDE_DIRS})
+target_compile_options(bibledit PUBLIC ${TIDY_CFLAGS_OTHER})
+target_link_directories(bibledit PUBLIC ${TIDY_LIBRARY_DIRS})
+target_link_libraries(server ${TIDY_LIBRARIES})
+if (BUILD_UNITTESTS)
+    target_link_libraries(unittest ${TIDY_LIBRARIES})
+endif ()
+target_link_libraries(generate ${TIDY_LIBRARIES})
+
+pkg_check_modules(PUGIXML pugixml>=1.10)
+if (PUGIXML_FOUND)
+    set(HAVE_PUGIXML ON)
+    target_include_directories(bibledit PUBLIC ${PUGIXML_INCLUDE_DIRS})
+    target_compile_options(bibledit PUBLIC ${PUGIXML_CFLAGS_OTHER})
+    target_link_directories(bibledit PUBLIC ${PUGIXML_LIBRARY_DIRS})
+    target_link_libraries(server ${PUGIXML_LIBRARIES})
+    if (BUILD_UNITTESTS)
+        target_link_libraries(unittest ${PUGIXML_LIBRARIES})
+    endif ()
+    target_link_libraries(generate ${PUGIXML_LIBRARIES})
+endif ()
+
+pkg_check_modules(GTEST gtest>=1.10.0)
+if (GTEST_FOUND)
+    set(HAVE_GTEST ON)
+    target_include_directories(bibledit PUBLIC ${GTEST_INCLUDE_DIRS})
+    target_compile_options(bibledit PUBLIC ${GTEST_CFLAGS_OTHER})
+    target_link_directories(bibledit PUBLIC ${GTEST_LIBRARY_DIRS})
+    if (BUILD_UNITTESTS)
+        target_link_libraries(unittest ${GTEST_LIBRARIES})
+    endif ()
+endif ()
+
+# Whether to use GTK for the client edition.
+option(USE_GTK "Use GTK" OFF)
+# Default is OFF. Set it on: $ cmake .. -DUSE_GTK=ON
+
+if (USE_GTK)
+
+    pkg_check_modules(GTK REQUIRED gtk+-3.0)
+    target_include_directories(bibledit PUBLIC ${GTK_INCLUDE_DIRS})
+    target_compile_options(bibledit PUBLIC ${GTK_CFLAGS_OTHER})
+    target_link_directories(bibledit PUBLIC ${GTK_LIBRARY_DIRS})
+    target_link_libraries(server ${GTK_LIBRARIES})
+
+    pkg_check_modules(WEBKIT2GTK REQUIRED webkit2gtk-4.1)
+    target_include_directories(bibledit PUBLIC ${WEBKIT2GTK_INCLUDE_DIRS})
+    target_compile_options(bibledit PUBLIC ${WEBKIT2GTK_CFLAGS_OTHER})
+    target_link_directories(bibledit PUBLIC ${WEBKIT2GTK_LIBRARY_DIRS})
+    target_link_libraries(server ${WEBKIT2GTK_LIBRARIES})
+
+endif ()
+
+
+check_include_file(libproc.h, HAVE_LIBPROC)
+check_include_file(execinfo.h, HAVE_EXECINFO)
+check_include_file(mach/mach.h, HAVE_MACH_MACH)
+
+set(PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share/bibledit")
+
+set(PACKAGE_PREFIX_DIR "${CMAKE_INSTALL_PREFIX}")
+
+message(STATUS "Bibledit ${bibledit_VERSION} configuration summary")
+message(STATUS "Build unit tests (cmake -DBUILD_UNITTESTS=OFF)        ${BUILD_UNITTESTS}")
+message(STATUS "Install prefix   (cmake -DCMAKE_INSTALL_PREFIX=path)  ${CMAKE_INSTALL_PREFIX}")
+message(STATUS "Windows          (cmake -DHAVE_WINDOWS=ON)            ${HAVE_WINDOWS}")
+message(STATUS "Android          (cmake -DHAVE_ANDROID=ON)            ${HAVE_ANDROID}")
+message(STATUS "macOS            (cmake -DHAVE_MACOS=ON)              ${HAVE_MACOS}")
+message(STATUS "Linux            (cmake -DHAVE_LINUX=ON)              ${HAVE_LINUX}")
+message(STATUS "iOS              (cmake -DHAVE_IOS=ON)                ${HAVE_IOS}")
+
+# Write the variables in the template to config.h.
+configure_file(cmake_config.h.in ${PROJECT_SOURCE_DIR}/config.h)
+
+# Installation.
+install(TARGETS server DESTINATION bin)

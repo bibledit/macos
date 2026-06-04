@@ -9,7 +9,7 @@ SCRIPTDIR=`pwd`
 WEBROOT=$SCRIPTDIR/webroot
 echo Synchronizing relevant source code to $WEBROOT
 mkdir -p $WEBROOT
-rsync --archive --delete --exclude=.git ../../cloud/ $WEBROOT/
+rsync --archive --delete --exclude=.git* --exclude=.idea --exclude=cmake-build-debug --exclude=build ../../cloud/ $WEBROOT/
 
 echo From now on the working directory is the webroot location.
 pushd $WEBROOT

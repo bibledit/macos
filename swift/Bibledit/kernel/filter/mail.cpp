@@ -19,6 +19,7 @@
 
 #include <filter/mail.h>
 #include <filter/string.h>
+#undef min
 
 
 #ifdef HAVE_CLOUD
@@ -219,7 +220,7 @@ std::string filter_mail_address_name (std::string name)
 std::string filter_mail_limit_line_length_rfc5322(std::string body, const int length)
 {
   // If the HTML body length is within the maximum line length: Ready.
-  if (body.length() <= length)
+  if (body.length() <= static_cast<size_t>(length))
     return body;
 
   // Maximum number of iterations allowed: This prevents an infinite loop.
@@ -243,7 +244,7 @@ std::string filter_mail_limit_line_length_rfc5322(std::string body, const int le
     // Check whether the next new line after the caret is within the maximum line length.
     // If so update the caret position and go to next iteration.
     if (const auto nl_pos = body.find('\n', caret);
-        (nl_pos - caret) <= length) {
+        (nl_pos - caret) <= static_cast<size_t>(length)) {
       caret = nl_pos;
       continue;
     }
@@ -252,7 +253,7 @@ std::string filter_mail_limit_line_length_rfc5322(std::string body, const int le
     // in the range of the caret to the caret plus max line length.
     // Add a new line after that.
     // Update the caret positon and go to the next iteration.
-    if (auto gt_pos = body.rfind('>', caret + length);
+    if (auto gt_pos = body.rfind('>', caret + static_cast<size_t>(length));
         gt_pos != std::string::npos and gt_pos > caret)
     {
       body.insert(gt_pos + 1, "\n");
@@ -265,7 +266,7 @@ std::string filter_mail_limit_line_length_rfc5322(std::string body, const int le
     // in the range of the caret to the caret plus max line length.
     // Add a new line before that.
     // Update the caret position and go to the next iteration.
-    if (auto st_pos = body.rfind('<', caret + length);
+    if (auto st_pos = body.rfind('<', caret + static_cast<size_t>(length));
         st_pos != std::string::npos and st_pos > caret)
     {
       body.insert(st_pos, "\n");
@@ -276,8 +277,8 @@ std::string filter_mail_limit_line_length_rfc5322(std::string body, const int le
     // Okay, the ">" or the "<" were not found: If needed:
     // 1. Add a new line in the body at the range end.
     // 2. Update the caret position.
-    if ((body.length() - caret) > length) {
-      const size_t range_end = std::min(caret + length, body.length());
+    if ((body.length() - caret) > static_cast<size_t>(length)) {
+      const size_t range_end = std::min(caret + static_cast<size_t>(length), body.length());
       body.insert(range_end, "\n");
       caret = range_end;
     }
