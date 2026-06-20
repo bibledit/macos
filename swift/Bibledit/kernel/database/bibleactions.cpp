@@ -20,11 +20,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #include <database/bibleactions.h>
 #include <filter/url.h>
 #include <filter/string.h>
-#include <config/globals.h>
 #include <database/sqlite.h>
 
+#include <utility>
 
-constexpr const auto database_name {"bibleactions"};
+
+constexpr auto database_name {"bibleactions"};
 
 
 namespace database::bible_actions {
@@ -59,7 +60,7 @@ void optimize ()
 }
 
 
-void record (std::string bible, int book, int chapter, std::string usfm)
+void record (const std::string& bible, const int book, const int chapter, const std::string& usfm)
 {
   if (get_usfm (bible, book, chapter).empty ()) {
     SqliteDatabase sql (database_name);
@@ -86,16 +87,18 @@ std::vector <std::string> get_bibles ()
 }
 
 
-std::vector <int> get_books (std::string bible)
+std::vector <int> get_books (const std::string& bible)
 {
-  SqliteDatabase sql (database_name);
-  sql.add ("SELECT DISTINCT book FROM bibleactions WHERE bible =");
-  sql.add (bible);
-  sql.add ("ORDER BY book;");
-  std::vector <std::string> result = sql.query ()["book"];
-  std::vector <int> books;
-  for (auto book : result) books.push_back (filter::string::convert_to_int (book));
-  return books;
+    SqliteDatabase sql(database_name);
+    sql.add("SELECT DISTINCT book FROM bibleactions WHERE bible =");
+    sql.add(bible);
+    sql.add("ORDER BY book;");
+    std::vector<std::string> result = sql.query()["book"];
+    std::vector<int> books;
+    std::ranges::for_each(result, [&books](auto book) {
+        books.push_back(filter::string::convert_to_int(book));
+    });
+    return books;
 }
 
 
@@ -133,11 +136,11 @@ std::string get_usfm (std::string bible, int book, int chapter)
 }
 
 
-void erase (std::string bible, int book, int chapter)
+void erase (std::string bible, const int book, const int chapter)
 {
   SqliteDatabase sql (database_name);
   sql.add ("DELETE FROM bibleactions WHERE bible =");
-  sql.add (bible);
+  sql.add (std::move(bible));
   sql.add ("AND book =");
   sql.add (book);
   sql.add ("AND chapter =");

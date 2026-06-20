@@ -15,25 +15,15 @@ echo From now on the working directory is the webroot location.
 pushd $WEBROOT
 echo Current directory: `pwd`
 
-echo Do a dist-clean of the Bibledit library.
-./configure
-make distclean
-
-echo Update the build configuration and reconfigure.
-sed -i.bak '/mbedtls_ssl_init/d' configure.ac
-sed -i.bak 's/ unittest / /g' Makefile.am
-sed -i.bak '/UTF8PROC/d' Makefile.am
-sed -i.bak '/GUMBO/d' Makefile.am
-sed -i.bak '/PUGIXM/d' Makefile.am
-sed -i.bak '/GTEST/d' Makefile.am
-./reconfigure
+echo Remove build info from the Bibledit library.
+rm -rf build
 
 echo Configure Bibledit in client mode.
-./configure --enable-mac
+cmake -B build -DHAVE_MACOS=ON -DBUILD_UNITTESTS=OFF
 # Do not set the network port.
 # The Bibledit kernel will negotiate its own network port number.
 # echo 9876 > config/network-port
-# 
+
 echo Update the configuration.
 sed -i.bak '/HAVE_ICU/d' config.h
 sed -i.bak '/HAVE_UTF8PROC/d' config.h
@@ -53,15 +43,10 @@ find . -name exampleProgram.cpp -delete
 echo Remove main executable code
 rm executable/bibledit.*
 rm sqlite/shell.c
-#echo Remove MbedTLS 3.x and enable version 2.x
-#rm -rf mbedtls
-##mv mbedtls2 mbedtls
-#echo Remove MbedTLS 2.x.
 rm -rf mbedtls2
 
 
 echo Copy the source code to the kernel folder.
-pwd
 KERNELDIR=$SCRIPTDIR/Bibledit/kernel
 rsync --archive --delete ./ $KERNELDIR/
 
@@ -82,20 +67,12 @@ find . -name "*.m4" -delete
 find . -name "autom*cache" -print | xargs rm -rf
 find . -name "bibledit" -delete
 find . -name "compile" -delete
-rm $WEBROOT/config.*
-rm $WEBROOT/configure*
-rm $WEBROOT/depcomp
 rm $WEBROOT/dev
-rm $WEBROOT/install-sh
-rm $WEBROOT/missing
-rm $WEBROOT/reconfigure
 rm $WEBROOT/valgrind
 find . -name ".deps" -print | xargs rm -rf
 find . -name ".dirstamp" -delete
-rm $WEBROOT/Makefile*
 rm -f $WEBROOT/server
 rm -f $WEBROOT/unittest
-rm $WEBROOT/stamp-h1
 rm -f $WEBROOT/generate
 rm -rf $WEBROOT/sources
 rm -rf $WEBROOT/unittests
@@ -103,6 +80,13 @@ find .. -name "*.sh" -delete
 rm -rf $WEBROOT/xcode.xcodeproj
 rm -rf $WEBROOT/.github
 rm -f $WEBROOT/.gitignore
+rm $WEBROOT/CMakeLists.txt
+rm -rf $KERNELDIR/build
+rm -rf $WEBROOT/build
+rm $KERNELDIR/executable/client.*
+rm -rf $KERNELDIR/gtk
+rm -rf $WEBROOT/gtk
+
 
 echo To graphically build the app for macOS, open the project in Xcode:
 echo open $SCRIPTDIR/Bibledit.xcodeproj

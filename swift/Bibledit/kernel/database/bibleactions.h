@@ -26,9 +26,9 @@ namespace database::bible_actions {
 void create ();
 void clear ();
 void optimize ();
-void record (std::string bible, int book, int chapter, std::string usfm);
+void record (const std::string& bible, int book, int chapter, const std::string& usfm);
 std::vector <std::string> get_bibles ();
-std::vector <int> get_books (std::string bible);
+std::vector <int> get_books (const std::string& bible);
 std::vector <int> get_chapters (std::string bible, int book);
 std::string get_usfm (std::string bible, int book, int chapter);
 void erase (std::string bible, int book, int chapter);
