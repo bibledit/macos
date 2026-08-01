@@ -22,8 +22,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #include <filter/string.h>
 #include <database/sqlite.h>
 
-#include <utility>
-
 
 constexpr auto database_name {"bibleactions"};
 
@@ -31,122 +29,128 @@ constexpr auto database_name {"bibleactions"};
 namespace database::bible_actions {
 
 
-void create ()
+void create()
 {
-  SqliteDatabase sql (database_name);
-  sql.add ("CREATE TABLE IF NOT EXISTS bibleactions ("
-           " bible text,"
-           " book integer,"
-           " chapter integer,"
-           " usfm text"
-           ");");
-  sql.execute ();
+    SqliteDatabase sql(database_name);
+    sql.add("CREATE TABLE IF NOT EXISTS bibleactions ("
+        " bible text,"
+        " book integer,"
+        " chapter integer,"
+        " usfm text"
+        ");");
+    sql.execute();
 }
 
 
-void clear ()
+void clear()
 {
-  SqliteDatabase sql (database_name);
-  sql.add ("DROP TABLE IF EXISTS bibleactions;");
-  sql.execute ();
+    SqliteDatabase sql(database_name);
+    sql.add("DROP TABLE IF EXISTS bibleactions;");
+    sql.execute();
 }
 
 
-void optimize ()
+void optimize()
 {
-  SqliteDatabase sql (database_name);
-  sql.add ("VACUUM;");
-  sql.execute ();
+    SqliteDatabase sql(database_name);
+    sql.add("VACUUM;");
+    sql.execute();
 }
 
 
-void record (const std::string& bible, const int book, const int chapter, const std::string& usfm)
+void record(const std::string& bible, const int book, const int chapter, const std::string& usfm)
 {
-  if (get_usfm (bible, book, chapter).empty ()) {
-    SqliteDatabase sql (database_name);
-    sql.add ("INSERT INTO bibleactions VALUES (");
-    sql.add (bible);
-    sql.add (",");
-    sql.add (book);
-    sql.add (",");
-    sql.add (chapter);
-    sql.add (",");
-    sql.add (usfm);
-    sql.add (");");
-    sql.execute ();
-  }
+    if (get_usfm(bible, book, chapter).empty())
+    {
+        SqliteDatabase sql(database_name);
+        sql.add("INSERT INTO bibleactions VALUES (");
+        sql.add(bible);
+        sql.add(",");
+        sql.add(book);
+        sql.add(",");
+        sql.add(chapter);
+        sql.add(",");
+        sql.add(usfm);
+        sql.add(");");
+        sql.execute();
+    }
 }
 
 
-std::vector <std::string> get_bibles ()
+std::vector<std::string> get_bibles()
 {
-  SqliteDatabase sql (database_name);
-  sql.add ("SELECT DISTINCT bible FROM bibleactions ORDER BY bible;");
-  std::vector <std::string> notes = sql.query ()["bible"];
-  return notes;
+    SqliteDatabase sql(database_name);
+    sql.add("SELECT DISTINCT bible FROM bibleactions ORDER BY bible;");
+    const std::vector<std::string> notes = sql.query()["bible"];
+    return notes;
 }
 
 
-std::vector <int> get_books (const std::string& bible)
+std::vector<int> get_books(const std::string& bible)
 {
     SqliteDatabase sql(database_name);
     sql.add("SELECT DISTINCT book FROM bibleactions WHERE bible =");
     sql.add(bible);
     sql.add("ORDER BY book;");
-    std::vector<std::string> result = sql.query()["book"];
+    const std::vector<std::string> result = sql.query()["book"];
     std::vector<int> books;
-    std::ranges::for_each(result, [&books](auto book) {
+    std::ranges::for_each(result, [&books](const auto& book)
+    {
         books.push_back(filter::string::convert_to_int(book));
     });
     return books;
 }
 
 
-std::vector <int> get_chapters (std::string bible, int book)
+std::vector<int> get_chapters(const std::string& bible, const int book)
 {
-  SqliteDatabase sql (database_name);
-  sql.add ("SELECT DISTINCT chapter FROM bibleactions WHERE bible =");
-  sql.add (bible);
-  sql.add ("AND book =");
-  sql.add (book);
-  sql.add ("ORDER BY chapter;");
-  std::vector <std::string> result = sql.query ()["chapter"];
-  std::vector <int> chapters;
-  for (auto chapter : result) chapters.push_back (filter::string::convert_to_int (chapter));
-  return chapters;
+    SqliteDatabase sql(database_name);
+    sql.add("SELECT DISTINCT chapter FROM bibleactions WHERE bible =");
+    sql.add(bible);
+    sql.add("AND book =");
+    sql.add(book);
+    sql.add("ORDER BY chapter;");
+    const std::vector<std::string> result = sql.query()["chapter"];
+    std::vector<int> chapters;
+    std::ranges::for_each(result, [&chapters](const auto& chapter)
+    {
+        chapters.push_back(filter::string::convert_to_int(chapter));
+    });
+    return chapters;
 }
 
 
-std::string get_usfm (std::string bible, int book, int chapter)
+std::string get_usfm(const std::string& bible, const int book, const int chapter)
 {
-  SqliteDatabase sql (database_name);
-  sql.add ("SELECT usfm FROM bibleactions WHERE bible =");
-  sql.add (bible);
-  sql.add ("AND book =");
-  sql.add (book);
-  sql.add ("AND chapter =");
-  sql.add (chapter);
-  sql.add (";");
-  std::vector <std::string> result = sql.query ()["usfm"];
-  if (!result.empty()) {
-    std::string usfm = result[0];
-    return usfm;
-  };
-  return std::string();
+    SqliteDatabase sql(database_name);
+    sql.add("SELECT usfm FROM bibleactions WHERE bible =");
+    sql.add(bible);
+    sql.add("AND book =");
+    sql.add(book);
+    sql.add("AND chapter =");
+    sql.add(chapter);
+    sql.add(";");
+    std::vector<std::string> result = sql.query()["usfm"];
+    if (!result.empty())
+    {
+        const std::string usfm = result.at(0);
+        return usfm;
+    };
+    return {};
 }
 
 
-void erase (std::string bible, const int book, const int chapter)
+void erase(const std::string& bible, const int book, const int chapter)
 {
-  SqliteDatabase sql (database_name);
-  sql.add ("DELETE FROM bibleactions WHERE bible =");
-  sql.add (std::move(bible));
-  sql.add ("AND book =");
-  sql.add (book);
-  sql.add ("AND chapter =");
-  sql.add (chapter);
-  sql.add (";");
-  sql.execute ();
+    SqliteDatabase sql(database_name);
+    sql.add("DELETE FROM bibleactions WHERE bible =");
+    sql.add(bible);
+    sql.add("AND book =");
+    sql.add(book);
+    sql.add("AND chapter =");
+    sql.add(chapter);
+    sql.add(";");
+    sql.execute();
 }
 
 
